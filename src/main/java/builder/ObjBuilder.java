@@ -15,7 +15,8 @@ public class ObjBuilder {
     double sizeY = ISize.Size.DEFAULT.getSizeY();
     double labelX = ILabel.Label.DEFAULT.getLabelX();
     double labelY = ILabel.Label.DEFAULT.getLabelY();
-    List<Ports> ports = new ArrayList<>();
+    List<Ports> inputsL = new ArrayList<>();
+    List<Ports> outputsL = new ArrayList<>();
     List<Rectangles> rectangles = new ArrayList<>();
     String amount = IAmount.amount;
     String spacing = ISpacing.spacing;
@@ -51,24 +52,25 @@ public class ObjBuilder {
                 break;
             case "TTr":
                 TTr ttr;
-                ports = getPorts(TTr.inputs, TTr.outputs);
+                inputsL = getInputs(TTr.inputs);
+                outputsL = getOutputs(TTr.outputs);
                 rectangles.add(new Rectangles.Builder()
-                .neX(1.0)
-                .neY(1.0)
-                .swX(1.0)
-                .swY(1.0)
-                .build());
-                rectangles.add(new Rectangles.Builder()
-                        .neX(1.0)
-                        .neY(1.0)
-                        .swX(0.4)
-                        .swY(1.0)
+                        .neX(sizeX)
+                        .neY(sizeY*2)
+                        .swX(sizeX)
+                        .swY(sizeY*2)
                         .build());
                 rectangles.add(new Rectangles.Builder()
-                        .neX(-0.4)
-                        .neY(1.0)
-                        .swX(1.0)
-                        .swY(0.7)
+                        .neX(sizeX*2)
+                        .neY(sizeY*2)
+                        .swX(sizeX*2)
+                        .swY(sizeY*2)
+                        .build());
+                rectangles.add(new Rectangles.Builder()
+                        .neX(-sizeX)
+                        .neY(-(sizeY/2)) //СВЯЗАТЬ С ФОРМУЛОЙ КОЛИЧЕСТВА ПОРТОВ
+                        .swX(sizeX*2)
+                        .swY(sizeY*2)
                         .build());
                 break;
             case "JKTr":
@@ -81,7 +83,8 @@ public class ObjBuilder {
                 .labelX(labelX)
                 .labelY(labelY)
                 .labelN(name)
-                .ports(ports)
+                .inputs(inputsL)
+                .outputs(outputsL)
                 .amount(amount)
                 .spacing(spacing)
                 .rectangles(rectangles)
@@ -89,25 +92,28 @@ public class ObjBuilder {
         return element;
     }
 
-    public List<Ports> getPorts(List inputs, List outputs) {
+    public List<Ports> getInputs(List inputs) {
         List<Ports> ports = new ArrayList<>();
-        for (int i = 0; i < inputs.size(); i++) {
-            ports.add(new Ports.Builder()
+        for (int i = inputs.size()-1; i >=0; i--) {
+            inputsL.add(new Ports.Builder()
                     .name(inputs.get(i).toString())
-                    .x(0)
-                    .y(sizeY / inputs.size() * (i + 1))
+                    .x(-sizeX * 2)
+                    .y(((sizeY * 4) / (inputs.size() + 1) * (i + 1)) - sizeY * 2)
                     .build()
             );
         }
-        for (int i = 0; i < outputs.size(); i++) {
-            ports.add(new Ports.Builder()
+        return inputsL;
+    }
+    public List<Ports>getOutputs(List outputs) {
+        for (int i = outputs.size() - 1; i >= 0; i--) {
+            outputsL.add(new Ports.Builder()
                     .name(outputs.get(i).toString())
-                    .x(sizeX)
-                    .y(sizeY / outputs.size() * (i + 1))
+                    .x(sizeX * 2) // ВОЗМОЖНЫ ПРОБЛЕМЫ С ОТРИСОВКОЙ СОЕДИНЕНИЙ
+                    .y(((sizeY * 4) / (outputs.size() + 1) * (i + 1)) - sizeY * 2)
                     .build()
             );
         }
-        return ports;
+        return outputsL;
     }
 
     public void setSizeCRD(double sizeX, double sizeY){
@@ -150,11 +156,7 @@ public class ObjBuilder {
                 break;
         }
     }
-    public void setAmount(String amount){
-        this.amount = amount;
-    }
-    public void setSpacing(String spacing){
-        this.spacing = spacing;
-    }
+    public void setAmount(String amount){ this.amount = amount; }
+    public void setSpacing(String spacing){ this.spacing = spacing; }
 
 }

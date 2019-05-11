@@ -36,9 +36,9 @@ teXsize(x, y)::=<<
 \savedanchor\southwest{
 \pgfmathsetlength\pgf@x{\pgfshapeminwidth}
 \pgfmathsetlength\pgf@y{\pgfshapeminheight}
-\pgf@x=-<x>\pgf@x\n
-\pgf@y=-<y>\pgf@y\n
-
+\pgf@x=-<x>\pgf@x
+\pgf@y=-<y>\pgf@y
+}
 
 >>
 
@@ -62,7 +62,8 @@ teXlabelC(x, y)::=<<
 \northeast
 \advance\pgf@x by -<x>\wd\pgfnodeparttextbox
 \advance\pgf@y by -<y>\ht\pgfnodeparttextbox
-\advance\pgf@y by +.5\dp\pgfnodeparttextbox}
+\advance\pgf@y by +.5\dp\pgfnodeparttextbox
+}
 
 
 >>
@@ -71,7 +72,8 @@ teXport(name, x, y)::=<<
 \anchor{<name>}{
 \pgf@process{\northeast}
 \pgf@x=<x>\pgf@x
-\pgf@y=<y>\pgf@y}
+\pgf@y=<y>\pgf@y
+}
 
 
 >>
@@ -83,7 +85,7 @@ teXbackgroundpath()::=<<
 >>
 
 teXportN(swx, swy, nex, ney)::=<<
-\pgfpathrectanglecorners{\southwest <swx>\pgf@x <swy>\pgf@y}{\northeast <nex>\pgf@x <ney>\pgf@y}
+\pgfpathrectanglecorners{\southwest \pgf@x=<swx>\pgf@x \pgf@y=<swy>\pgf@y}{\northeast \pgf@x=<nex>\pgf@x \pgf@y=<ney>\pgf@y}
 
 
 >>
@@ -97,21 +99,26 @@ teXcloseP()::=<<
 
 >>
 
-teXportL(objName, name)::=<<
-\pgf@anchor@<name>@<objName>
-\pgftext[left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{<name>}}
+teXportL(objName, name, lor)::=<<
+\pgf@anchor@<objName>@<name>
+\pgftext[<lor>,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{<name>}
+}
 
 
 >>
 
 teXendG()::=<<
-\endgroup}}
+\endgroup
+}
+}
 
 
 >>
 
 teXaddFont()::=<<
-\tikzset{add font/.code={\expandafter\def\expandafter\tikz@textfont\expandafter{\tikz@textfont#1}}}
+\tikzset{add font/.code={\expandafter\def\expandafter\tikz@textfont\expandafter{\tikz@textfont#1}
+}
+}
 
 
 >>
@@ -120,7 +127,9 @@ teXfontSize()::=<<
 \tikzset{flip flop/port labels/.style={font=\sffamily\scriptsize}}
 \tikzset{every TTr node/.style={draw,minimum width=2cm,minimum
 height=2.828427125cm,very thick,inner sep=1mm,outer sep=0pt,cap=squar,add
-font=\sffamily}}
+font=\sffamily
+}
+}
 
 
 >>
@@ -141,7 +150,7 @@ teXbegin()::=<<
 >>
 
 teXdef(var, index, amount)::=<<
-\def\<var><index>{<amount>}
+\def\\<var><index>{<amount>}
 
 
 >>
@@ -162,8 +171,8 @@ teXconn2(index2, objName2, port2)::=<< --(<objName2>\m<index2>.<port2>);
 
 
 >> //END POINT (CONNECTION)
-teXconnIO(eorw, port)::=<<-- +(1,0) node [anchor=<eorw>] {<port>};
-
+teXconnIO(eorw, port, linetype, space, objName, index)::=<<
+\draw [<linetype>] (<objName><index>.<port>) -- +(<space>) node [anchor=<eorw>] {<port>};
 
 >> //END POINT (IO)
 
@@ -182,7 +191,6 @@ teXend()::=<<
 teXforEach(index, K)::=<<
 \foreach \m<index> in {<K>,...,\N<index>}
 
-
 >>
 
 teXlet()::=<<
@@ -193,6 +201,7 @@ teXlet()::=<<
 
 teXoverLine(name)::=<<
 $\overline{\mbox{<name>}}$
+
 
 >>
 teXbracketL()::=<<{

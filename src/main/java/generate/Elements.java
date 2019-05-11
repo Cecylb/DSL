@@ -30,14 +30,20 @@ public class Elements {
         teXlabelC.add("y", data.labelY());
         return teXlabelC.render();
     }
-
     public String teXport(){
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < data.ports().size(); i++) {
+        for (int i = 0; i < data.inputs().size(); i++) {
             ST teXport = element.getInstanceOf("teXport");
-            teXport.add("name", data.ports().get(i).name());
-            teXport.add("x", data.ports().get(i).x());
-            teXport.add("y", data.ports().get(i).y());
+            teXport.add("name", data.inputs().get(i).name());
+            teXport.add("x", data.inputs().get(i).x());
+            teXport.add("y", data.inputs().get(i).y());
+            sb.append(teXport.render());
+        }
+        for (int i = 0; i < data.outputs().size(); i++) {
+            ST teXport = element.getInstanceOf("teXport");
+            teXport.add("name", data.outputs().get(i).name());
+            teXport.add("x", data.outputs().get(i).x());
+            teXport.add("y", data.outputs().get(i).y());
             sb.append(teXport.render());
         }
         return sb.toString();
@@ -56,10 +62,18 @@ public class Elements {
     }
     public String teXportL() {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < data.ports().size(); i++) {
+        for (int i = 0; i < data.inputs().size(); i++) {
             ST teXportL = element.getInstanceOf("teXportL");
             teXportL.add("objName", data.objName());
-            teXportL.add("name", data.ports().get(i).name());
+            teXportL.add("name", data.inputs().get(i).name());
+            teXportL.add("lor", "left");
+            sb.append(teXportL.render());
+        }
+        for (int i = 0; i < data.outputs().size(); i++) {
+            ST teXportL = element.getInstanceOf("teXportL");
+            teXportL.add("objName", data.objName());
+            teXportL.add("name", data.outputs().get(i).name());
+            teXportL.add("lor", "right");
             sb.append(teXportL.render());
         }
         return sb.toString();

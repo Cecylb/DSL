@@ -13,7 +13,8 @@ public interface Objects extends Element {
     double labelX();
     double labelY();
     String labelN();
-    List<Ports> ports();
+    List<Ports> inputs();
+    List<Ports> outputs();
     String amount();
     String spacing();
     List<Rectangles> rectangles();
