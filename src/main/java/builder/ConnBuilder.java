@@ -13,7 +13,7 @@ public class ConnBuilder {
 
     public ConnBuilder(){}
 
-    public Connection getConnections(){
+    public Connection getConnection(){
         Connection connections = new Connection.Builder()
                 .lineType(lineType)
                 .objName1(objName1)

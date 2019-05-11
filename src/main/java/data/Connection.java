@@ -10,8 +10,8 @@ public interface Connection {
     String lineType();
     String port1();
     String port2();
-    String index1();
-    String index2();
+    // String index1();
+    // String index2();
 
     class Builder extends ImmutableConnection.Builder {
     }

@@ -7,6 +7,7 @@ import data.Connection;
 import builder.Crutch;
 import data.Objects;
 import data.Property;
+import generate.Connections;
 import generate.Elements;
 import generate.Properties;
 import generate.TeXfields;
@@ -45,7 +46,7 @@ public class Launch {
             tokenize("BRR").pattern("^\\)$").priority(1);
             tokenize("COL").pattern("^\\:$").priority(1);
             tokenize("QUT").pattern("^\"$").priority(1);
-            tokenize("GRD").pattern("^\\#$").priority(1);
+            //tokenize("GRD").pattern("^\\#$").priority(1);
             tokenize("DIV").pattern("^\\;$").priority(1);
             tokenize("CMA").pattern("^\\,$").priority(1);
             tokenize("DOT").pattern("^\\.$").priority(1);
@@ -77,7 +78,7 @@ public class Launch {
             tokenize("SCL").pattern("^(small|medium|large)$").priority(2);
             tokenize("POS").pattern("^(top|middle|bottom)$").priority(2);
             tokenize("CRD").pattern("^(x|y)$").priority(2);
-            tokenize("CUR").pattern("^n$").priority(2);
+            tokenize("CUR").pattern("^#n$").priority(2);
             tokenize("IDN").pattern("^id$").priority(2);
 
             tokenize("single_line_comment").pattern("//.*(\n|\r|\r\n|\n\r)").hidden(true);
@@ -222,7 +223,7 @@ public class Launch {
                                     "crutch.setN(Double.parseDouble(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value()));\n" +
                                           "ast.moveCursor(AST.Movement.TO_PARENT);\n"
                             ),
-                            t("CRD"),
+                            t("CRD"), // Есть возможность увидеть нетерминал, если обратиться к последнему ноду
                             inline(
                                     "switch(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value()){\n" +
                                         "case \"x\": crutch.setX(crutch.getN());\n" +
@@ -291,7 +292,7 @@ public class Launch {
             prod("connection")
                     .is(
                             t("BRL"),
-                            repeat(t("LET")),
+                            t("OBJ"),
                             inline(
                                     "connBuilder.setObjName1(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());\n" +
                                           "ast.moveCursor(AST.Movement.TO_PARENT);\n"
@@ -309,7 +310,7 @@ public class Launch {
                                           "ast.moveCursor(AST.Movement.TO_PARENT);\n"
                             ),
                             t("BRL"),
-                            repeat(t("LET")),
+                            t("OBJ"),
                             inline(
                                     "connBuilder.setObjName2(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());\n" +
                                           "ast.moveCursor(AST.Movement.TO_PARENT);\n"
@@ -321,23 +322,21 @@ public class Launch {
                                     "connBuilder.setPort2(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());\n" +
                                           "ast.moveCursor(AST.Movement.TO_PARENT);\n"
                             ),
-                            t("DIV")
-                            /*inline(
-                                    "ConnBuilder conn = new ConnBuilder();\n" +
-                                            "connections.add(conn.getConnections(ast.onCursor().asNode));\n"
-                                            )*/
+                            t("DIV"),
+                            inline(
+                                    "connections.add(connBuilder.getConnection());\n"
+                            )
                     );
             //5
             prod("property")
                     .is(
-                            t("GRD"),
-                            oneOf(t("IDN"), t("NUM"), t("CUR"))
+                           oneOf(t("IDN"), t("NUM"), t("CUR"))
                     );
         }
     });
     @Test
     public void Test() {
-        ast = parser.parse(lexer.stream("a4, landscape; new TTr{ size: 1.0x, 1.0y; label: 0.5x, 0.5y, \"TtR #n\"; inputs:  10; amount: 1; spacing: 4; }connections{ }"));
+        ast = parser.parse(lexer.stream("a4, landscape; new TTr{ size: 0.5x, 0.5y; label: 1.5x, 1.5y, \"TtR #n\"; inputs:  10; amount: 1; spacing: 4; }connections{ (TTr)Qn o- (TTr)S; }"));
         File teXcode = new File("/etc/home/cecylb/Documents/TeX/Test/Test.tex");
         StringBuilder sb = new StringBuilder();
         TeXfields fields = new TeXfields(); // поля, необходимые для TeX, в которых нет значений
@@ -364,16 +363,20 @@ public class Launch {
         sb.append(fields.teXmakeAtother());
         sb.append(fields.teXbegin());
 
-        for(Objects object : objects){
+        for(Objects object : objects) {
             Elements elem = new Elements(object);
             sb.append(elem.teXamount());
             sb.append(elem.teXforEach());
             sb.append(elem.teXspacing());
+            sb.append(elem.teXforEach());
+            sb.append(fields.teXbrL());
+            for (Connection connection : connections) {
+                Connections conn = new Connections(connection);
+                sb.append(conn.teXconn1());
+                sb.append(conn.teXconn2());
+            }
+            sb.append(fields.teXbrR());
         }
-        /*for(Connection connection: connections){
-            Connections conn = new Connections(connection);
-            sb.append(c)
-         }*/
         sb.append(fields.teXend());
         System.out.println(sb.toString());
     }

@@ -64,5 +64,12 @@ public class TeXfields {
         ST teXend = element.getInstanceOf("teXend");
         return teXend.render();
     }
-
+    public String teXbrL(){
+        ST teXbrL = element.getInstanceOf("teXbracketL");
+        return teXbrL.render();
+    }
+    public String teXbrR(){
+        ST teXbrR = element.getInstanceOf("teXbracketR");
+        return teXbrR.render();
+    }
 }
