@@ -1,15 +1,15 @@
 package grammarTest.propTest;
 
-import io.github.therealmone.tdf4j.generator.impl.ParserGenerator;
+import io.github.therealmone.tdf4j.generator.LexerGenerator;
+import io.github.therealmone.tdf4j.generator.ParserGenerator;
 import io.github.therealmone.tdf4j.lexer.Lexer;
-import io.github.therealmone.tdf4j.lexer.LexerFactory;
 import io.github.therealmone.tdf4j.lexer.config.AbstractLexerModule;
 import io.github.therealmone.tdf4j.parser.Parser;
 import io.github.therealmone.tdf4j.parser.config.AbstractParserModule;
 import org.junit.Test;
 
 public class SpacingTest{
-    Lexer lexer = new LexerFactory().withModule(new AbstractLexerModule() {
+    Lexer lexer = LexerGenerator.newInstance().generate(new AbstractLexerModule() {
         public void configure() {
             tokenize("BSL").pattern("^\\[$").priority(1); // int max
             tokenize("BSR").pattern("^\\]$").priority(1); // priority-  необзяательный параметр
@@ -58,7 +58,7 @@ public class SpacingTest{
             tokenize("WS").pattern("\\s|\\n|\\r").priority(Integer.MAX_VALUE).hidden(true);
         }
     });
-    Parser parser = new ParserGenerator().generate(new AbstractParserModule() {
+    Parser parser = ParserGenerator.newInstance().generate(new AbstractParserModule() {
         public void configure() {
             //1
             prod("lang") // identifire - the name of production
