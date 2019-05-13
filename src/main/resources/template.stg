@@ -123,9 +123,9 @@ teXaddFont()::=<<
 
 >>
 
-teXfontSize()::=<<
+teXfontSize(objName)::=<<
 \tikzset{flip flop/port labels/.style={font=\sffamily\scriptsize}}
-\tikzset{every TTr node/.style={draw,minimum width=2cm,minimum
+\tikzset{every <objName> node/.style={draw,minimum width=2cm,minimum
 height=2.828427125cm,very thick,inner sep=1mm,outer sep=0pt,cap=squar,add
 font=\sffamily
 }
@@ -166,7 +166,9 @@ teXspacing(objName, spacing)::=<<
 teXconn1(linetype, index1, objName1, port1)::=<<
 \draw [<linetype>] (<objName1>\m<index1>.<port1>)
 >> //START POINT
+
 teXconnC(objName, index, port, x, y)::=<<-- ($ (<objName>\m<index>.<port>) + (<x>,<y>) $)>> //OPTIONAL FOR THE LINE ANGLES
+
 teXconn2(index2, objName2, port2)::=<< --(<objName2>\m<index2>.<port2>);
 
 

@@ -32,10 +32,6 @@ public class TeXfields {
         ST teXaddFont = element.getInstanceOf("teXaddFont");
         return teXaddFont.render();
     }
-    public String teXfontSize(){
-        ST teXfontSize = element.getInstanceOf("teXfontSize");
-        return teXfontSize.render();
-    }
     public String teXmakeAtother(){
         ST teXmakeAtother = element.getInstanceOf("teXmakeAtother");
         return teXmakeAtother.render();

@@ -10,6 +10,10 @@ public interface Connection {
     String lineType();
     String port1();
     String port2();
+    double objSizeY1();
+    double objSizeY2();
+    int port1pos();
+    int port2pos();
     // String index1();
     // String index2();
 

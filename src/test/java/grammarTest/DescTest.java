@@ -11,9 +11,9 @@ import org.junit.Test;
 public class DescTest{
     Lexer lexer = LexerGenerator.newInstance().generate(new AbstractLexerModule() {
         public void configure() {
-            tokenize("BSL").pattern("^\\[$").priority(1); // int max
-            tokenize("BSR").pattern("^\\]$").priority(1); // priority-  необзяательный параметр
-            tokenize("BFL").pattern("^\\{$").priority(1); // По умолчанию приоритет = 0
+            tokenize("BSL").pattern("^\\[$").priority(1);
+            tokenize("BSR").pattern("^\\]$").priority(1);
+            tokenize("BFL").pattern("^\\{$").priority(1);
             tokenize("BFR").pattern("^\\}$").priority(1);
             tokenize("BRL").pattern("^\\($").priority(1);
             tokenize("BRR").pattern("^\\)$").priority(1);

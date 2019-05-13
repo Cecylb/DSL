@@ -36,7 +36,8 @@ public class ParserModule extends AbstractParserModule {
                         inline("this.context = new Context();\n"),
                         optional(nt("desc")),
                         repeat(nt("object")),
-                        nt("connections")
+                        nt("connections"),
+                        optional(repeat(nt("code")))
                 );
         //2
         prod("desc")
@@ -99,9 +100,19 @@ public class ParserModule extends AbstractParserModule {
                         ),
                         t("CMA"),
                         t("QUT"),
-                        repeat(t("LET")),
+                        inline(
+                                "StringBuilder sb = new StringBuilder();"
+                        ),
+                        repeat(t("LET"), inline(
+                                "sb.append(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());" +
+                                        "ast.moveCursor(AST.Movement.TO_PARENT);\n"
+                                )
+                        ),
                         optional(nt("property")),
                         t("QUT"),
+                        inline(
+                                "objBuilder.setLabelN(sb.toString());"
+                        ),
                         t("DIV")
                 );
         //4
@@ -237,13 +248,66 @@ public class ParserModule extends AbstractParserModule {
                         ),
                         t("DIV"),
                         inline(
-                                "this.context.getConnections().add(connBuilder.getConnection());\n"
+                                "this.context.getConnections().add(connBuilder.getConnection(this.context.getObjects()));\n"
                         )
                 );
         //5
         prod("property")
                 .is(
                         oneOf(t("IDN"), t("NUM"), t("CUR"))
+                );
+        prod("code")
+                .is(
+                        t("COD"),
+                        t("COL"),
+                        t("KOD"),
+                        inline(
+                                "String position = ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value();\n" +
+                                      "ast.moveCursor(AST.Movement.TO_PARENT);\n"
+                        ),
+                        t("CMA"),
+                        t("QUT"),
+                        inline(
+                                "StringBuilder sb = new StringBuilder();"
+                        ),
+                        repeat(
+                                oneOf(
+                                        t("LET"),
+                                        t("NUM"),
+                                        t("DBL"),
+                                        t("MTH"),
+                                        t("CMA"),
+                                        t("INV"),
+                                        t("ARW"),
+                                        t("LIN"),
+                                        t("DOT"),
+                                        t("SLA"),
+                                        t("BRR"),
+                                        t("BRL"),
+                                        t("BFR"),
+                                        t("BFL"),
+                                        t("BSR"),
+                                        t("BSL"),
+                                        t("BRL"),
+                                        t("BRL"),
+                                        t("LIN"),
+                                        t("ARW"),
+                                        t("INV"),
+                                        t("DTL"),
+                                        t("DLR"),
+                                        t("EQL"),
+                                        t("DIV")
+                                ),
+                                inline(
+                                        "sb.append(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());" +
+                                                "ast.moveCursor(AST.Movement.TO_PARENT);\n"
+                                )
+                        ),
+                        t("QUT"),
+                        t("DIV"),
+                        inline(
+                                "this.context.getInline().put(position, sb.toString());\n"
+                        )
                 );
     }
 }

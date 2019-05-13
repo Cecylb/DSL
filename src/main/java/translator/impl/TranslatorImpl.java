@@ -14,6 +14,7 @@ import translator.ParserModule;
 import translator.Translator;
 
 import java.io.*;
+import java.util.Map;
 
 public class TranslatorImpl implements Translator {
     private final LexerModule lexerModule;
@@ -58,23 +59,30 @@ public class TranslatorImpl implements Translator {
             sb.append(fields.teXcloseP());
             sb.append(elem.teXportL());
             sb.append(fields.teXendG());
+            sb.append(fields.teXaddFont());
+            sb.append(elem.teXfontSize());
         }
-        sb.append(fields.teXaddFont());
-        sb.append(fields.teXfontSize());
         sb.append(fields.teXmakeAtother());
         sb.append(fields.teXbegin());
+
+        for(Map.Entry<String, String> inline : parser.getContext().getInline().entrySet()){
+            if(inline.getKey().equals("group")){
+                System.out.println("HERE?");
+                sb.append(inline.getValue());
+            }
+        }
 
         for(Objects object : parser.getContext().getObjects()) {
             Elements elem = new Elements(object);
             sb.append(elem.teXamount());
-            sb.append(elem.teXforEach());
+            sb.append(elem.teXforEach("0"));
             sb.append(elem.teXspacing());
-            sb.append(elem.teXforEach());
+            sb.append(elem.teXforEach("1"));
             sb.append(fields.teXbrL());
             for (Connection connection : parser.getContext().getConnections()) {
                 Connections conn = new Connections(connection);
                 sb.append(conn.teXconn1());
-
+                sb.append(conn.teXconnC());
                 sb.append(conn.teXconn2());
             }
             sb.append(fields.teXbrR());
@@ -82,10 +90,10 @@ public class TranslatorImpl implements Translator {
         for(Objects object : parser.getContext().getObjects()){
             IO io = new IO();
             for(Ports ports : object.inputs()){
-                sb.append(io.teXconnIO(object.objName(), ports.name(), "east", -object.sizeX(), "0", "<-"));
+                sb.append(io.teXconnIO(object.labelN(), ports.name(), "east", -object.sizeX(), "0", "<-"));
             }
             for(Ports output : object.outputs()){
-                sb.append(io.teXconnIO(object.objName(), output.name(), "west", object.sizeX(), "\\N", "->"));
+                sb.append(io.teXconnIO(object.labelN(), output.name(), "west", object.sizeX(), "\\N", "->"));
             }
         }
         sb.append(fields.teXend());

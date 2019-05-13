@@ -15,7 +15,7 @@ public class Elements {
 
     public String teXobjN() {
         ST teXobjN = element.getInstanceOf("teXobjN");
-        teXobjN.add("objName", data.objName());
+        teXobjN.add("objName", data.labelN());
         return teXobjN.render();
     }
     public String teXsize() {
@@ -64,14 +64,14 @@ public class Elements {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < data.inputs().size(); i++) {
             ST teXportL = element.getInstanceOf("teXportL");
-            teXportL.add("objName", data.objName());
+            teXportL.add("objName", data.labelN());
             teXportL.add("name", data.inputs().get(i).name());
             teXportL.add("lor", "left");
             sb.append(teXportL.render());
         }
         for (int i = 0; i < data.outputs().size(); i++) {
             ST teXportL = element.getInstanceOf("teXportL");
-            teXportL.add("objName", data.objName());
+            teXportL.add("objName", data.labelN());
             teXportL.add("name", data.outputs().get(i).name());
             teXportL.add("lor", "right");
             sb.append(teXportL.render());
@@ -86,12 +86,18 @@ public class Elements {
     }
     public String teXspacing(){
         ST teXspacing = element.getInstanceOf("teXspacing");
-        teXspacing.add("objName", data.objName());
+        teXspacing.add("objName", data.labelN());
         teXspacing.add("spacing", data.spacing());
         return teXspacing.render();
     }
-    public String teXforEach(){
+    public String teXforEach(String k){
         ST teXforEach = element.getInstanceOf("teXforEach");
+        teXforEach.add("K", k);
         return teXforEach.render();
+    }
+    public String teXfontSize(){
+        ST teXfontSize = element.getInstanceOf("teXfontSize");
+        teXfontSize.add("objName", data.labelN());
+        return teXfontSize.render();
     }
 }

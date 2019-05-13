@@ -5,7 +5,9 @@ import data.Objects;
 import data.Property;
 
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Queue;
+import java.util.TreeMap;
 
 public interface Parser extends io.github.therealmone.tdf4j.parser.Parser {
     Context getContext();
@@ -14,11 +16,13 @@ public interface Parser extends io.github.therealmone.tdf4j.parser.Parser {
         private final Queue<Property> properties;
         private final Queue<Objects> objects;
         private final Queue<Connection> connections;
+        private final Map<String, String> inline;
 
         public Context() {
             this.properties = new LinkedList<>();
             this.objects = new LinkedList<>();
             this.connections = new LinkedList<>();
+            this.inline = new TreeMap<>();
         }
 
         public Queue<Property> getProperties() {
@@ -32,5 +36,7 @@ public interface Parser extends io.github.therealmone.tdf4j.parser.Parser {
         public Queue<Connection> getConnections() {
             return connections;
         }
+
+        public Map<String, String> getInline() { return inline; }
     }
 }

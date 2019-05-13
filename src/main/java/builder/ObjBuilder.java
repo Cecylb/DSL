@@ -11,6 +11,7 @@ import java.util.List;
 public class ObjBuilder {
 
     String name = "name";
+    String labelN = "Element";
     double sizeX = ISize.Size.DEFAULT.getSizeX();
     double sizeY = ISize.Size.DEFAULT.getSizeY();
     double labelX = ILabel.Label.DEFAULT.getLabelX();
@@ -20,8 +21,6 @@ public class ObjBuilder {
     List<Rectangles> rectangles = new ArrayList<>();
     String amount = IAmount.amount;
     String spacing = ISpacing.spacing;
-
-    public ObjBuilder(){}
 
     public Objects getResult(String name) {
         this.name = name;
@@ -82,7 +81,7 @@ public class ObjBuilder {
                 .sizeY(sizeY)
                 .labelX(labelX)
                 .labelY(labelY)
-                .labelN(name)
+                .labelN(labelN)
                 .inputs(inputsL)
                 .outputs(outputsL)
                 .amount(amount)
@@ -93,23 +92,24 @@ public class ObjBuilder {
     }
 
     public List<Ports> getInputs(List inputs) {
-        List<Ports> ports = new ArrayList<>();
-        for (int i = inputs.size()-1; i >=0; i--) {
+        for (int i=0; i<inputs.size(); i++) {
             inputsL.add(new Ports.Builder()
                     .name(inputs.get(i).toString())
                     .x(-sizeX * 2)
                     .y(((sizeY * 4) / (inputs.size() + 1) * (i + 1)) - sizeY * 2)
+                    .position(i+1)
                     .build()
             );
         }
         return inputsL;
     }
     public List<Ports>getOutputs(List outputs) {
-        for (int i = outputs.size() - 1; i >= 0; i--) {
+        for (int i=0; i<outputs.size(); i++) {
             outputsL.add(new Ports.Builder()
                     .name(outputs.get(i).toString())
                     .x(sizeX * 2) // ВОЗМОЖНЫ ПРОБЛЕМЫ С ОТРИСОВКОЙ СОЕДИНЕНИЙ
                     .y(((sizeY * 4) / (outputs.size() + 1) * (i + 1)) - sizeY * 2)
+                    .position(i+1)
                     .build()
             );
         }
@@ -122,15 +122,15 @@ public class ObjBuilder {
     }
     public void setSizeKW(String scale){
         switch (scale){
-            case "SMALL":
+            case "small":
                 sizeX = ISize.Size.SMALL.getSizeX();
                 sizeY = ISize.Size.SMALL.getSizeY();
                 break;
-            case "MEDIUM":
+            case "mediun":
                 sizeX = ISize.Size.MEDIUM.getSizeX();
                 sizeY = ISize.Size.MEDIUM.getSizeY();
                 break;
-            case "LARGE":
+            case "large":
                 sizeX = ISize.Size.LARGE.getSizeX();
                 sizeY = ISize.Size.LARGE.getSizeY();
                 break;
@@ -142,20 +142,21 @@ public class ObjBuilder {
     }
     public void setLabelKW(String scale){
         switch (scale){
-            case "SMALL":
+            case "small":
                 labelX = ILabel.Label.SMALL.getLabelX();
                 labelY = ILabel.Label.SMALL.getLabelY();
                 break;
-            case "MEDIUM":
+            case "medium":
                 labelX = ILabel.Label.MEDIUM.getLabelX();
                 labelY = ILabel.Label.MEDIUM.getLabelY();
                 break;
-            case "LARGE":
+            case "large":
                 labelX = ILabel.Label.LARGE.getLabelX();
                 labelY = ILabel.Label.LARGE.getLabelY();
                 break;
         }
     }
+    public void setLabelN(String labelN){ this.labelN=labelN; }
     public void setAmount(String amount){ this.amount = amount; }
     public void setSpacing(String spacing){ this.spacing = spacing; }
 
