@@ -90,11 +90,6 @@ public class Elements {
         teXspacing.add("spacing", data.spacing());
         return teXspacing.render();
     }
-    public String teXforEach(String k){
-        ST teXforEach = element.getInstanceOf("teXforEach");
-        teXforEach.add("K", k);
-        return teXforEach.render();
-    }
     public String teXfontSize(){
         ST teXfontSize = element.getInstanceOf("teXfontSize");
         teXfontSize.add("objName", data.labelN());

@@ -44,9 +44,19 @@ public class TranslatorImpl implements Translator {
         final TeXfields fields = new TeXfields(); // поля, необходимые для TeX, в которых нет значений
         //GATHERING PROPERTIES
         final Properties prop = new Properties();
+        for(Map.Entry<String, String> inline : parser.getContext().getInline().entrySet()){
+            if(inline.getKey().equals("documentclass")){
+                sb.append(inline.getValue());
+            }
+        }
         sb.append(prop.teXproperty(parser.getContext().getProperties().peek()));
         sb.append(fields.teXmakeAletter());
         //GATHERING OBJECT INFORMATION
+        for(Map.Entry<String, String> inline : parser.getContext().getInline().entrySet()){
+            if(inline.getKey().equals("declareshape")){
+                sb.append(inline.getValue());
+            }
+        }
         for(Objects object: parser.getContext().getObjects()) {
             Elements elem = new Elements(object);
             sb.append(elem.teXobjN());
@@ -64,29 +74,89 @@ public class TranslatorImpl implements Translator {
         }
         sb.append(fields.teXmakeAtother());
         sb.append(fields.teXbegin());
-
         for(Map.Entry<String, String> inline : parser.getContext().getInline().entrySet()){
-            if(inline.getKey().equals("group")){
-                System.out.println("HERE?");
+            if(inline.getKey().equals("tikzpicture")){
                 sb.append(inline.getValue());
             }
         }
-
         for(Objects object : parser.getContext().getObjects()) {
             Elements elem = new Elements(object);
             sb.append(elem.teXamount());
-            sb.append(elem.teXforEach("0"));
+            sb.append(fields.teXforEach("0"));
             sb.append(elem.teXspacing());
-            sb.append(elem.teXforEach("1"));
+        }
+            sb.append(fields.teXforEach("1"));
             sb.append(fields.teXbrL());
             for (Connection connection : parser.getContext().getConnections()) {
                 Connections conn = new Connections(connection);
                 sb.append(conn.teXconn1());
-                sb.append(conn.teXconnC());
+                // Я вновь сбился с праведного пути...
+                if(connection.objName1().equals(connection.objName2())){
+                    for(Objects object : parser.getContext().getObjects()) {
+                        if(object.labelN().equals(connection.objName1())){
+                            for(Ports port : object.outputs()){
+                               if(port.name().equals(connection.port1())){
+                                   sb.append(conn.teXconnC(
+                                           connection.objName1(),
+                                           connection.port1(),
+                                           object.sizeX(),
+                                           (object.sizeY()/object.outputs().size())*port.position())
+                                   );
+                                   sb.append(conn.teXconnC(
+                                           connection.objName1(),
+                                           connection.port1(),
+                                           object.sizeX(),
+                                           object.sizeY()+(object.sizeY()/object.outputs().size())*port.position())
+                                   );
+                               }
+                            }
+                            for(Ports port : object.inputs()){
+                                if(port.name().equals(connection.port2())){
+                                    sb.append(conn.teXconnC(
+                                            connection.objName2(),
+                                            connection.port2(),
+                                            -object.sizeX(),
+                                            (object.sizeY()/object.outputs().size())*port.position())
+                                    );
+                                    sb.append(conn.teXconnC(
+                                            connection.objName2(),
+                                            connection.port2(),
+                                            -object.sizeX(),
+                                            object.sizeY()+(object.sizeY()/object.outputs().size())*port.position())
+                                    );
+                                }
+                            }
+                        }
+                    }
+                }else{
+                    for(Objects object : parser.getContext().getObjects()) {
+                        if(object.labelN().equals(connection.objName1())){
+                            for(Ports port : object.outputs()){
+                                if(port.name().equals(connection.port1())){
+                                    sb.append(conn.teXconnC(
+                                            connection.objName1(),
+                                            connection.port1(),
+                                            object.sizeX(),
+                                            (object.sizeY()/object.outputs().size())*port.position())
+                                    );
+                                }
+                            }
+                            for(Ports port : object.inputs()){
+                                if(port.name().equals(connection.port2())){
+                                    sb.append(conn.teXconnC(
+                                            connection.objName2(),
+                                            connection.port2(),
+                                            -object.sizeX(),
+                                            (object.sizeY()/object.outputs().size())*port.position())
+                                    );
+                                }
+                            }
+                        }
+                    }
+                }
                 sb.append(conn.teXconn2());
             }
             sb.append(fields.teXbrR());
-        }
         for(Objects object : parser.getContext().getObjects()){
             IO io = new IO();
             for(Ports ports : object.inputs()){

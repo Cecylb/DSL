@@ -4,6 +4,7 @@ import data.Rectangles;
 
 import javax.swing.text.Element;
 import java.util.List;
+import java.util.Queue;
 
 public interface TTr extends Element {
 
@@ -25,6 +26,18 @@ public interface TTr extends Element {
             this.neY=neY;
             this.swX=swX;
             this.swY=swY;
+        }
+        public double getNeX(){
+            return neX;
+        }
+        public double getNeY(){
+            return neY;
+        }
+        public double getSwX(){
+            return swX;
+        }
+        public double getSwY(){
+            return swY;
         }
     }
 }

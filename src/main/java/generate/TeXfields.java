@@ -68,4 +68,9 @@ public class TeXfields {
         ST teXbrR = element.getInstanceOf("teXbracketR");
         return teXbrR.render();
     }
+    public String teXforEach(String k){
+        ST teXforEach = element.getInstanceOf("teXforEach");
+        teXforEach.add("K", k);
+        return teXforEach.render();
+    }
 }

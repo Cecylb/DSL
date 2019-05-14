@@ -50,6 +50,6 @@ public class LexerModule extends AbstractLexerModule {
         tokenize("multi_line_comment").pattern("/\\*[^(\\*/)]*\\*/").hidden(true); // Ignore comments
         tokenize("WS").pattern("\\s|\\n|\\r").priority(Integer.MAX_VALUE).hidden(true); // Ignore spaces
         tokenize("DLR").pattern("^\\$$").priority(2);
-        tokenize("KOD").pattern("^(declareshape|tikzpicture|group)$").priority(2); // For the inline TeX code
+        tokenize("KOD").pattern("^(documentclass|declareshape|tikzpicture)$").priority(2); // For the inline TeX code
     }
 }

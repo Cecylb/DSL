@@ -35,7 +35,7 @@ public class ParserModule extends AbstractParserModule {
                 .is( // here will be all the methods
                         inline("this.context = new Context();\n"),
                         optional(nt("desc")),
-                        repeat(nt("object")),
+                        repeat(or(nt("object"), nt("code"))),
                         nt("connections"),
                         optional(repeat(nt("code")))
                 );
@@ -98,7 +98,7 @@ public class ParserModule extends AbstractParserModule {
                                         "}\n" +
                                         "ast.moveCursor(AST.Movement.TO_PARENT);\n"
                         ),
-                        t("CMA"),
+                        optional(t("CMA"),
                         t("QUT"),
                         inline(
                                 "StringBuilder sb = new StringBuilder();"
@@ -112,7 +112,7 @@ public class ParserModule extends AbstractParserModule {
                         t("QUT"),
                         inline(
                                 "objBuilder.setLabelN(sb.toString());"
-                        ),
+                        )),
                         t("DIV")
                 );
         //4
@@ -216,10 +216,19 @@ public class ParserModule extends AbstractParserModule {
         prod("connection")
                 .is(
                         t("BRL"),
-                        t("OBJ"),
                         inline(
-                                "connBuilder.setObjName1(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());\n" +
-                                        "ast.moveCursor(AST.Movement.TO_PARENT);\n"
+                                "StringBuilder sb = new StringBuilder();"
+                        ),
+                        repeat(
+                                t("LET"),
+                                inline(
+                                        "sb.append(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());" +
+                                                "ast.moveCursor(AST.Movement.TO_PARENT);\n"
+                                )
+                        ),
+                        inline(
+                                "connBuilder.setObjName1(sb.toString());\n" +
+                                        "sb = new StringBuilder();\n"
                         ),
                         optional(nt("property")),
                         t("BRR"),
@@ -234,10 +243,15 @@ public class ParserModule extends AbstractParserModule {
                                         "ast.moveCursor(AST.Movement.TO_PARENT);\n"
                         ),
                         t("BRL"),
-                        t("OBJ"),
+                        repeat(
+                                t("LET"),
+                                inline(
+                                        "sb.append(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());" +
+                                                "ast.moveCursor(AST.Movement.TO_PARENT);\n"
+                                )
+                        ),
                         inline(
-                                "connBuilder.setObjName2(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());\n" +
-                                        "ast.moveCursor(AST.Movement.TO_PARENT);\n"
+                                "connBuilder.setObjName2(sb.toString());\n"
                         ),
                         optional(nt("property")),
                         t("BRR"),

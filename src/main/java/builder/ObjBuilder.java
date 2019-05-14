@@ -53,24 +53,15 @@ public class ObjBuilder {
                 TTr ttr;
                 inputsL = getInputs(TTr.inputs);
                 outputsL = getOutputs(TTr.outputs);
-                rectangles.add(new Rectangles.Builder()
-                        .neX(sizeX)
-                        .neY(sizeY*2)
-                        .swX(sizeX)
-                        .swY(sizeY*2)
-                        .build());
-                rectangles.add(new Rectangles.Builder()
-                        .neX(sizeX*2)
-                        .neY(sizeY*2)
-                        .swX(sizeX*2)
-                        .swY(sizeY*2)
-                        .build());
-                rectangles.add(new Rectangles.Builder()
-                        .neX(-sizeX)
-                        .neY(-(sizeY/2)) //СВЯЗАТЬ С ФОРМУЛОЙ КОЛИЧЕСТВА ПОРТОВ
-                        .swX(sizeX*2)
-                        .swY(sizeY*2)
-                        .build());
+                for(TTr.Rectangles rec : TTr.Rectangles.values()){
+                    rectangles.add(new Rectangles.Builder()
+                    .neX(rec.getNeX()*sizeX)
+                    .neY(rec.getNeY()*sizeY)
+                    .swX(rec.getSwX()*sizeX)
+                    .swY(rec.getSwY()*sizeY)
+                    .build()
+                    );
+                }
                 break;
             case "JKTr":
                 break;
