@@ -67,7 +67,7 @@ public class Elements {
             teXportL.add("objName", data.labelN());
             teXportL.add("name", data.inputs().get(i).name());
             teXportL.add("lor", "left");
-            teXportL.add("name", data.inputs().get(i).label());
+            teXportL.add("label", data.inputs().get(i).label());
             sb.append(teXportL.render());
         }
         for (int i = 0; i < data.outputs().size(); i++) {

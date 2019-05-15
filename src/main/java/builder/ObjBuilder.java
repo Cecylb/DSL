@@ -37,13 +37,12 @@ public class ObjBuilder {
                 inputsL = getInputs(DC.inputs);
                 inputsL.addAll(getInputsD(inputsN));
                 outputsL = getOutputsD((int)Math.pow(2.0, (double)inputsN));
-                System.out.println(outputsL);
                 for(DC.Rectangles rec : DC.Rectangles.values()){
                     rectangles.add(new Rectangles.Builder()
-                            .neX(rec.getNeX()*sizeX)
-                            .neY(rec.getNeY()*sizeY*outputsL.size())
-                            .swX(rec.getSwX()*sizeX)
-                            .swY(rec.getSwY()*sizeY*outputsL.size())
+                            .neX(rec.getNeX()*sizeX*2)
+                            .neY(rec.getNeY()*sizeY*outputsL.size()/4)
+                            .swX(rec.getSwX()*sizeX*2)
+                            .swY(rec.getSwY()*sizeY*outputsL.size()/4)
                             .build()
                     );
                 }
@@ -127,7 +126,7 @@ public class ObjBuilder {
         char alphabet = 'a';
         for(int i=0; i<inputsN; i++){
                 inputsL.add(new Ports.Builder()
-                        .name(Character.toString(alphabet))
+                        .name("i"+alphabet)
                         .label(Integer.toString(i))
                         .x(-sizeX * 2)
                         .y(((sizeY * 4) / (inputsN + 1) * (i + 1)) - sizeY * 2)
@@ -142,9 +141,9 @@ public class ObjBuilder {
         char alphabet = 'a';
         for(int i=0; i<outputsN; i++){
                 outputsL.add(new Ports.Builder()
-                        .name(Character.toString(alphabet))
+                        .name("o"+alphabet)
                         .label(Integer.toString(i))
-                        .x(-sizeX * 2)
+                        .x(sizeX * 2)
                         .y(((sizeY * 4) / (outputsN + 1) * (i + 1)) - sizeY * 2)
                         .position(i+1)
                         .build()
