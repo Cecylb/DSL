@@ -99,9 +99,9 @@ teXcloseP()::=<<
 
 >>
 
-teXportL(objName, name, lor)::=<<
+teXportL(objName, name, lor, label)::=<<
 \pgf@anchor@<objName>@<name>
-\pgftext[<lor>,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{<name>}
+\pgftext[<lor>,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{<label>}
 }
 
 

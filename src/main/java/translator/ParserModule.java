@@ -187,7 +187,11 @@ public class ParserModule extends AbstractParserModule {
                 .is(
                         t("PRT"),
                         t("COL"),
-                        or(t("NUM"), nt("ports")),
+                        t("NUM"), //or(t("NUM"), nt("ports")),
+                        inline(
+                                "objBuilder.setInputsN(Integer.parseInt(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value()));\n" +
+                                        "ast.moveCursor(AST.Movement.TO_PARENT);\n"
+                        ),
                         optional(t("DIV"))
                 );
         //5

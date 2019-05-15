@@ -3,6 +3,7 @@ package builder;
 import data.Objects;
 import data.Ports;
 import data.Rectangles;
+import elements.DC;
 import elements.TTr;
 import elements.parameters.*;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class ObjBuilder {
     double sizeY = ISize.Size.DEFAULT.getSizeY();
     double labelX = ILabel.Label.DEFAULT.getLabelX();
     double labelY = ILabel.Label.DEFAULT.getLabelY();
+    int inputsN = 1; // На случай, например, дешифратора, где количество задается пользователем
     List<Ports> inputsL = new ArrayList<>();
     List<Ports> outputsL = new ArrayList<>();
     List<Rectangles> rectangles = new ArrayList<>();
@@ -32,6 +34,19 @@ public class ObjBuilder {
             case "CTTr":
                 break;
             case "DC":
+                inputsL = getInputs(DC.inputs);
+                inputsL.addAll(getInputsD(inputsN));
+                outputsL = getOutputsD((int)Math.pow(2.0, (double)inputsN));
+                System.out.println(outputsL);
+                for(TTr.Rectangles rec : TTr.Rectangles.values()){
+                    rectangles.add(new Rectangles.Builder()
+                            .neX(rec.getNeX()*sizeX)
+                            .neY(rec.getNeY()*sizeY*outputsL.size())
+                            .swX(rec.getSwX()*sizeX)
+                            .swY(rec.getSwY()*sizeY*outputsL.size())
+                            .build()
+                    );
+                }
                 break;
             case "DTr":
                 break;
@@ -86,6 +101,7 @@ public class ObjBuilder {
         for (int i=0; i<inputs.size(); i++) {
             inputsL.add(new Ports.Builder()
                     .name(inputs.get(i).toString())
+                    .label(inputs.get(i).toString())
                     .x(-sizeX * 2)
                     .y(((sizeY * 4) / (inputs.size() + 1) * (i + 1)) - sizeY * 2)
                     .position(i+1)
@@ -98,6 +114,7 @@ public class ObjBuilder {
         for (int i=0; i<outputs.size(); i++) {
             outputsL.add(new Ports.Builder()
                     .name(outputs.get(i).toString())
+                    .label(outputs.get(i).toString())
                     .x(sizeX * 2) // ВОЗМОЖНЫ ПРОБЛЕМЫ С ОТРИСОВКОЙ СОЕДИНЕНИЙ
                     .y(((sizeY * 4) / (outputs.size() + 1) * (i + 1)) - sizeY * 2)
                     .position(i+1)
@@ -107,7 +124,37 @@ public class ObjBuilder {
         return outputsL;
     }
 
-    public void setSizeCRD(double sizeX, double sizeY){
+    public List<Ports> getInputsD(int inputsN){
+        char alphabet = 'a';
+        for(int i=0; i<inputsN; i++){
+                inputsL.add(new Ports.Builder()
+                        .name(Character.toString(alphabet))
+                        .label(Integer.toString(i))
+                        .x(-sizeX * 2)
+                        .y(((sizeY * 4) / (inputsN + 1) * (i + 1)) - sizeY * 2)
+                        .position(i+1)
+                        .build()
+                );
+                alphabet++;
+        }
+        return inputsL;
+    }
+    public List<Ports> getOutputsD(int outputsN){
+        char alphabet = 'a';
+        for(int i=0; i<outputsN; i++){
+                outputsL.add(new Ports.Builder()
+                        .name(Character.toString(alphabet))
+                        .label(Integer.toString(i))
+                        .x(-sizeX * 2)
+                        .y(((sizeY * 4) / (outputsN + 1) * (i + 1)) - sizeY * 2)
+                        .position(i+1)
+                        .build()
+                );
+                alphabet++;
+        }
+        return outputsL;
+    }
+  public void setSizeCRD(double sizeX, double sizeY){
         this.sizeX = sizeX;
         this.sizeY = sizeY;
     }
@@ -148,6 +195,7 @@ public class ObjBuilder {
         }
     }
     public void setLabelN(String labelN){ this.labelN=labelN; }
+    public void setInputsN(int inputsN){this.inputsN=inputsN; }
     public void setAmount(String amount){ this.amount = amount; }
     public void setSpacing(String spacing){ this.spacing = spacing; }
 

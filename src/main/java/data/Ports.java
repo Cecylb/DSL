@@ -8,6 +8,7 @@ public interface Ports {
     double x();
     double y();
     String name();
+    String label();
     int position();
 
     class Builder extends ImmutablePorts.Builder {
