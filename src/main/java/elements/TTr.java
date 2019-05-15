@@ -2,7 +2,6 @@ package elements;
 
 import data.Rectangles;
 
-import javax.swing.text.Element;
 import java.util.List;
 import java.util.Queue;
 
