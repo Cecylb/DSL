@@ -1,6 +1,5 @@
 package elements;
 
-import javax.swing.text.Element;
 import java.util.List;
 
 public interface DC extends Element {
