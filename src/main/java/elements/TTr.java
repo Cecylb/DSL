@@ -1,7 +1,6 @@
 package elements;
 
 import java.util.List;
-import java.util.Queue;
 
 public interface TTr extends Element {
 

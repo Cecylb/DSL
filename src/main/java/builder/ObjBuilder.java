@@ -38,7 +38,7 @@ public class ObjBuilder {
                 inputsL.addAll(getInputsD(inputsN));
                 outputsL = getOutputsD((int)Math.pow(2.0, (double)inputsN));
                 System.out.println(outputsL);
-                for(TTr.Rectangles rec : TTr.Rectangles.values()){
+                for(DC.Rectangles rec : DC.Rectangles.values()){
                     rectangles.add(new Rectangles.Builder()
                             .neX(rec.getNeX()*sizeX)
                             .neY(rec.getNeY()*sizeY*outputsL.size())
@@ -65,16 +65,15 @@ public class ObjBuilder {
             case "SRSTr":
                 break;
             case "TTr":
-                TTr ttr;
                 inputsL = getInputs(TTr.inputs);
                 outputsL = getOutputs(TTr.outputs);
                 for(TTr.Rectangles rec : TTr.Rectangles.values()){
                     rectangles.add(new Rectangles.Builder()
-                    .neX(rec.getNeX()*sizeX)
-                    .neY(rec.getNeY()*sizeY)
-                    .swX(rec.getSwX()*sizeX)
-                    .swY(rec.getSwY()*sizeY)
-                    .build()
+                            .neX(rec.getNeX()*sizeX)
+                            .neY(rec.getNeY()*sizeY)
+                            .swX(rec.getSwX()*sizeX)
+                            .swY(rec.getSwY()*sizeY)
+                            .build()
                     );
                 }
                 break;
