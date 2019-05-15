@@ -1,7 +1,5 @@
 package elements;
 
-import data.Rectangles;
-
 import java.util.List;
 import java.util.Queue;
 
