@@ -21,8 +21,8 @@ public class ObjBuilder {
     List<Ports> inputsL = new ArrayList<>();
     List<Ports> outputsL = new ArrayList<>();
     List<Rectangles> rectangles = new ArrayList<>();
-    String amount = IAmount.amount;
-    String spacing = ISpacing.spacing;
+    int amount = IAmount.amount;
+    int spacing = ISpacing.spacing;
 
     public Objects getResult(String name) {
         this.name = name;
@@ -34,8 +34,7 @@ public class ObjBuilder {
             case "CTTr":
                 break;
             case "DC":
-                inputsL = getInputs(DC.inputs);
-                inputsL.addAll(getInputsD(inputsN));
+                inputsL = getInputsD(DC.inputs, inputsN);
                 outputsL = getOutputsD((int)Math.pow(2.0, (double)inputsN));
                 for(DC.Rectangles rec : DC.Rectangles.values()){
                     rectangles.add(new Rectangles.Builder()
@@ -68,10 +67,10 @@ public class ObjBuilder {
                 outputsL = getOutputs(TTr.outputs);
                 for(TTr.Rectangles rec : TTr.Rectangles.values()){
                     rectangles.add(new Rectangles.Builder()
-                            .neX(rec.getNeX()*sizeX)
-                            .neY(rec.getNeY()*sizeY)
-                            .swX(rec.getSwX()*sizeX)
-                            .swY(rec.getSwY()*sizeY)
+                            .neX(rec.getNeX()*sizeX*2)
+                            .neY(rec.getNeY()*sizeY*2)
+                            .swX(rec.getSwX()*sizeX*2)
+                            .swY(rec.getSwY()*sizeY*2)
                             .build()
                     );
                 }
@@ -122,9 +121,10 @@ public class ObjBuilder {
         return outputsL;
     }
 
-    public List<Ports> getInputsD(int inputsN){
+    public List<Ports> getInputsD(List inputs, int inputsN){
         char alphabet = 'a';
-        for(int i=0; i<inputsN; i++){
+        //inputsN=inputsN+inputs.size();
+        for(int i=0; i<inputsN-1; i++){
                 inputsL.add(new Ports.Builder()
                         .name("i"+alphabet)
                         .label(Integer.toString(i))
@@ -134,6 +134,16 @@ public class ObjBuilder {
                         .build()
                 );
                 alphabet++;
+        }
+        for(int i=0; i<inputs.size(); i++){
+            inputsL.add(new Ports.Builder()
+                    .name(inputs.get(i).toString())
+                    .label(inputs.get(i).toString())
+                    .x(-sizeX * 2)
+                    .y((((sizeY * 4) / (inputsN + 1) * (inputsN + 1)) - sizeY * 2)-0.2)
+                    .position(inputsN)
+                    .build()
+            );
         }
         return inputsL;
     }
@@ -194,7 +204,7 @@ public class ObjBuilder {
     }
     public void setLabelN(String labelN){ this.labelN=labelN; }
     public void setInputsN(int inputsN){this.inputsN=inputsN; }
-    public void setAmount(String amount){ this.amount = amount; }
-    public void setSpacing(String spacing){ this.spacing = spacing; }
+    public void setAmount(int amount){ this.amount = amount-1; }
+    public void setSpacing(int spacing){ this.spacing = spacing; }
 
 }

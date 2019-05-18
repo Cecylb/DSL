@@ -85,6 +85,7 @@ public class TranslatorImpl implements Translator {
             sb.append(fields.teXforEach("0"));
             sb.append(elem.teXspacing());
         }
+            sb.append(fields.teXdefC());
             sb.append(fields.teXforEach("1"));
             sb.append(fields.teXbrL());
             for (Connection connection : parser.getContext().getConnections()) {
@@ -99,14 +100,9 @@ public class TranslatorImpl implements Translator {
                                    sb.append(conn.teXconnC(
                                            connection.objName1(),
                                            connection.port1(),
-                                           object.sizeX(),
-                                           (object.sizeY()/object.outputs().size())*port.position())
-                                   );
-                                   sb.append(conn.teXconnC(
-                                           connection.objName1(),
-                                           connection.port1(),
-                                           object.sizeX(),
-                                           object.sizeY()+(object.sizeY()/object.outputs().size())*port.position())
+                                           object.spacing()/4,
+                                           0.0,
+                                           "p")
                                    );
                                }
                             }
@@ -115,14 +111,9 @@ public class TranslatorImpl implements Translator {
                                     sb.append(conn.teXconnC(
                                             connection.objName2(),
                                             connection.port2(),
-                                            -object.sizeX(),
-                                            (object.sizeY()/object.outputs().size())*port.position())
-                                    );
-                                    sb.append(conn.teXconnC(
-                                            connection.objName2(),
-                                            connection.port2(),
-                                            -object.sizeX(),
-                                            object.sizeY()+(object.sizeY()/object.outputs().size())*port.position())
+                                            -object.spacing()/4,
+                                            0.0,
+                                            "m")
                                     );
                                 }
                             }
@@ -137,7 +128,8 @@ public class TranslatorImpl implements Translator {
                                             connection.objName1(),
                                             connection.port1(),
                                             object.sizeX(),
-                                            (object.sizeY()/object.outputs().size())*port.position())
+                                            (object.sizeY()/object.outputs().size())*port.position(),
+                                            "m")
                                     );
                                 }
                             }
@@ -147,7 +139,8 @@ public class TranslatorImpl implements Translator {
                                             connection.objName2(),
                                             connection.port2(),
                                             -object.sizeX(),
-                                            (object.sizeY()/object.outputs().size())*port.position())
+                                            (object.sizeY()/object.outputs().size())*port.position(),
+                                            "m")
                                     );
                                 }
                             }

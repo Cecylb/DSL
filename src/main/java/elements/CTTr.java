@@ -2,9 +2,11 @@ package elements;
 
 import java.util.List;
 
-public interface DC extends Element {
+public interface CTTr extends Element {
 
-    List<String> inputs = List.of("E");
+    List<String> inputs = List.of("S", "T", "C", "R");
+    List<String> outputs = List.of("Q", "Qn");
+
     enum Rectangles {
 
         FRAME(1.0, 1.0, 1.0, 1.0),
@@ -35,4 +37,5 @@ public interface DC extends Element {
             return swY;
         }
     }
+
 }

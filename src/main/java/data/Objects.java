@@ -15,8 +15,8 @@ public interface Objects extends Element {
     String labelN();
     List<Ports> inputs();
     List<Ports> outputs();
-    String amount();
-    String spacing();
+    int amount();
+    int spacing();
     List<Rectangles> rectangles();
 
     class Builder extends ImmutableObjects.Builder {

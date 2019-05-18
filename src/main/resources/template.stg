@@ -164,10 +164,10 @@ teXspacing(objName, spacing)::=<<
 //CONNECTIONS BLOCK
 
 teXconn1(linetype, index1, objName1, port1)::=<<
-\draw [<linetype>] (<objName1>\m<index1>.<port1>)
+\draw [<linetype>] (<objName1>\p<index1>.<port1>)
 >> //START POINT
 
-teXconnC(objName, index, port, x, y)::=<<-- ($ (<objName>\m<index>.<port>) + (<x>,<y>) $)>> //OPTIONAL FOR THE LINE ANGLES
+teXconnC(objName, index, port, x, y, let)::=<<-- ($ (<objName>\\<let><index>.<port>) + (<x>,<y>) $)>> //OPTIONAL FOR THE LINE ANGLES
 
 teXconn2(index2, objName2, port2)::=<< --(<objName2>\m<index2>.<port2>);
 

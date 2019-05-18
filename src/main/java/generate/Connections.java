@@ -21,12 +21,13 @@ public class Connections {
         teXconn1.add("port1", connection.port1());
         return teXconn1.render();
     }
-    public String teXconnC(String objName, String port, double x, double y){
+    public String teXconnC(String objName, String port, double x, double y, String let){
         ST teXconnC = element.getInstanceOf("teXconnC");
         teXconnC.add("objName", objName);
         teXconnC.add("port", port);
         teXconnC.add("x", x);
         teXconnC.add("y", y);
+        teXconnC.add("let", let);
         //teXconnC.add("index", connection.index1());
         return teXconnC.render();
     }

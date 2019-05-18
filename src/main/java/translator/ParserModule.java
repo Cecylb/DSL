@@ -165,7 +165,7 @@ public class ParserModule extends AbstractParserModule {
                         t("COL"),
                         t("NUM"),
                         inline(
-                                "objBuilder.setAmount(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());\n" +
+                                "objBuilder.setAmount(Integer.parseInt(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value()));\n" +
                                         "ast.moveCursor(AST.Movement.TO_PARENT);\n"
                         ),
                         t("DIV")
@@ -177,7 +177,7 @@ public class ParserModule extends AbstractParserModule {
                         t("COL"),
                         t("NUM"),
                         inline(
-                                "objBuilder.setSpacing(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());\n" +
+                                "objBuilder.setSpacing(Integer.parseInt(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value()));\n" +
                                         "ast.moveCursor(AST.Movement.TO_PARENT);\n"
                         ),
                         t("DIV")
@@ -223,23 +223,44 @@ public class ParserModule extends AbstractParserModule {
                         inline(
                                 "StringBuilder sb = new StringBuilder();"
                         ),
+                        or(
+                                group(
+                                        repeat(
+                                                t("LET"),
+                                                inline(
+                                                        "sb.append(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());" +
+                                                                "ast.moveCursor(AST.Movement.TO_PARENT);\n"
+                                                )
+                                        ),
+                                        inline(
+                                                "connBuilder.setObjName1(sb.toString());\n" +
+                                                        "sb = new StringBuilder();\n"
+                                        )
+                                ),
+                                group(
+                                        t("OBJ"),
+                                        inline(
+                                                "String name = ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value();\n" +
+                                                        "ast.moveCursor(AST.Movement.TO_PARENT);\n"
+                                        )
+                                )
+                        ),
+                        optional(nt("property")),
+                        t("BRR"),
                         repeat(
-                                t("LET"),
+                                or(
+                                        t("LET"),
+                                        t("NUM")
+                                ),
                                 inline(
                                         "sb.append(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());" +
                                                 "ast.moveCursor(AST.Movement.TO_PARENT);\n"
                                 )
                         ),
                         inline(
-                                "connBuilder.setObjName1(sb.toString());\n" +
+                                "connBuilder.setPort1(sb.toString());\n" +
+                                        "ast.moveCursor(AST.Movement.TO_PARENT);\n" +
                                         "sb = new StringBuilder();\n"
-                        ),
-                        optional(nt("property")),
-                        t("BRR"),
-                        or(repeat(t("LET")),t("NUM")),
-                        inline(
-                                "connBuilder.setPort1(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());\n" +
-                                        "ast.moveCursor(AST.Movement.TO_PARENT);\n"
                         ),
                         oneOf(t("ARW"), t("LIN"), t("INV"), t("DTL")),
                         inline(
@@ -255,14 +276,25 @@ public class ParserModule extends AbstractParserModule {
                                 )
                         ),
                         inline(
-                                "connBuilder.setObjName2(sb.toString());\n"
+                                "connBuilder.setObjName2(sb.toString());\n" +
+                                        "sb = new StringBuilder();\n"
                         ),
                         optional(nt("property")),
                         t("BRR"),
-                        or(repeat(t("LET")),t("NUM")),
+                        repeat(
+                                or(
+                                        t("LET"),
+                                        t("NUM")
+                                ),
+                                inline(
+                                        "sb.append(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());" +
+                                                "ast.moveCursor(AST.Movement.TO_PARENT);\n"
+                                )
+                        ),
                         inline(
-                                "connBuilder.setPort2(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());\n" +
-                                        "ast.moveCursor(AST.Movement.TO_PARENT);\n"
+                                "connBuilder.setPort2(sb.toString());\n" +
+                                        "ast.moveCursor(AST.Movement.TO_PARENT);\n" +
+                                        "sb = new StringBuilder();\n"
                         ),
                         t("DIV"),
                         inline(
