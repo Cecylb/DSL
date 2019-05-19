@@ -1,4 +1,4 @@
-package builder;
+package builder.properties;
 
 import data.Property;
 

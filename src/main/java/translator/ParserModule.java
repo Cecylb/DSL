@@ -8,9 +8,9 @@ public class ParserModule extends AbstractParserModule {
     public void configure() {
         environment()
                 .packages(
-                        "builder.PropBuilder",
-                        "builder.ObjBuilder",
-                        "builder.ConnBuilder"
+                        "builder.properties.PropBuilder",
+                        "builder.objects.ObjBuilder",
+                        "builder.connections.ConnBuilder"
                 )
                 .code(
                         "PropBuilder propBuilder = new PropBuilder();\n" +
@@ -81,7 +81,8 @@ public class ParserModule extends AbstractParserModule {
                         optional(nt("spacing")),
                         t("BFR"),
                         inline(
-                                "this.context.getObjects().add(objBuilder.getResult(name));\n"
+                                "objBuilder.setShape(name);\n" +
+                                        "this.context.getObjects().add(objBuilder.getObject());\n"
                         ));
         //4
         prod("label")

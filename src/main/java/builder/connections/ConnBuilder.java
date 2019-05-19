@@ -1,4 +1,4 @@
-package builder;
+package builder.connections;
 
 import data.Connection;
 import data.Objects;
