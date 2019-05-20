@@ -9,17 +9,30 @@ public class ParserModule extends AbstractParserModule {
         environment()
                 .packages(
                         "builder.properties.PropBuilder",
-                        "builder.objects.ObjBuilder",
-                        "builder.connections.ConnBuilder"
+                        "builder.objects.elements.*",
+                        "builder.objects.elements.parameters.*",
+                        "builder.connections.ConnBuilder",
+                                "data.*",
+                        "data.Objects"
                 )
                 .code(
                         "PropBuilder propBuilder = new PropBuilder();\n" +
-                        "ObjBuilder objBuilder = new ObjBuilder();\n" +
+                        "Amount amount = new Amount();\n" +
+                        "InputsN inputsN = new InputsN();\n" +
+                        "IO io = new IO();\n" +
+                        "IOD iod = new IOD();\n" +
+                        "Label label = new Label();\n" +
+                        "LabelN labelN = new LabelN();\n" +
+                        "Size size = new Size();\n" +
+                        "Spacing spacing = new Spacing();\n" +
                         "ConnBuilder connBuilder = new ConnBuilder();\n" +
                         "double x;\n" +
                         "double y;\n" +
                         "double n;\n" +
                         "String name;\n" +
+                                "List<Rectangles> rectangles = new ArrayList<>();\n" +
+                                "List<Ports> inputsL = new ArrayList<>();\n" +
+                                "List<Ports> outputsL = new ArrayList<>();\n" +
                         "\n" +
                         "Context context;" +
                         "\n" +
@@ -81,8 +94,51 @@ public class ParserModule extends AbstractParserModule {
                         optional(nt("spacing")),
                         t("BFR"),
                         inline(
-                                "objBuilder.setShape(name);\n" +
-                                        "this.context.getObjects().add(objBuilder.getObject());\n"
+                                "switch (name) {\n" +
+                                        "            case \"AC\":\n" +
+                                        "                break;\n" +
+                                        "            case \"ARSTr\":\n" +
+                                        "                break;\n" +
+                                        "            case \"CTTr\":\n" +
+                                        "                break;\n" +
+                                        "            case \"DC\":\n" +
+                                        "DCBuilder dc = new DCBuilder(size.getSizeX(), size.getSizeY(), inputsN.getInputsN());\n" +
+                                        "                break;\n" +
+                                        "            case \"DTr\":\n" +
+                                        "                break;\n" +
+                                        "            case \"LDC\":\n" +
+                                        "                break;\n" +
+                                        "            case \"MX\":\n" +
+                                        "                break;\n" +
+                                        "            case \"RDC\":\n" +
+                                        "                break;\n" +
+                                        "            case \"PDC\":\n" +
+                                        "                break;\n" +
+                                        "            case \"SC\":\n" +
+                                        "                break;\n" +
+                                        "            case \"ShRSTr\":\n" +
+                                        "                break;\n" +
+                                        "            case \"SRSTr\":\n" +
+                                        "                break;\n" +
+                                        "            case \"TTr\":\n" +
+                                        "TTrBuilder ttr = new TTrBuilder(size.getSizeX(), size.getSizeY());\n" +
+                                        "                break;\n" +
+                                        "            case \"JKTr\":\n" +
+                                        "                break;\n" +
+                                        "        }\n" +
+        "this.context.getObjects().add(new Objects.Builder()" +
+                                        ".objName(name)\n" +
+                                        ".sizeX(size.getSizeX())\n" +
+                                        ".sizeY(size.getSizeY())\n" +
+                                        ".labelX(label.getLabelX())\n" +
+                                        ".labelY(label.getLabelY())\n" +
+                                        ".labelN(labelN.getLabelN())\n" +
+                                        ".inputs(inputsL)\n" +
+                                        ".outputs(outputsL)\n" +
+                                        ".amount(amount.getAmount())\n" +
+                                        ".spacing(spacing.getSpacing())\n" +
+                                        ".rectangles(rectangles)\n" +
+                                        ".build());\n"
                         ));
         //4
         prod("label")
@@ -92,9 +148,9 @@ public class ParserModule extends AbstractParserModule {
                         optional(or(t("POS"), nt("coordinates"))),
                         inline(
                                 "switch(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().tag().value()){\n" +
-                                        "case \"POS\": objBuilder.setLabelKW(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());\n" +
+                                        "case \"POS\": label = new Label(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());\n" +
                                         "break;\n" +
-                                        "case \"COL\": objBuilder.setLabelCRD(x, y);\n" +
+                                        "case \"COL\": label = new Label(x, y);\n" +
                                         "break; \n" +
                                         "}\n" +
                                         "ast.moveCursor(AST.Movement.TO_PARENT);\n"
@@ -112,7 +168,7 @@ public class ParserModule extends AbstractParserModule {
                         optional(nt("property")),
                         t("QUT"),
                         inline(
-                                "objBuilder.setLabelN(sb.toString());"
+                                "labelN = new LabelN(sb.toString());"
                         )),
                         t("DIV")
                 );
@@ -124,9 +180,9 @@ public class ParserModule extends AbstractParserModule {
                         or(t("SCL"), nt("coordinates")),
                         inline(
                                 "switch(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().tag().value()){\n" +
-                                        "case \"SCL\": objBuilder.setSizeKW(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());\n" +
+                                        "case \"SCL\": size = new Size(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());\n" +
                                         "break;\n" +
-                                        "case \"COL\": objBuilder.setSizeCRD(x, y);\n" +
+                                        "case \"COL\": size = new Size(x, y);\n" +
                                         "break; \n" +
                                         "}\n" +
                                         "ast.moveCursor(AST.Movement.TO_PARENT);\n"
@@ -166,7 +222,7 @@ public class ParserModule extends AbstractParserModule {
                         t("COL"),
                         t("NUM"),
                         inline(
-                                "objBuilder.setAmount(Integer.parseInt(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value()));\n" +
+                                "amount = new Amount(Integer.parseInt(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value()));\n" +
                                         "ast.moveCursor(AST.Movement.TO_PARENT);\n"
                         ),
                         t("DIV")
@@ -178,7 +234,7 @@ public class ParserModule extends AbstractParserModule {
                         t("COL"),
                         t("NUM"),
                         inline(
-                                "objBuilder.setSpacing(Integer.parseInt(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value()));\n" +
+                                "spacing = new Spacing(Integer.parseInt(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value()));\n" +
                                         "ast.moveCursor(AST.Movement.TO_PARENT);\n"
                         ),
                         t("DIV")
@@ -190,7 +246,7 @@ public class ParserModule extends AbstractParserModule {
                         t("COL"),
                         t("NUM"), //or(t("NUM"), nt("ports")),
                         inline(
-                                "objBuilder.setInputsN(Integer.parseInt(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value()));\n" +
+                                "inputsN = new InputsN(Integer.parseInt(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value()));\n" +
                                         "ast.moveCursor(AST.Movement.TO_PARENT);\n"
                         ),
                         optional(t("DIV"))

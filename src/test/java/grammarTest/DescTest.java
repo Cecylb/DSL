@@ -126,7 +126,7 @@ public class DescTest{
                                 optional(t("name")), // recieves the Element
                                 repeat(), //
                                 repetition(t("A"), 1), // It's necessary to say how many times it's repeating
-                                or(t("A"), t("B")), // Recieves only 2 elements, it's necessary to describe both
+                                or(t("A"), t("B")), // Recieves only 2 builder.objects.elements, it's necessary to describe both
                                 oneOf(),
                                 group(),
                                 t("A"),

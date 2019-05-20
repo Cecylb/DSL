@@ -1,6 +1,6 @@
-package elements.parameters;
+package builder.objects.elements.parameters.data;
 
-public interface ISize extends Parameter{
+public interface ISize {
 
      enum Size {
 

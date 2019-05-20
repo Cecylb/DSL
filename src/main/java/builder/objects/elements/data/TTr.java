@@ -1,8 +1,8 @@
-package elements;
+package builder.objects.elements.data;
 
 import java.util.List;
 
-public interface TTr extends Element {
+public interface TTr {
 
     List<String> inputs = List.of("S", "T", "C", "R");
     List<String> outputs = List.of("Q", "Qn");

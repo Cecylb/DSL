@@ -1,8 +1,8 @@
-package elements;
+package builder.objects.elements.data;
 
 import java.util.List;
 
-public interface DC extends Element {
+public interface DC {
 
     List<String> inputs = List.of("E");
     enum Rectangles {

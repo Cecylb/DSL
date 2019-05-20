@@ -1,11 +1,10 @@
 package data;
 
-import elements.Element;
 import org.immutables.value.Value;
 import java.util.List;
 
 @Value.Immutable
-public interface Objects extends Element {
+public interface Objects {
 
     String objName();
     double sizeX();

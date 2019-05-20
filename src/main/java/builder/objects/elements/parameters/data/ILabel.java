@@ -1,6 +1,6 @@
-package elements.parameters;
+package builder.objects.elements.parameters.data;
 
-public interface ILabel extends Parameter{
+public interface ILabel  {
 
     enum Label {
 
