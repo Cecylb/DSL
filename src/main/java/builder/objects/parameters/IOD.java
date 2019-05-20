@@ -7,8 +7,8 @@ import java.util.List;
 
 public class IOD {
 
-    List<Ports> inputsL = new ArrayList<>();
-    List<Ports> outputsL = new ArrayList<>();
+    List<Ports> inputsLD = new ArrayList<>();
+    List<Ports> outputsLD = new ArrayList<>();
 
     public List<Ports> getInputsD(
             List inputs,
@@ -18,7 +18,7 @@ public class IOD {
         char alphabet = 'a';
         //inputsN=inputsN+inputs.size();
         for (int i = 0; i < inputsN - 1; i++) {
-            inputsL.add(new Ports.Builder()
+            inputsLD.add(new Ports.Builder()
                     .name("i" + alphabet)
                     .label(Integer.toString(i))
                     .x(-sizeX * 2)
@@ -29,7 +29,7 @@ public class IOD {
             alphabet++;
         }
         for (int i = 0; i < inputs.size(); i++) {
-            inputsL.add(new Ports.Builder()
+            inputsLD.add(new Ports.Builder()
                     .name(inputs.get(i).toString())
                     .label(inputs.get(i).toString())
                     .x(-sizeX * 2)
@@ -38,7 +38,7 @@ public class IOD {
                     .build()
             );
         }
-        return inputsL;
+        return inputsLD;
     }
 
     public List<Ports> getOutputsD(
@@ -47,7 +47,7 @@ public class IOD {
             double sizeY) {
         char alphabet = 'a';
         for (int i = 0; i < outputsN; i++) {
-            outputsL.add(new Ports.Builder()
+            outputsLD.add(new Ports.Builder()
                     .name("o" + alphabet)
                     .label(Integer.toString(i))
                     .x(sizeX * 2)
@@ -57,6 +57,6 @@ public class IOD {
             );
             alphabet++;
         }
-        return outputsL;
+        return outputsLD;
     }
 }
