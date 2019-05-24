@@ -1,5 +1,8 @@
 package cecylb.dsl.model;
 
+import org.immutables.value.Value;
+
+@Value.Immutable
 public interface DC {
 
     String[] INPUTS = new String[] {"E"};

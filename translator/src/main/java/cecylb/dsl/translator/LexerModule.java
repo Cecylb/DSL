@@ -51,5 +51,7 @@ public class LexerModule extends AbstractLexerModule {
         tokenize("WS").pattern("\\s|\\n|\\r").priority(Integer.MAX_VALUE).hidden(true); // Ignore spaces
         tokenize("DLR").pattern("^\\$$").priority(2);
         tokenize("KOD").pattern("^(documentclass|declareshape|tikzpicture)$").priority(2); // For the inline TeX code
+        tokenize("IOL").pattern("[^\']*").priority(2);
+        tokenize("QOT").pattern("^\\'$").priority(2);
     }
 }

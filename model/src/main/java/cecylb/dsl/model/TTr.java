@@ -1,5 +1,8 @@
 package cecylb.dsl.model;
 
+import org.immutables.value.Value;
+
+@Value.Immutable
 public interface TTr {
 
     String[] INPUTS = new String[] {"S", "T", "C", "R"};
@@ -27,21 +30,13 @@ public interface TTr {
             this.swY=swY;
         }
 
-        public double getNeX(){
-            return neX;
-        }
+        public double getNeX() { return neX; }
 
-        public double getNeY(){
-            return neY;
-        }
+        public double getNeY() { return neY; }
 
-        public double getSwX(){
-            return swX;
-        }
+        public double getSwX() { return swX; }
 
-        public double getSwY(){
-            return swY;
-        }
+        public double getSwY() { return swY; }
 
     }
 
