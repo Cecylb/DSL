@@ -1,8 +1,7 @@
-package cecylb.dsl.model.processor;
+package cecylb.dsl.modelv2.processor;
 
 import io.github.therealmone.tdf4j.parser.model.ast.ASTElement;
-import io.github.therealmone.tdf4j.parser.model.ast.ASTNode;
-import io.github.therealmone.tdf4j.parser.model.ast.ASTRoot;
+import io.github.therealmone.tdf4j.parser.model.ast.ASTLeaf;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,21 +15,17 @@ public class ASTProcessor {
         rules.add(rule);
     }
 
-    public void addRule(final Path path, final Consumer<ASTElement> action) {
+    public void addRule(final Path path, final Consumer<ASTLeaf> action) {
         rules.add(new ASTRule(path, action));
     }
 
     public void process(final ASTElement element) {
         if(element.isRoot()) {
-            final ASTRoot root = element.asRoot();
-            applyRules(root);
-            for(final ASTElement child: root.children()) {
+            for(final ASTElement child : element.asRoot().children()) {
                 process(child);
             }
         } else if(element.isNode()) {
-            final ASTNode node = element.asNode();
-            applyRules(node);
-            for(final ASTElement child: node.children()) {
+            for(final ASTElement child : element.asNode().children()) {
                 process(child);
             }
         } else {
@@ -38,9 +33,9 @@ public class ASTProcessor {
         }
     }
 
-    public void applyRules(final ASTElement element) {
+    public void applyRules(final ASTLeaf leaf) {
         for(final ASTRule rule : rules) {
-            rule.accept(element);
+            rule.accept(leaf);
         }
     }
 
