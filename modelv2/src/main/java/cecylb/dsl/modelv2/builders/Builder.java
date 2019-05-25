@@ -1,14 +1,12 @@
-package cecylb.dsl.model.builders;
+package cecylb.dsl.modelv2.builders;
 
-import cecylb.dsl.model.DC;
-import cecylb.dsl.model.Objects;
-import cecylb.dsl.model.TTr;
+import cecylb.dsl.modelv2.tmp.TexObject;
 import io.github.therealmone.tdf4j.parser.model.ast.ASTElement;
 
 @FunctionalInterface // Интерфейс у которого только один метод, можно использовать как лямбду
-public interface Builder extends TTr, DC {
+public interface Builder {
 
-    Objects build(ASTElement tree);
+    TexObject build(final ASTElement tree);
 
     static Builder byName(final String name) {
         switch (name) {
