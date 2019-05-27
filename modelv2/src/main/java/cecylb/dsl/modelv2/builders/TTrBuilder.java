@@ -24,7 +24,6 @@ public class TTrBuilder extends AbstractBuilder {
     public TexObject build(ASTElement tree) {
         builder = new TTr.Builder();
         process(tree);
-        return null;
-//        return builder.build();
+        return builder.build();
     }
 }

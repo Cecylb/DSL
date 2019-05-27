@@ -1,6 +1,6 @@
 package cecylb.dsl.translator;
 
-import cecylb.dsl.model.builders.Builder;
+import cecylb.dsl.modelv2.builders.Builder;
 import io.github.therealmone.tdf4j.parser.config.AbstractParserModule;
 import io.github.therealmone.tdf4j.parser.model.ast.AST;
 
