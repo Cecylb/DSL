@@ -10,6 +10,10 @@ public interface TexObject extends Size, Label{
 
     Integer spacing();
 
+    Integer input();
+
+    Integer output();
+
     List<Port> inputs();
 
     List<Port> outputs();
