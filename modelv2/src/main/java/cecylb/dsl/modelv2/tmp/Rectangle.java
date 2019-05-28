@@ -16,4 +16,7 @@ public interface Rectangle {
     class Builder extends ImmutableRectangle.Builder {
     }
 
+    class Builder extends ImmutableRectangle.Builder {
+    }
+
 }
