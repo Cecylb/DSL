@@ -3,8 +3,8 @@ package cecylb.dsl.modelv2.builders;
 import cecylb.dsl.modelv2.processor.ASTProcessor;
 import cecylb.dsl.modelv2.processor.ASTRule;
 import cecylb.dsl.modelv2.processor.Path;
-import io.github.therealmone.tdf4j.parser.model.ast.ASTElement;
-import io.github.therealmone.tdf4j.parser.model.ast.ASTLeaf;
+import io.github.therealmone.tdf4j.model.ast.ASTElement;
+import io.github.therealmone.tdf4j.model.ast.ASTLeaf;
 
 import java.util.function.Consumer;
 

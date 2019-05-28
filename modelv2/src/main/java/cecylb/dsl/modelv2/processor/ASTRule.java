@@ -1,6 +1,6 @@
 package cecylb.dsl.modelv2.processor;
 
-import io.github.therealmone.tdf4j.parser.model.ast.ASTLeaf;
+import io.github.therealmone.tdf4j.model.ast.ASTLeaf;
 
 import java.util.function.Consumer;
 

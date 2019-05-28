@@ -1,8 +1,8 @@
 package cecylb.dsl.translator;
 
 import cecylb.dsl.modelv2.builders.Builder;
-import io.github.therealmone.tdf4j.parser.config.AbstractParserModule;
-import io.github.therealmone.tdf4j.parser.model.ast.AST;
+import io.github.therealmone.tdf4j.module.parser.AbstractParserModule;
+import io.github.therealmone.tdf4j.model.ast.AST;
 
 public class ParserModule extends AbstractParserModule {
 
@@ -43,14 +43,14 @@ public class ParserModule extends AbstractParserModule {
                 .is(
                         t("SHS"),
                         inline(
-                                "propBuilder.setSheetSize(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());\n" +
-                                        "ast.moveCursor(AST.Movement.TO_PARENT);\n"
+                                "propBuilder.setSheetSize(ast.moveCursor(ASTCursor.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());\n" +
+                                        "ast.moveCursor(ASTCursor.Movement.TO_PARENT);\n"
                         ),
                         t("CMA"),
                         t("ORI"),
                         inline(
-                                "propBuilder.setOrientation(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());\n" +
-                                        "ast.moveCursor(AST.Movement.TO_PARENT);\n"
+                                "propBuilder.setOrientation(ast.moveCursor(ASTCursor.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());\n" +
+                                        "ast.moveCursor(ASTCursor.Movement.TO_PARENT);\n"
                         ),
                         t("DIV"),
                         inline(
@@ -63,8 +63,8 @@ public class ParserModule extends AbstractParserModule {
                         t("NEW"),
                         t("OBJ"),
                         inline(
-                                "Builder builder = Builder.byName(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());\n" +
-                                        "ast.moveCursor(AST.Movement.TO_PARENT);\n"
+                                "Builder builder = Builder.byName(ast.moveCursor(ASTCursor.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());\n" +
+                                        "ast.moveCursor(ASTCursor.Movement.TO_PARENT);\n"
                         ),
                         t("BFL"),
                         optional(nt("size")),
@@ -174,8 +174,8 @@ public class ParserModule extends AbstractParserModule {
                         repeat(
                                 t("LET"),
                                 inline(
-                                        "sb.append(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());" +
-                                                "ast.moveCursor(AST.Movement.TO_PARENT);\n"
+                                        "sb.append(ast.moveCursor(ASTCursor.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());" +
+                                                "ast.moveCursor(ASTCursor.Movement.TO_PARENT);\n"
                                 )
                         ),
                         inline(
@@ -190,26 +190,26 @@ public class ParserModule extends AbstractParserModule {
                                         t("NUM")
                                 ),
                                 inline(
-                                        "sb.append(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());" +
-                                                "ast.moveCursor(AST.Movement.TO_PARENT);\n"
+                                        "sb.append(ast.moveCursor(ASTCursor.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());" +
+                                                "ast.moveCursor(ASTCursor.Movement.TO_PARENT);\n"
                                 )
                         ),
                         inline(
                                 "connBuilder.setPort1(sb.toString());\n" +
-                                        "ast.moveCursor(AST.Movement.TO_PARENT);\n" +
+                                        "ast.moveCursor(ASTCursor.Movement.TO_PARENT);\n" +
                                         "sb = new StringBuilder();\n"
                         ),
                         oneOf(t("ARW"), t("LIN"), t("INV"), t("DTL")),
                         inline(
-                                "connBuilder.setLineType(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());\n" +
-                                        "ast.moveCursor(AST.Movement.TO_PARENT);\n"
+                                "connBuilder.setLineType(ast.moveCursor(ASTCursor.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());\n" +
+                                        "ast.moveCursor(ASTCursor.Movement.TO_PARENT);\n"
                         ),
                         t("BRL"),
                         repeat(
                                 t("LET"),
                                 inline(
-                                        "sb.append(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());" +
-                                                "ast.moveCursor(AST.Movement.TO_PARENT);\n"
+                                        "sb.append(ast.moveCursor(ASTCursor.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());" +
+                                                "ast.moveCursor(ASTCursor.Movement.TO_PARENT);\n"
                                 )
                         ),
                         inline(
@@ -224,13 +224,13 @@ public class ParserModule extends AbstractParserModule {
                                         t("NUM")
                                 ),
                                 inline(
-                                        "sb.append(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());" +
-                                                "ast.moveCursor(AST.Movement.TO_PARENT);\n"
+                                        "sb.append(ast.moveCursor(ASTCursor.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());" +
+                                                "ast.moveCursor(ASTCursor.Movement.TO_PARENT);\n"
                                 )
                         ),
                         inline(
                                 "connBuilder.setPort2(sb.toString());\n" +
-                                        "ast.moveCursor(AST.Movement.TO_PARENT);\n" +
+                                        "ast.moveCursor(ASTCursor.Movement.TO_PARENT);\n" +
                                         "sb = new StringBuilder();\n"
                         ),
                         t("DIV"),
@@ -249,8 +249,8 @@ public class ParserModule extends AbstractParserModule {
                         t("COL"),
                         t("KOD"),
                         inline(
-                                "String position = ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value();\n" +
-                                      "ast.moveCursor(AST.Movement.TO_PARENT);\n"
+                                "String position = ast.moveCursor(ASTCursor.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value();\n" +
+                                      "ast.moveCursor(ASTCursor.Movement.TO_PARENT);\n"
                         ),
                         t("CMA"),
                         t("QOT"),

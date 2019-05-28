@@ -3,9 +3,9 @@ package cecylb.dsl.translator;
 import io.github.therealmone.tdf4j.generator.LexerGenerator;
 import io.github.therealmone.tdf4j.generator.ParserGenerator;
 import io.github.therealmone.tdf4j.lexer.Lexer;
-import io.github.therealmone.tdf4j.lexer.config.AbstractLexerModule;
+import io.github.therealmone.tdf4j.module.lexer.AbstractLexerModule;
 import io.github.therealmone.tdf4j.parser.Parser;
-import io.github.therealmone.tdf4j.parser.config.AbstractParserModule;
+import io.github.therealmone.tdf4j.module.parser.AbstractParserModule;
 import org.junit.Test;
 
 public class DescTest{

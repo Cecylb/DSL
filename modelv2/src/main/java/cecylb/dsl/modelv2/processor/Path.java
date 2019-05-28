@@ -1,8 +1,8 @@
 package cecylb.dsl.modelv2.processor;
 
-import io.github.therealmone.tdf4j.commons.Token;
-import io.github.therealmone.tdf4j.parser.model.ast.ASTElement;
-import io.github.therealmone.tdf4j.parser.model.ast.ASTLeaf;
+import io.github.therealmone.tdf4j.model.Token;
+import io.github.therealmone.tdf4j.model.ast.ASTElement;
+import io.github.therealmone.tdf4j.model.ast.ASTLeaf;
 
 public class Path {
 
