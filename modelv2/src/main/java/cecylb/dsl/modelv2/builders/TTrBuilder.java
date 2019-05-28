@@ -45,9 +45,11 @@ public class TTrBuilder extends AbstractBuilder {
         addRule("object/label/coordinates/y_coordinate/DBL", leaf -> {
             builder.setLabelY(Double.parseDouble(leaf.token().value()));
         });
+
         addRule("object/amount/NUM", leaf -> {
             builder.setAmount(Integer.parseInt(leaf.token().value()));
         });
+
         addRule("object/spacing/NUM", leaf -> {
             builder.setSpacing(Integer.parseInt(leaf.token().value()));
         });
@@ -78,7 +80,6 @@ public class TTrBuilder extends AbstractBuilder {
                         .build());
             }
         });
-
     }
 
     @Override
