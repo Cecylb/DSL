@@ -3,6 +3,8 @@ package cecylb.dsl.translator.impl;
 import cecylb.dsl.model.Connection;
 import cecylb.dsl.model.Objects;
 import cecylb.dsl.model.Ports;
+import cecylb.dsl.modelv2.tmp.Port;
+import cecylb.dsl.modelv2.tmp.TexObject;
 import cecylb.dsl.translator.Parser;
 import cecylb.dsl.translator.TemplateProcessor;
 import cecylb.dsl.translator.templates.*;
@@ -55,7 +57,7 @@ public class TemplateProcessorImpl implements TemplateProcessor {
     }
 
     private void processObjects(final Collector collector, final Parser.Context context) {
-        for(Objects object: context.getObjects()) {
+        for(TexObject object: context.getTexObject()) {
 
             //todo: удалить Elements
             Elements elem = new Elements(object);
@@ -80,7 +82,7 @@ public class TemplateProcessorImpl implements TemplateProcessor {
                 collector.append(inline.getValue());
             }
         }
-        for(Objects object : context.getObjects()) {
+        for(TexObject object : context.getTexObject()) {
             Elements elem = new Elements(object);
             collector.append(elem.teXamount());
             new ForEachTemplate.Builder()
@@ -106,10 +108,10 @@ public class TemplateProcessorImpl implements TemplateProcessor {
                     .build()
                     .appendBy(collector);
             if(connection.objName1().equals(connection.objName2())) {
-                for(Objects object : context.getObjects()) {
-                    if(object.labelN().equals(connection.objName1())) {
-                        for(Ports port : object.outputs()){
-                            if(port.name().equals(connection.port1())) {
+                for(TexObject object : context.getTexObject()) {
+                    if(object.labelName().equals(connection.objName1())) {
+                        for(Port port : object.outputs()){
+                            if(port.portName().equals(connection.port1())) {
                                 new ConnCTemplate.Builder()
                                         .objName(connection.objName1())
                                         .port(connection.port1())
@@ -120,8 +122,8 @@ public class TemplateProcessorImpl implements TemplateProcessor {
                                         .appendBy(collector);
                             }
                         }
-                        for(Ports port : object.inputs()){
-                            if(port.name().equals(connection.port2())){
+                        for(Port port : object.inputs()){
+                            if(port.portName().equals(connection.port2())){
                                 new ConnCTemplate.Builder()
                                         .objName(connection.objName2())
                                         .port(connection.port2())
@@ -136,28 +138,28 @@ public class TemplateProcessorImpl implements TemplateProcessor {
                     }
                 }
             } else {
-                for(Objects object : context.getObjects()) {
-                    if(object.labelN().equals(connection.objName1())) {
-                        for(Ports port : object.outputs()){
-                            if(port.name().equals(connection.port1())) {
+                for(TexObject object : context.getTexObject()) {
+                    if(object.labelName().equals(connection.objName1())) {
+                        for(Port port : object.outputs()){
+                            if(port.portName().equals(connection.port1())) {
                                 new ConnCTemplate.Builder()
                                         .objName(connection.objName1())
                                         .port(connection.port1())
                                         .x(String.valueOf( object.sizeX() ))
-                                        .y(String.valueOf( ( object.sizeY() / object.outputs().size() ) * port.position() ))
+                                        .y(String.valueOf( ( object.sizeY() / object.outputs().size() ))) //* port.position() ))
                                         .let("m")
                                         .build()
                                         .appendBy(collector);
 
                             }
                         }
-                        for(Ports port : object.inputs()) {
-                            if(port.name().equals(connection.port2())) {
+                        for(Port port : object.inputs()) {
+                            if(port.portName().equals(connection.port2())) {
                                 new ConnCTemplate.Builder()
                                         .objName(connection.objName2())
                                         .port(connection.port2())
                                         .x(String.valueOf( - object.sizeX() ))
-                                        .y(String.valueOf( ( object.sizeY() / object.outputs().size() ) * port.position() ))
+                                        .y(String.valueOf( ( object.sizeY() / object.outputs().size() ))) // * port.position() ))
                                         .let("m")
                                         .build()
                                         .appendBy(collector);
@@ -176,11 +178,11 @@ public class TemplateProcessorImpl implements TemplateProcessor {
     }
 
     private void processLastPart(final Collector collector, final Parser.Context context) {
-        for(Objects object : context.getObjects()) {
-            for(Ports ports : object.inputs()) {
+        for(TexObject object : context.getTexObject()) {
+            for(Port ports : object.inputs()) {
                 new ConnIOTemplate.Builder()
-                        .objName(object.labelN())
-                        .port(ports.name())
+                        .objName(object.labelName())
+                        .port(ports.portName())
                         .eorw("east")
                         .space(decimalFormat.format( - object.sizeX() * 2 ))
                         .index("0")
@@ -188,10 +190,10 @@ public class TemplateProcessorImpl implements TemplateProcessor {
                         .build()
                         .appendBy(collector);
             }
-            for(Ports output : object.outputs()) {
+            for(Port output : object.outputs()) {
                 new ConnIOTemplate.Builder()
-                        .objName(object.labelN())
-                        .port(output.name())
+                        .objName(object.labelName())
+                        .port(output.portName())
                         .eorw("west")
                         .space(decimalFormat.format( object.sizeX() * 2 ))
                         .index("\\N")

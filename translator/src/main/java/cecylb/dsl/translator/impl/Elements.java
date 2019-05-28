@@ -1,6 +1,7 @@
 package cecylb.dsl.translator.impl;
 
 import cecylb.dsl.model.Objects;
+import cecylb.dsl.modelv2.tmp.TexObject;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
@@ -8,15 +9,15 @@ import org.stringtemplate.v4.STGroupFile;
 //todo: удалить
 public class Elements {
 
-    Objects data;
+    TexObject data;
     STGroup element = new STGroupFile("template.stg");
-    public Elements(Objects data) {
+    public Elements(TexObject data) {
         this.data = data;
     }
 
     public String teXobjN() {
         ST teXobjN = element.getInstanceOf("teXobjN");
-        teXobjN.add("objName", data.labelN());
+        teXobjN.add("objName", data.labelName());
         return teXobjN.render();
     }
     public String teXsize() {
@@ -35,16 +36,16 @@ public class Elements {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < data.inputs().size(); i++) {
             ST teXport = element.getInstanceOf("teXport");
-            teXport.add("name", data.inputs().get(i).name());
-            teXport.add("x", data.inputs().get(i).x());
-            teXport.add("y", data.inputs().get(i).y());
+            teXport.add("name", data.inputs().get(i).portName());
+            teXport.add("x", data.inputs().get(i).portX());
+            teXport.add("y", data.inputs().get(i).portY());
             sb.append(teXport.render());
         }
         for (int i = 0; i < data.outputs().size(); i++) {
             ST teXport = element.getInstanceOf("teXport");
-            teXport.add("name", data.outputs().get(i).name());
-            teXport.add("x", data.outputs().get(i).x());
-            teXport.add("y", data.outputs().get(i).y());
+            teXport.add("name", data.outputs().get(i).portName());
+            teXport.add("x", data.outputs().get(i).portX());
+            teXport.add("y", data.outputs().get(i).portY());
             sb.append(teXport.render());
         }
         return sb.toString();
@@ -65,18 +66,18 @@ public class Elements {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < data.inputs().size(); i++) {
             ST teXportL = element.getInstanceOf("teXportL");
-            teXportL.add("objName", data.labelN());
-            teXportL.add("name", data.inputs().get(i).name());
+            teXportL.add("objName", data.labelName());
+            teXportL.add("name", data.inputs().get(i).portName());
             teXportL.add("lor", "left");
-            teXportL.add("label", data.inputs().get(i).label());
+            teXportL.add("label", data.inputs().get(i).portLabel());
             sb.append(teXportL.render());
         }
         for (int i = 0; i < data.outputs().size(); i++) {
             ST teXportL = element.getInstanceOf("teXportL");
-            teXportL.add("objName", data.labelN());
-            teXportL.add("name", data.outputs().get(i).name());
+            teXportL.add("objName", data.labelName());
+            teXportL.add("name", data.outputs().get(i).portName());
             teXportL.add("lor", "right");
-            teXportL.add("label", data.outputs().get(i).label());
+            teXportL.add("label", data.outputs().get(i).portLabel());
             sb.append(teXportL.render());
         }
         return sb.toString();
@@ -89,13 +90,13 @@ public class Elements {
     }
     public String teXspacing(){
         ST teXspacing = element.getInstanceOf("teXspacing");
-        teXspacing.add("objName", data.labelN());
+        teXspacing.add("objName", data.labelName());
         teXspacing.add("spacing", data.spacing());
         return teXspacing.render();
     }
     public String teXfontSize(){
         ST teXfontSize = element.getInstanceOf("teXfontSize");
-        teXfontSize.add("objName", data.labelN());
+        teXfontSize.add("objName", data.labelName());
         return teXfontSize.render();
     }
 }

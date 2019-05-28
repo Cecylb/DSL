@@ -19,9 +19,9 @@ public interface Connection {
 
     double objSizeY2();
 
-    int port1pos();
+    //int port1pos();
 
-    int port2pos();
+    //int port2pos();
 
     class Builder extends ImmutableConnection.Builder {
     }

@@ -3,6 +3,7 @@ package cecylb.dsl.translator;
 import cecylb.dsl.model.Connection;
 import cecylb.dsl.model.Objects;
 import cecylb.dsl.model.Property;
+import cecylb.dsl.modelv2.tmp.TexObject;
 
 import java.util.LinkedList;
 import java.util.Map;
@@ -14,7 +15,7 @@ public interface Parser extends io.github.therealmone.tdf4j.parser.Parser {
 
     class Context {
         private final Queue<Property> properties;
-        private final Queue<Objects> objects;
+        private final Queue<TexObject> objects;
         private final Queue<Connection> connections;
         private final Map<String, String> inline;
 
@@ -29,7 +30,7 @@ public interface Parser extends io.github.therealmone.tdf4j.parser.Parser {
             return properties;
         }
 
-        public Queue<Objects> getObjects() {
+        public Queue<TexObject> getTexObject() {
             return objects;
         }
 

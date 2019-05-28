@@ -45,14 +45,20 @@ public class TTrBuilder extends AbstractBuilder {
         addRule("object/label/coordinates/y_coordinate/DBL", leaf -> {
             builder.setLabelY(Double.parseDouble(leaf.token().value()));
         });
+        addRule("object/amount/NUM", leaf -> {
+            builder.setAmount(Integer.parseInt(leaf.token().value()));
+        });
+        addRule("object/spacing/NUM", leaf -> {
+            builder.setSpacing(Integer.parseInt(leaf.token().value()));
+        });
 
-        addRule("object/BRR", leaf -> {
+        addRule("object/BFR", leaf -> {
             for(TTr.Rectangles rectangle : TTr.Rectangles.values()) {
                 builder.rectangles().add(new Rectangle.Builder()
-                .swx(rectangle.getSwX()*builder.sizeX()*2)
-                .swy(rectangle.getSwY()*builder.sizeY()*2)
-                .nex(rectangle.getNeX()*builder.sizeX()*2)
-                .ney(rectangle.getNeY()*builder.sizeY()*2)
+                .swX(rectangle.getSwX()*builder.sizeX()*2)
+                .swY(rectangle.getSwY()*builder.sizeY()*2)
+                .neX(rectangle.getNeX()*builder.sizeX()*2)
+                .neY(rectangle.getNeY()*builder.sizeY()*2)
                 .build());
             }
             for(int i=0; i<TTr.INPUTS.length; i++){
@@ -79,10 +85,6 @@ public class TTrBuilder extends AbstractBuilder {
     public TexObject build(ASTElement tree) {
         builder = ModifiableTTr.create();
         process(tree);
-<<<<<<< HEAD
-        return builder.build();
-=======
         return builder;
->>>>>>> Recs and Ports
     }
 }

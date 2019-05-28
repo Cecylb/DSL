@@ -5,13 +5,13 @@ import org.immutables.value.Value;
 @Value.Immutable
 public interface Rectangle {
 
-    Double swx();
+    Double swX();
 
-    Double swy();
+    Double swY();
 
-    Double nex();
+    Double neX();
 
-    Double ney();
+    Double neY();
 
     class Builder extends ImmutableRectangle.Builder {
     }

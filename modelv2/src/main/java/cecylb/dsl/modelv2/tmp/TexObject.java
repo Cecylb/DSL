@@ -4,7 +4,7 @@ import org.immutables.value.Value;
 
 import java.util.List;
 
-public interface TexObject extends Size, Label, Rectangle {
+public interface TexObject extends Size, Label{
 
     Integer amount();
 

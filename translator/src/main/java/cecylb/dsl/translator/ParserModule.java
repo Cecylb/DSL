@@ -12,7 +12,7 @@ public class ParserModule extends AbstractParserModule {
                 .packages(
                         "cecylb.dsl.translator.builder.*",
                         "cecylb.dsl.model.*",
-                        "cecylb.dsl.model.Objects",
+                        "cecylb.dsl.modelv2.tmp.TexObject",
                         "cecylb.dsl.model.rectangles.*",
                         "cecylb.dsl.modelv2.builders.*"
                 )
@@ -74,7 +74,7 @@ public class ParserModule extends AbstractParserModule {
                         optional(nt("spacing")),
                         t("BFR"),
                         inline(
-                                "this.context.getObjects().add(builder.build(ast.onCursor()));\n"
+                                "this.context.getTexObject().add(builder.build(ast.onCursor()));\n"
                         )
                 );
         //4
@@ -102,9 +102,9 @@ public class ParserModule extends AbstractParserModule {
         //5
         prod("coordinates")
                 .is(
-                        or(nt("x_coordinate"), nt("y_coordinate")),
+                        nt("x_coordinate"),
                         t("CMA"),
-                        or(nt("x_coordinate"), nt("y_coordinate"))
+                        nt("y_coordinate")
                 );
         //6
         prod("x_coordinate")
@@ -171,14 +171,16 @@ public class ParserModule extends AbstractParserModule {
                         inline(
                                 "StringBuilder sb = new StringBuilder();"
                         ),
-                        or(repeat(t("LET")),
-                                group(
-                                        t("OBJ"),
-                                        inline(
-                                                "String name = ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value();\n" +
-                                                        "ast.moveCursor(AST.Movement.TO_PARENT);\n"
-                                        )
+                        repeat(
+                                t("LET"),
+                                inline(
+                                        "sb.append(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());" +
+                                                "ast.moveCursor(AST.Movement.TO_PARENT);\n"
                                 )
+                        ),
+                        inline(
+                                "connBuilder.setObjName1(sb.toString());\n" +
+                                        "sb = new StringBuilder();\n"
                         ),
                         optional(nt("property")),
                         t("BRR"),
@@ -233,7 +235,7 @@ public class ParserModule extends AbstractParserModule {
                         ),
                         t("DIV"),
                         inline(
-                                "this.context.getConnections().add(connBuilder.getConnection(this.context.getObjects()));\n"
+                                "this.context.getConnections().add(connBuilder.getConnection(this.context.getTexObject()));\n"
                         )
                 );
         //5
