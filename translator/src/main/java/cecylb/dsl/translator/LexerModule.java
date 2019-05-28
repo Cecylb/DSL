@@ -1,6 +1,6 @@
 package cecylb.dsl.translator;
 
-import io.github.therealmone.tdf4j.lexer.config.AbstractLexerModule;
+import io.github.therealmone.tdf4j.module.lexer.AbstractLexerModule;
 
 public class LexerModule extends AbstractLexerModule {
     @Override
