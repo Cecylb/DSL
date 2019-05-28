@@ -84,7 +84,7 @@ teXbackgroundpath()::=<<
 
 >>
 
-teXportN(swx, swy, nex, ney)::=<<
+teXrec(swx, swy, nex, ney)::=<<
 \pgfpathrectanglecorners{\southwest \pgf@x=<swx>\pgf@x \pgf@y=<swy>\pgf@y}{\northeast \pgf@x=<nex>\pgf@x \pgf@y=<ney>\pgf@y}
 
 
