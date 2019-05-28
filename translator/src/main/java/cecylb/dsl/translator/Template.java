@@ -13,7 +13,7 @@ public enum Template {
     TEX_LABEL_C("teXlabelC"),
     TEX_PORT("teXport"),
     TEX_BACKGROUND_PATH("teXbackgroundpath"),
-    TEX_PORT_N("teXportN"),
+    TEX_REC("teXrec"),
     TEX_CLOSE_P("teXcloseP"),
     TEX_PORT_L("teXportL"),
     TEX_END_G("teXendG"),

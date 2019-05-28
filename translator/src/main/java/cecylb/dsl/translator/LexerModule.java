@@ -42,7 +42,8 @@ public class LexerModule extends AbstractLexerModule {
         tokenize("DBL").pattern("^(-?)(0|([1-9][0-9]*))(\\.[0-9]+)?$").priority(1); // Double numbers
         tokenize("SCL").pattern("^(small|medium|large)$").priority(2); // Scale options
         tokenize("POS").pattern("^(top|middle|bottom)$").priority(2); // Position options (unused)
-        tokenize("CRD").pattern("^(x|y)$").priority(2); // Coordinates
+        tokenize("CDX").pattern("^x$").priority(2); // Coordinates
+        tokenize("CDY").pattern("^y$").priority(2); // Coordinates
         tokenize("CUR").pattern("^#n$").priority(2); // Property
         //tokenize("IDN").pattern("^id$").priority(2); //
         //tokenize("single_line_comment").pattern("//.*(\n|\r|\r\n|\n\r)").hidden(true);
@@ -51,7 +52,7 @@ public class LexerModule extends AbstractLexerModule {
         tokenize("WS").pattern("\\s|\\n|\\r").priority(Integer.MAX_VALUE).hidden(true); // Ignore spaces
         tokenize("DLR").pattern("^\\$$").priority(2);
         tokenize("KOD").pattern("^(documentclass|declareshape|tikzpicture)$").priority(2); // For the inline TeX code
-        tokenize("IOL").pattern("[^\']*").priority(2);
+        tokenize("IOL").pattern("^\'*$").priority(1);
         tokenize("QOT").pattern("^\\'$").priority(2);
     }
 }

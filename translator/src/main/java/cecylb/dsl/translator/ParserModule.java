@@ -1,6 +1,6 @@
 package cecylb.dsl.translator;
 
-import cecylb.dsl.model.builders.Builder;
+import cecylb.dsl.modelv2.builders.Builder;
 import io.github.therealmone.tdf4j.parser.config.AbstractParserModule;
 import io.github.therealmone.tdf4j.parser.model.ast.AST;
 
@@ -13,26 +13,12 @@ public class ParserModule extends AbstractParserModule {
                         "cecylb.dsl.translator.builder.*",
                         "cecylb.dsl.model.*",
                         "cecylb.dsl.model.Objects",
-                        "cecylb.dsl.model.rectangles.*"
+                        "cecylb.dsl.model.rectangles.*",
+                        "cecylb.dsl.modelv2.builders.*"
                 )
                 .code(
                         "PropBuilder propBuilder = new PropBuilder();\n" +
-                        "Amount amount = new Amount();\n" +
-                        "InputsN inputsN = new InputsN();\n" +
-                        "IO io = new IO();\n" +
-                        "IOD iod = new IOD();\n" +
-                        "Label label = new Label();\n" +
-                        "LabelN labelN = new LabelN();\n" +
-                        "Size size = new Size();\n" +
-                        "Spacing spacing = new Spacing();\n" +
                         "ConnBuilder connBuilder = new ConnBuilder();\n" +
-                        "double x;\n" +
-                        "double y;\n" +
-                        "double n;\n" +
-                        "String name;\n" +
-                        "List<Rectangles> rectangles = new ArrayList<>();\n" +
-                        "List<Ports> inputsL = new ArrayList<>();\n" +
-                        "List<Ports> outputsL = new ArrayList<>();\n" +
                         "\n" +
                         "Context context;" +
                         "\n" +
@@ -41,11 +27,7 @@ public class ParserModule extends AbstractParserModule {
                         "   return this.context == null \n" +
                         "           ? new Context()\n" +
                         "           : this.context;\n" +
-                        "}\n" +
-                                "public void getNode() {\n" +
-                                "return  AST.Movement.TO_LAST_ADDED_NODE;\n" +
-                                "ast.moveCursor(AST.Movement.TO_PARENT);\n" +
-                                "}\n"
+                        "}\n"
         );
         //1
         prod("lang")
@@ -80,6 +62,10 @@ public class ParserModule extends AbstractParserModule {
                 .is(
                         t("NEW"),
                         t("OBJ"),
+                        inline(
+                                "Builder builder = Builder.byName(ast.moveCursor(AST.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());\n" +
+                                        "ast.moveCursor(AST.Movement.TO_PARENT);\n"
+                        ),
                         t("BFL"),
                         optional(nt("size")),
                         optional(nt("label")),
@@ -88,7 +74,7 @@ public class ParserModule extends AbstractParserModule {
                         optional(nt("spacing")),
                         t("BFR"),
                         inline(
-                                "Здесь отправить дерево в "
+                                "this.context.getObjects().add(builder.build(ast.onCursor()));\n"
                         )
                 );
         //4
@@ -116,15 +102,21 @@ public class ParserModule extends AbstractParserModule {
         //5
         prod("coordinates")
                 .is(
-                        oneOf(t("SCL"), t("POS"), nt("coordinate")),
+                        or(nt("x_coordinate"), nt("y_coordinate")),
                         t("CMA"),
-                        oneOf(t("SCL"), t("POS"), nt("coordinate"))
+                        or(nt("x_coordinate"), nt("y_coordinate"))
                 );
         //6
-        prod("coordinate")
+        prod("x_coordinate")
                 .is(
                         t("DBL"),
-                        t("CRD") // Есть возможность увидеть нетерминал, если обратиться к последнему ноду
+                        t("CDX") // Есть возможность увидеть нетерминал, если обратиться к последнему ноду
+                );
+        //6
+        prod("y_coordinate")
+                .is(
+                        t("DBL"),
+                        t("CDY") // Есть возможность увидеть нетерминал, если обратиться к последнему ноду
                 );
         //4
         prod("amount")
@@ -261,9 +253,9 @@ public class ParserModule extends AbstractParserModule {
                         t("CMA"),
                         t("QOT"),
                         t("IOL"),
-                        inline(
-                                "??????????????????????????????"
-                        ),
+                        //inline(
+                        //        "??????????????????????????????"
+                        //),
                         t("QOT"),
                         t("DIV")
                 );

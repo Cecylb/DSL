@@ -5,7 +5,7 @@ import cecylb.dsl.translator.TemplateProcessor;
 import org.immutables.value.Value;
 
 @Value.Immutable
-public interface PortNTemplate extends Collectible {
+public interface RecTemplate extends Collectible {
 
     String swx();
 
@@ -15,12 +15,12 @@ public interface PortNTemplate extends Collectible {
 
     String ney();
 
-    class Builder extends ImmutablePortNTemplate.Builder {
+    class Builder extends ImmutableRecTemplate.Builder {
     }
 
     @Override
     default void appendBy(final TemplateProcessor.Collector collector) {
-        collector.append(Template.TEX_PORT_N.template()
+        collector.append(Template.TEX_REC.template()
                 .add("swx", swx())
                 .add("swy", swy())
                 .add("nex", nex())

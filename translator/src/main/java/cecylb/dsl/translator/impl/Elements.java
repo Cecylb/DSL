@@ -49,15 +49,15 @@ public class Elements {
         }
         return sb.toString();
     }
-    public String teXportN(){
+    public String teXrec(){
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < data.rectangles().size(); i++) {
-            ST teXportN = element.getInstanceOf("teXportN");
-            teXportN.add("swx", data.rectangles().get(i).swX());
-            teXportN.add("swy", data.rectangles().get(i).swY());
-            teXportN.add("nex", data.rectangles().get(i).neX());
-            teXportN.add("ney", data.rectangles().get(i).neY());
-            sb.append(teXportN.render());
+            ST teXrec = element.getInstanceOf("teXrec");
+            teXrec.add("swx", data.rectangles().get(i).swX());
+            teXrec.add("swy", data.rectangles().get(i).swY());
+            teXrec.add("nex", data.rectangles().get(i).neX());
+            teXrec.add("ney", data.rectangles().get(i).neY());
+            sb.append(teXrec.render());
         }
         return sb.toString();
     }

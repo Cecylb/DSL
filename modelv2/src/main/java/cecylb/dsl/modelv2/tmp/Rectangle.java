@@ -1,5 +1,8 @@
 package cecylb.dsl.modelv2.tmp;
 
+import org.immutables.value.Value;
+
+@Value.Immutable
 public interface Rectangle {
 
     Double swx();
@@ -9,5 +12,8 @@ public interface Rectangle {
     Double nex();
 
     Double ney();
+
+    class Builder extends ImmutableRectangle.Builder {
+    }
 
 }

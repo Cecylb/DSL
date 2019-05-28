@@ -65,7 +65,7 @@ public class TemplateProcessorImpl implements TemplateProcessor {
             collector.append(elem.teXlabelC());
             collector.append(elem.teXport());
             collector.append(TEX_BACKGROUND_PATH.render());
-            collector.append(elem.teXportN());
+            collector.append(elem.teXrec());
             collector.append(TEX_CLOSE_P.render());
             collector.append(elem.teXportL());
             collector.append(TEX_END_G.render());
