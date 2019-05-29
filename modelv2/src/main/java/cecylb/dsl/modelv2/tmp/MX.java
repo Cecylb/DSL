@@ -3,7 +3,7 @@ package cecylb.dsl.modelv2.tmp;
 import org.immutables.value.Value;
 
 @Value.Modifiable
-public interface DC extends TexObject {
+public interface MX extends TexObject {
 
     Integer input = 1;
 

@@ -3,17 +3,15 @@ package cecylb.dsl.modelv2.tmp;
 import org.immutables.value.Value;
 
 @Value.Modifiable
-public interface DC extends TexObject {
+public interface UDVTr extends TexObject {
 
-    Integer input = 1;
+    String[] INPUTS = new String[] {"D", "C", "V"};
 
-    String[] INPUTS = new String[] {"E"};
-    String[] OUTPUTS = new String[] {};
+    String[] OUTPUTS = new String[] {"Q", "Qn"};
 
     enum Rectangles {
         FRAME(1.0, 1.0, 1.0, 1.0),
-        BORDER(0.5, 1.0, 0.5, 1.0),
-        PORT(-0.5, -0.25, 1.0, 1.0);
+        BORDER(0.5, 1.0, 0.5, 1.0);
 
         private final double neX;
         private final double neY;

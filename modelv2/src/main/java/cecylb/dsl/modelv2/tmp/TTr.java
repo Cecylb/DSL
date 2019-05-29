@@ -2,8 +2,6 @@ package cecylb.dsl.modelv2.tmp;
 
 import org.immutables.value.Value;
 
-import java.util.List;
-
 @Value.Modifiable
 public interface TTr extends TexObject {
 

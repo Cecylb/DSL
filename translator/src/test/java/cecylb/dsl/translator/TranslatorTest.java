@@ -42,4 +42,26 @@ public class TranslatorTest {
         );
         System.out.println(byteArrayOutputStream.toString());
     }
+    @Test
+    public void test4() throws Exception {
+        System.out.println("[UJKTr T E S T . . .]");
+        final Translator translator = new TranslatorImpl(new LexerModule(), new ParserModule(), new TemplateProcessorImpl());
+        final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        translator.translate(
+                new ByteArrayInputStream("a4, landscape; new UJKTr{ size: 0.5x, 0.6y; label: 1.5x, 1.5y, \"JK #n\"; inputs:  3; amount: 2; spacing: 4; }connections{(JK)Q -- (JK)S; };".getBytes()),
+                byteArrayOutputStream
+        );
+        System.out.println(byteArrayOutputStream.toString());
+    }
+    @Test
+    public void test5() throws Exception {
+        System.out.println("[UDVTr T E S T . . .]");
+        final Translator translator = new TranslatorImpl(new LexerModule(), new ParserModule(), new TemplateProcessorImpl());
+        final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        translator.translate(
+                new ByteArrayInputStream("a4, landscape; new UDVTr{ size: 0.5x, 0.6y; label: 1.5x, 1.5y, \"DV #n\"; inputs:  3; amount: 2; spacing: 4; }connections{(DV)Q -- (DV)S; };".getBytes()),
+                byteArrayOutputStream
+        );
+        System.out.println(byteArrayOutputStream.toString());
+    }
 }

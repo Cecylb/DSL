@@ -23,7 +23,7 @@ public class LexerModule extends AbstractLexerModule {
         tokenize("INV").pattern("^(o-)|(-o)$").priority(1); // Inversion line
         tokenize("ARW").pattern("^(->)|(<-)$").priority(1); // Arrow
         tokenize("DTL").pattern("^(\\*-)|(-\\*)$").priority(1); // Dot line
-        tokenize("OBJ").pattern("^(AC|ARSTr|CTTr|DC|DTr|LDC|MX|PDC|RDC|SC|ShRSTr|SRSTr|TTr|UJKTr)$").priority(2); // Element
+        tokenize("OBJ").pattern("^(AC|UDVTr|ARSTr|CTTr|DC|DTr|LDC|MX|PDC|RDC|SC|ShRSTr|SRSTr|TTr|UJKTr)$").priority(2); // Element
         tokenize("SHS").pattern("^(a1|a2|a3|a4|a5)$").priority(2); // Sheet size
         tokenize("ORI").pattern("^(landscape|portrait)$").priority(2); // Orientation
         tokenize("NEW").pattern("^new$").priority(2); // New element

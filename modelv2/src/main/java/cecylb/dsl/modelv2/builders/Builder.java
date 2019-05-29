@@ -14,6 +14,12 @@ public interface Builder {
                 return new TTrBuilder();
             case "DC":
                 return new DCBuilder();
+            case "MX":
+                return new MXBuilder();
+            case "UDVTr":
+                return new UDVTrBuilder();
+            case "UJKTr":
+                return new UJKTrBuilder();
             default:
                 return tree -> null;
         }
