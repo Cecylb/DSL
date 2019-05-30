@@ -10,9 +10,7 @@ public class ParserModule extends AbstractParserModule {
                 .packages(
                         "cecylb.dsl.modelv2.builders.objects.*",
                         "cecylb.dsl.modelv2.builders.*",
-                        "cecylb.dsl.model.*",
-                        "cecylb.dsl.modelv2.tmp.TexObject",
-                        "cecylb.dsl.model.rectangles.*"
+                        "cecylb.dsl.modelv2.tmp.TexObject"
                 )
                 .code(
                         "Context context;" +

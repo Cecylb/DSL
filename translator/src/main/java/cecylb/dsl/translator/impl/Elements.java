@@ -1,6 +1,5 @@
 package cecylb.dsl.translator.impl;
 
-import cecylb.dsl.model.Objects;
 import cecylb.dsl.modelv2.tmp.TexObject;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
