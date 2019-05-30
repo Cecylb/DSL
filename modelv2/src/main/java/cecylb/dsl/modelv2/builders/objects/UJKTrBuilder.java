@@ -1,12 +1,13 @@
-package cecylb.dsl.modelv2.builders;
+package cecylb.dsl.modelv2.builders.objects;
 
+import cecylb.dsl.modelv2.builders.objects.AbstractObjectBuilder;
 import cecylb.dsl.modelv2.tmp.*;
 import io.github.therealmone.tdf4j.model.ast.ASTElement;
 
-public class UDVTrBuilder extends AbstractBuilder {
+public class UJKTrBuilder extends AbstractObjectBuilder {
 
-    private ModifiableUDVTr builder;
-    public UDVTrBuilder() {
+    private ModifiableUJKTr builder;
+    public UJKTrBuilder() {
 
         addRule("object/size/SCL", leaf -> {
             switch(leaf.token().value()) {
@@ -55,7 +56,7 @@ public class UDVTrBuilder extends AbstractBuilder {
         });
 
         addRule("object/BFR", leaf -> {
-            for(UDVTr.Rectangles rectangle : UDVTr.Rectangles.values()) {
+            for(UJKTr.Rectangles rectangle : UJKTr.Rectangles.values()) {
                 builder.rectangles().add(new Rectangle.Builder()
                         .swX(rectangle.getSwX()*builder.sizeX()*2)
                         .swY(rectangle.getSwY()*builder.sizeY()*2)
@@ -63,20 +64,20 @@ public class UDVTrBuilder extends AbstractBuilder {
                         .neY(rectangle.getNeY()*builder.sizeY()*2)
                         .build());
             }
-            for(int i = 0; i< UDVTr.INPUTS.length; i++){
+            for(int i = 0; i< UJKTr.INPUTS.length; i++){
                 builder.inputs().add(new Port.Builder()
                         .portX(-builder.sizeX()* 2)
-                        .portY(((builder.sizeY() * 4) / (UDVTr.INPUTS.length + 1) * (i + 1)) - builder.sizeY() * 2)
-                        .portName(UDVTr.INPUTS[i])
-                        .portLabel(UDVTr.INPUTS[i])
+                        .portY(((builder.sizeY() * 4) / (UJKTr.INPUTS.length + 1) * (i + 1)) - builder.sizeY() * 2)
+                        .portName(UJKTr.INPUTS[i])
+                        .portLabel(UJKTr.INPUTS[i])
                         .build());
             }
-            for(int i = 0; i< UDVTr.OUTPUTS.length; i++){
+            for(int i = 0; i< UJKTr.OUTPUTS.length; i++){
                 builder.outputs().add(new Port.Builder()
                         .portX(builder.sizeX()*2)
-                        .portY(((builder.sizeY() * 4) / (UDVTr.OUTPUTS.length + 1) * (i + 1)) - builder.sizeY() * 2)
-                        .portName(UDVTr.OUTPUTS[i])
-                        .portLabel(UDVTr.OUTPUTS[i])
+                        .portY(((builder.sizeY() * 4) / (UJKTr.OUTPUTS.length + 1) * (i + 1)) - builder.sizeY() * 2)
+                        .portName(UJKTr.OUTPUTS[i])
+                        .portLabel(UJKTr.OUTPUTS[i])
                         .build());
             }
         });
@@ -84,7 +85,7 @@ public class UDVTrBuilder extends AbstractBuilder {
 
     @Override
     public TexObject build(ASTElement tree) {
-        builder = ModifiableUDVTr.create();
+        builder = ModifiableUJKTr.create();
         process(tree);
         return builder;
     }

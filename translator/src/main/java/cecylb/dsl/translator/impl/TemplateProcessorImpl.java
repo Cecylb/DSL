@@ -1,8 +1,6 @@
 package cecylb.dsl.translator.impl;
 
-import cecylb.dsl.model.Connection;
-import cecylb.dsl.model.Objects;
-import cecylb.dsl.model.Ports;
+import cecylb.dsl.modelv2.tmp.Connection;
 import cecylb.dsl.modelv2.tmp.Port;
 import cecylb.dsl.modelv2.tmp.TexObject;
 import cecylb.dsl.translator.Parser;

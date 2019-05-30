@@ -1,12 +1,13 @@
-package cecylb.dsl.modelv2.builders;
+package cecylb.dsl.modelv2.builders.objects;
 
+import cecylb.dsl.modelv2.builders.objects.AbstractObjectBuilder;
 import cecylb.dsl.modelv2.tmp.*;
 import io.github.therealmone.tdf4j.model.ast.ASTElement;
 
-public class TTrBuilder extends AbstractBuilder {
+public class TTrBuilder extends AbstractObjectBuilder {
 
     private ModifiableTTr builder;
-    public  TTrBuilder() {
+    public TTrBuilder() {
 
         addRule("object/size/SCL", leaf -> {
             switch(leaf.token().value()) {

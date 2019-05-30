@@ -1,8 +1,6 @@
 package cecylb.dsl.translator;
 
-import cecylb.dsl.modelv2.builders.Builder;
 import io.github.therealmone.tdf4j.module.parser.AbstractParserModule;
-import io.github.therealmone.tdf4j.model.ast.AST;
 
 public class ParserModule extends AbstractParserModule {
 
@@ -10,16 +8,13 @@ public class ParserModule extends AbstractParserModule {
     public void configure() {
         environment()
                 .packages(
-                        "cecylb.dsl.translator.builder.*",
+                        "cecylb.dsl.modelv2.builders.objects.*",
+                        "cecylb.dsl.modelv2.builders.*",
                         "cecylb.dsl.model.*",
                         "cecylb.dsl.modelv2.tmp.TexObject",
-                        "cecylb.dsl.model.rectangles.*",
-                        "cecylb.dsl.modelv2.builders.*"
+                        "cecylb.dsl.model.rectangles.*"
                 )
                 .code(
-                        "PropBuilder propBuilder = new PropBuilder();\n" +
-                        "ConnBuilder connBuilder = new ConnBuilder();\n" +
-                        "\n" +
                         "Context context;" +
                         "\n" +
                         "@Override\n" +
@@ -42,19 +37,12 @@ public class ParserModule extends AbstractParserModule {
         prod("desc")
                 .is(
                         t("SHS"),
-                        inline(
-                                "propBuilder.setSheetSize(ast.moveCursor(ASTCursor.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());\n" +
-                                        "ast.moveCursor(ASTCursor.Movement.TO_PARENT);\n"
-                        ),
                         t("CMA"),
                         t("ORI"),
-                        inline(
-                                "propBuilder.setOrientation(ast.moveCursor(ASTCursor.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());\n" +
-                                        "ast.moveCursor(ASTCursor.Movement.TO_PARENT);\n"
-                        ),
                         t("DIV"),
                         inline(
-                                "this.context.getProperties().add(propBuilder.getProps());"
+                                "PropertyBuilder builder = new PropertyBuilder();\n" +
+                                        "this.context.getProperties().add(builder.build(ast.onCursor()));"
                         )
                 );
         //3
@@ -63,7 +51,7 @@ public class ParserModule extends AbstractParserModule {
                         t("NEW"),
                         t("OBJ"),
                         inline(
-                                "Builder builder = Builder.byName(ast.moveCursor(ASTCursor.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());\n" +
+                                "ObjectBuilder builder = ObjectBuilder.byName(ast.moveCursor(ASTCursor.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());\n" +
                                         "ast.moveCursor(ASTCursor.Movement.TO_PARENT);\n"
                         ),
                         t("BFL"),
@@ -168,75 +156,37 @@ public class ParserModule extends AbstractParserModule {
         prod("connection")
                 .is(
                         t("BRL"),
-                        inline(
-                                "StringBuilder sb = new StringBuilder();"
-                        ),
-                        repeat(
-                                t("LET"),
-                                inline(
-                                        "sb.append(ast.moveCursor(ASTCursor.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());" +
-                                                "ast.moveCursor(ASTCursor.Movement.TO_PARENT);\n"
-                                )
-                        ),
-                        inline(
-                                "connBuilder.setObjName1(sb.toString());\n" +
-                                        "sb = new StringBuilder();\n"
-                        ),
-                        optional(nt("property")),
+                        nt("obj1"),
                         t("BRR"),
-                        repeat(
-                                or(
-                                        t("LET"),
-                                        t("NUM")
-                                ),
-                                inline(
-                                        "sb.append(ast.moveCursor(ASTCursor.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());" +
-                                                "ast.moveCursor(ASTCursor.Movement.TO_PARENT);\n"
-                                )
-                        ),
-                        inline(
-                                "connBuilder.setPort1(sb.toString());\n" +
-                                        "ast.moveCursor(ASTCursor.Movement.TO_PARENT);\n" +
-                                        "sb = new StringBuilder();\n"
-                        ),
+                        nt("port1"),
                         oneOf(t("ARW"), t("LIN"), t("INV"), t("DTL")),
-                        inline(
-                                "connBuilder.setLineType(ast.moveCursor(ASTCursor.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());\n" +
-                                        "ast.moveCursor(ASTCursor.Movement.TO_PARENT);\n"
-                        ),
                         t("BRL"),
-                        repeat(
-                                t("LET"),
-                                inline(
-                                        "sb.append(ast.moveCursor(ASTCursor.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());" +
-                                                "ast.moveCursor(ASTCursor.Movement.TO_PARENT);\n"
-                                )
-                        ),
-                        inline(
-                                "connBuilder.setObjName2(sb.toString());\n" +
-                                        "sb = new StringBuilder();\n"
-                        ),
-                        optional(nt("property")),
+                        nt("obj2"),
                         t("BRR"),
-                        repeat(
-                                or(
-                                        t("LET"),
-                                        t("NUM")
-                                ),
-                                inline(
-                                        "sb.append(ast.moveCursor(ASTCursor.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());" +
-                                                "ast.moveCursor(ASTCursor.Movement.TO_PARENT);\n"
-                                )
-                        ),
-                        inline(
-                                "connBuilder.setPort2(sb.toString());\n" +
-                                        "ast.moveCursor(ASTCursor.Movement.TO_PARENT);\n" +
-                                        "sb = new StringBuilder();\n"
-                        ),
+                        nt("port2"),
                         t("DIV"),
                         inline(
-                                "this.context.getConnections().add(connBuilder.getConnection(this.context.getTexObject()));\n"
+                                "ConnectionBuilder builder = new ConnectionBuilder();\n" +
+                                        "this.context.getConnections().add(builder.build(ast.onCursor()));\n"
                         )
+                );
+        prod("obj1")
+                .is(
+                        repeat(t("LET")),
+                        optional(nt("property"))
+                );
+        prod("obj2")
+                .is(
+                        repeat(t("LET")),
+                        optional(nt("property"))
+                        );
+        prod("port1")
+                .is(
+                        repeat(or(t("LET"), t("NUM")))
+                );
+        prod("port2")
+                .is(
+                        repeat(or(t("LET"), t("NUM")))
                 );
         //5
         prod("property")

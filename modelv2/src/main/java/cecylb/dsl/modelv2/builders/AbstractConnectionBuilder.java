@@ -8,8 +8,7 @@ import io.github.therealmone.tdf4j.model.ast.ASTLeaf;
 
 import java.util.function.Consumer;
 
-abstract class AbstractBuilder implements Builder {
-
+public abstract class AbstractConnectionBuilder {
     private final ASTProcessor processor = new ASTProcessor();
 
     void addRule(final ASTRule rule) {
@@ -24,7 +23,5 @@ abstract class AbstractBuilder implements Builder {
         this.processor.addRule(new ASTRule(new Path(path), action));
     }
 
-    void process(final ASTElement element) {
-        this.processor.process(element);
-    }
+    void process(final ASTElement element) { this.processor.process(element); }
 }

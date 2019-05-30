@@ -1,12 +1,13 @@
-package cecylb.dsl.modelv2.builders;
+package cecylb.dsl.modelv2.builders.objects;
 
+import cecylb.dsl.modelv2.builders.objects.AbstractObjectBuilder;
 import cecylb.dsl.modelv2.tmp.*;
 import io.github.therealmone.tdf4j.model.ast.ASTElement;
 
-public class DCBuilder  extends AbstractBuilder {
+public class MXBuilder extends AbstractObjectBuilder {
 
-    private ModifiableDC builder;
-    public DCBuilder() {
+    private ModifiableMX builder;
+    public MXBuilder() {
         addRule("object/size/SCL", leaf -> {
             switch (leaf.token().value()) {
                 case "small":
@@ -69,11 +70,11 @@ public class DCBuilder  extends AbstractBuilder {
                 alphabet++;
             }
             builder.inputs().add(new Port.Builder()
-            .portX(-builder.sizeX() * 2)
-            .portY((builder.sizeY() * 4) / (builder.input() + 1) - builder.sizeY() * 2)
-            .portName(builder.INPUTS[0])
-            .portLabel(builder.INPUTS[0])
-            .build());
+                    .portX(-builder.sizeX() * 2)
+                    .portY((builder.sizeY() * 4) / (builder.input() + 1) - builder.sizeY() * 2)
+                    .portName(builder.INPUTS[0])
+                    .portLabel(builder.INPUTS[0])
+                    .build());
             builder.setOutput((int)Math.pow(2, builder.input()+1));
             alphabet = 'a';
             for (int i = 0; i < builder.output(); i++) {
@@ -85,7 +86,7 @@ public class DCBuilder  extends AbstractBuilder {
                         .build());
                 alphabet++;
             }
-            for (DC.Rectangles rectangle : DC.Rectangles.values()) {
+            for (MX.Rectangles rectangle : MX.Rectangles.values()) {
                 builder.rectangles().add(new Rectangle.Builder()
                         .swX(rectangle.getSwX() * builder.sizeX() * 2)
                         .swY(rectangle.getSwY() * builder.sizeY() * builder.output() / 4)
@@ -98,7 +99,7 @@ public class DCBuilder  extends AbstractBuilder {
 
     @Override
     public TexObject build(ASTElement tree) {
-        builder = ModifiableDC.create();
+        builder = ModifiableMX.create();
         process(tree);
         return builder;
     }
