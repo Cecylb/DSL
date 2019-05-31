@@ -5,6 +5,7 @@ import org.immutables.value.Value;
 @Value.Modifiable
 public interface DC extends TexObject {
 
+    String objName = "DC";
     Integer input = 1;
 
     String[] INPUTS = new String[] {"E"};

@@ -24,7 +24,6 @@ public class UDVTrBuilder extends AbstractObjectBuilder {
                     builder.setSizeY(Sizes.LARGE.getSizeY());
                     break;
             }
-
         });
 
         addRule("object/size/coordinates/x_coordinate/DBL", leaf -> {

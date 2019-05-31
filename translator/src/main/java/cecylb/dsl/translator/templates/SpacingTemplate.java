@@ -7,7 +7,7 @@ import org.immutables.value.Value;
 @Value.Immutable
 public interface SpacingTemplate extends Collectible {
 
-    String objName();
+    String labelName();
 
     String spacing();
 
@@ -17,7 +17,7 @@ public interface SpacingTemplate extends Collectible {
     @Override
     default void appendBy(final TemplateProcessor.Collector collector) {
         collector.append(Template.TEX_SPACING.template()
-                .add("objName", objName())
+                .add("labelName", labelName())
                 .add("spacing", spacing())
                 .render()
         );

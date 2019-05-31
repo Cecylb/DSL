@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface TexObject extends Size, Label{
 
+    String objName();
+
     Integer amount();
 
     Integer spacing();

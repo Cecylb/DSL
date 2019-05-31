@@ -54,24 +54,76 @@ public class TemplateProcessorImpl implements TemplateProcessor {
         }
     }
 
+// Стоит разделить это на отдельные методы?
+// Можно ли как-то это упростить?
     private void processObjects(final Collector collector, final Parser.Context context) {
         for(TexObject object: context.getTexObject()) {
-
-            //todo: удалить Elements
-            Elements elem = new Elements(object);
-            collector.append(elem.teXobjN());
-            collector.append(elem.teXsize());
+            new ObjNTemplate.Builder()
+                    .objName(object.objName())
+                    .build()
+                    .appendBy(collector);
+            new SizeTemplate.Builder()
+                    .x(String.valueOf(object.sizeX()))
+                    .y(String.valueOf(object.sizeY()))
+                    .build()
+                    .appendBy(collector);
             collector.append(TEX_BORDER.render());
-            collector.append(elem.teXlabelC());
-            collector.append(elem.teXport());
+            new LabelCTemplate.Builder()
+                    .x(String.valueOf(object.labelX()))
+                    .y(String.valueOf(object.labelY()))
+                    .build()
+                    .appendBy(collector);
+            for (int i = 0; i < object.inputs().size(); i++) {
+                new PortTemplate.Builder()
+                        .x(String.valueOf(object.inputs().get(i).portX()))
+                        .y(String.valueOf(object.inputs().get(i).portY()))
+                        .name(String.valueOf(object.inputs().get(i).portName()))
+                        .build()
+                        .appendBy(collector);
+            }
+            for (int i = 0; i < object.outputs().size(); i++) {
+                new PortTemplate.Builder()
+                        .x(String.valueOf(object.outputs().get(i).portX()))
+                        .y(String.valueOf(object.outputs().get(i).portY()))
+                        .name(String.valueOf(object.outputs().get(i).portName()))
+                        .build()
+                        .appendBy(collector);
+            }
             collector.append(TEX_BACKGROUND_PATH.render());
-            collector.append(elem.teXrec());
+            for (int i = 0; i < object.rectangles().size(); i++) {
+                new RecTemplate.Builder()
+                        .swx(String.valueOf(object.rectangles().get(i).swX()))
+                        .swy(String.valueOf(object.rectangles().get(i).swY()))
+                        .nex(String.valueOf(object.rectangles().get(i).neX()))
+                        .ney(String.valueOf(object.rectangles().get(i).neY()))
+                        .build()
+                        .appendBy(collector);
+            }
             collector.append(TEX_CLOSE_P.render());
-            collector.append(elem.teXportL());
+            for (int i = 0; i < object.inputs().size(); i++) {
+                new PortLTemplate.Builder()
+                        .objName(object.objName())
+                        .name(object.inputs().get(i).portName())
+                        .label(object.inputs().get(i).portLabel())
+                        .lor("left")
+                        .build()
+                        .appendBy(collector);
+            }
+            for (int i = 0; i < object.outputs().size(); i++) {
+                new PortLTemplate.Builder()
+                        .objName(object.objName())
+                        .name(object.outputs().get(i).portName())
+                        .label(object.outputs().get(i).portLabel())
+                        .lor("right")
+                        .build()
+                        .appendBy(collector);
+            }
             collector.append(TEX_END_G.render());
             collector.append(TEX_ADD_FONT.render());
-            collector.append(elem.teXfontSize());
-
+            new FontSizeTemplate.Builder()
+                    .objName(object.objName())
+                    .build()
+                    .appendBy(collector);
         }
         collector.append(TEX_MAKE_A_TOTHER.render());
         collector.append(TEX_BEGIN.render());
@@ -81,13 +133,20 @@ public class TemplateProcessorImpl implements TemplateProcessor {
             }
         }
         for(TexObject object : context.getTexObject()) {
-            Elements elem = new Elements(object);
-            collector.append(elem.teXamount());
+            new DefTemplate.Builder()
+                    .amount(String.valueOf(object.amount()))
+                    .var("N")
+                    .build()
+                    .appendBy(collector);
             new ForEachTemplate.Builder()
                     .k("0")
                     .build()
                     .appendBy(collector);
-            collector.append(elem.teXspacing());
+            new SpacingTemplate.Builder()
+                    .labelName(object.labelName())
+                    .spacing(String.valueOf(object.spacing()))
+                    .build()
+                    .appendBy(collector);
         }
         collector.append(TEX_DEF.render());
         new ForEachTemplate.Builder()

@@ -5,6 +5,8 @@ import org.immutables.value.Value;
 @Value.Modifiable
 public interface TTr extends TexObject {
 
+    String objName = "TTr";
+
     String[] INPUTS = new String[] {"S", "T", "C", "R"};
 
     String[] OUTPUTS = new String[] {"Q", "Qn"};

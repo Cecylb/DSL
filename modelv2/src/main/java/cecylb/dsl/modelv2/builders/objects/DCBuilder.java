@@ -8,6 +8,7 @@ public class DCBuilder extends AbstractObjectBuilder {
 
     private ModifiableDC builder;
     public DCBuilder() {
+
         addRule("object/size/SCL", leaf -> {
             switch (leaf.token().value()) {
                 case "small":
@@ -23,7 +24,6 @@ public class DCBuilder extends AbstractObjectBuilder {
                     builder.setSizeY(Sizes.LARGE.getSizeY());
                     break;
             }
-
         });
 
         addRule("object/size/coordinates/x_coordinate/DBL", leaf -> {
@@ -59,6 +59,8 @@ public class DCBuilder extends AbstractObjectBuilder {
         });
 
         addRule("object/BFR", leaf -> {
+            builder.setObjName("DC"); // crutch
+
             Character alphabet = 'a';
             for (int i = 0; i < builder.input(); i++) {
                 builder.inputs().add(new Port.Builder()

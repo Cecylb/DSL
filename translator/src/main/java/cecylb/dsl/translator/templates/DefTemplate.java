@@ -9,7 +9,7 @@ public interface DefTemplate extends Collectible {
 
     String var();
 
-    String index();
+    //String index();
 
     String amount();
 
@@ -20,7 +20,7 @@ public interface DefTemplate extends Collectible {
     default void appendBy(final TemplateProcessor.Collector collector) {
         collector.append(Template.TEX_DEF.template()
                 .add("var", var())
-                .add("index", index())
+                //.add("index", index())
                 .add("amount", amount())
                 .render()
         );
