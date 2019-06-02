@@ -1,7 +1,7 @@
 package cecylb.dsl.translator;
 
-import io.github.therealmone.tdf4j.generator.LexerGenerator;
-import io.github.therealmone.tdf4j.generator.ParserGenerator;
+import io.github.therealmone.tdf4j.generator.impl.LexerGenerator;
+import io.github.therealmone.tdf4j.generator.impl.ParserGenerator;
 import io.github.therealmone.tdf4j.lexer.Lexer;
 import io.github.therealmone.tdf4j.module.lexer.AbstractLexerModule;
 import io.github.therealmone.tdf4j.parser.Parser;
@@ -12,7 +12,7 @@ import io.github.therealmone.tdf4j.model.ast.ASTRoot;
 import org.junit.Test;
 
 public class GrammarTest{
-    Lexer lexer = LexerGenerator.newInstance().generate(new AbstractLexerModule() {
+    Lexer lexer = new LexerGenerator(new AbstractLexerModule() {
         public void configure() {
             tokenize("BSL").pattern("^\\[$").priority(1); // int max
             tokenize("BSR").pattern("^\\]$").priority(1); // priority-  необзяательный параметр
@@ -60,8 +60,8 @@ public class GrammarTest{
 
             tokenize("WS").pattern("\\s|\\n|\\r").priority(Integer.MAX_VALUE).hidden(true);
         }
-    });
-    Parser parser = ParserGenerator.newInstance().generate(new AbstractParserModule() {
+    }).generate();
+    Parser parser = new ParserGenerator(new AbstractParserModule() {
         public void configure() {
             //1
 
@@ -209,7 +209,7 @@ public class GrammarTest{
                             oneOf(t("IDN"), t("NUM"), t("CUR")) // U N F I N I S H E D
                     );
         }
-    });
+    }).generate();
     @Test
     public void Test(){
         System.out.println(parser.parse(lexer.stream( "a4, horizontal; new DC{ size: 1.0x, 1.0y; label: 0.5x, 0.5y, \"DC #n\"; inputs:  10; amount: 1; spacing: 4; } new ARSTr { size: medium; label: 0.5x, 0.5y, \"ARSTr #n\"; amount: 1; spacing: 3; } connections{ (DC)0 -o (ARSTr)C; (DC)15 -> (ARSTr)S; }")));
