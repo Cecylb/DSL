@@ -1,0 +1,384 @@
+lexis
+
+    BSL
+        "^\[$"
+        [priority: 1]
+
+    BSR
+        "^\]$"
+        [priority: 1]
+
+    BFL
+        "^\{$"
+        [priority: 1]
+
+    BFR
+        "^\}$"
+        [priority: 1]
+
+    BRL
+        "^\($"
+        [priority: 1]
+
+    BRR
+        "^\)$"
+        [priority: 1]
+
+    COL
+        "^\:$"
+        [priority: 1]
+
+    QUT
+        "^\"$"
+        [priority: 1]
+
+    DIV
+        "^\;$"
+        [priority: 1]
+
+    CMA
+        "^\,$"
+        [priority: 1]
+
+    DOT
+        "^\.$"
+        [priority: 1]
+
+    EQL
+        "^\=$"
+        [priority: 1]
+
+    LIN
+        "^--$"
+        [priority: 1]
+
+    INV
+        "^(o-)|(-o)$"
+        [priority: 1]
+
+    ARW
+        "^(->)|(<-)$"
+        [priority: 1]
+
+    DTL
+        "^(\*-)|(-\*)$"
+        [priority: 1]
+
+    OBJ
+        "^(AC|UDVTr|ARSTr|CTTr|DC|DTr|LDC|MX|PDC|RDC|SC|ShRSTr|SRSTr|TTr|UJKTr)$"
+        [priority: 2]
+
+    SHS
+        "^(a1|a2|a3|a4|a5)$"
+        [priority: 2]
+
+    ORI
+        "^(landscape|portrait)$"
+        [priority: 2]
+
+    NEW
+        "^new$"
+        [priority: 2]
+
+    POS
+        "^position$"
+        [priority: 2]
+
+    SIZ
+        "^size$"
+        [priority: 2]
+
+    LAB
+        "^label$"
+        [priority: 2]
+
+    PRT
+        "^inputs$"
+        [priority: 2]
+
+    SPC
+        "^spacing$"
+        [priority: 2]
+
+    AMT
+        "^amount"
+        [priority: 2]
+
+    MTH
+        "^[\+\-\/\*]$"
+        [priority: 2]
+
+    COP
+        "^[<>]|(<=)|(>=)|(==)|(!=)$"
+        [priority: 2]
+
+    CON
+        "^connections$"
+        [priority: 2]
+
+    COD
+        "^code$"
+        [priority: 3]
+
+    LET
+        "^([a-z]+[0-1]*)|([A-Z]+[0-1]*)$"
+        [priority: 1]
+
+    NUM
+        "^(0|([1-9][0-9]*))$"
+        [priority: 2]
+
+    DBL
+        "^(-?)(0|([1-9][0-9]*))(\.[0-9]+)?$"
+        [priority: 1]
+
+    SCL
+        "^(small|medium|large)$"
+        [priority: 2]
+
+    CDX
+        "^x$"
+        [priority: 2]
+
+    CDY
+        "^y$"
+        [priority: 2]
+
+    CUR
+        "^#n$"
+        [priority: 2]
+
+    SLA
+        "^\\$"
+        [priority: 2]
+
+
+    DLR
+        "^\$$"
+        [priority: 2]
+
+    KOD
+        "^(documentclass|declareshape|tikzpicture)$"
+        [priority: 2]
+
+    IOL
+        "^'*$"
+        [priority: 1]
+
+    QOT
+        "^\'$"
+        [priority: 2]
+
+    WS
+        "\s|\n|\r"
+        [priority: 1000, hidden: true]
+
+    MLC
+        "/\*[^(\*/)]*\*/"
+        [priority: 1000, hidden: true]
+
+env
+
+    import "cecylb.dsl.modelv2.builders.objects.*"
+    import "cecylb.dsl.modelv2.builders.*"
+    import "cecylb.dsl.modelv2.tmp.TexObject"
+
+    code "
+        Context context;
+
+        @Override
+        public Context getContext() {
+           return this.context == null
+                   ? new Context()
+                   : this.context;
+        }
+    "
+
+syntax
+
+    lang =
+            <"
+                this.context = new Context();
+            ">
+        ,   [desc]
+        ,   {|object |code_prod}
+        ,   connections
+        ,   [{code_prod}]
+        ;
+
+    desc =
+            SHS
+        ,   CMA
+        ,   ORI
+        ,   DIV
+        ,   <"
+                PropertyBuilder builder = new PropertyBuilder();
+                this.context.getProperties().add(builder.build(ast.onCursor()));
+            ">
+        ;
+
+    object =
+            NEW
+        ,   OBJ
+        ,   <"
+                ObjectBuilder builder = ObjectBuilder.byName(ast.moveCursor(ASTCursor.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());
+                ast.moveCursor(ASTCursor.Movement.TO_PARENT);
+            ">
+        ,   BFL
+        ,   [position]
+        ,   [size]
+        ,   [label]
+        ,   [inputs]
+        ,   [amount]
+        ,   [spacing]
+        ,   BFR
+        ,   <"
+                this.context.getTexObject().add(builder.build(ast.onCursor()));
+            ">
+        ;
+
+    label =
+            LAB
+        ,   COL
+        ,   [|POS |coordinates]
+        ,   [CMA]
+        ,   QUT
+        ,   {LET}
+        ,   [property]
+        ,   QUT
+        ,   DIV
+        ;
+
+    position =
+            POS
+        ,   COL
+        ,   coordinates
+        ,   DIV
+        ;
+
+    size =
+            SIZ
+        ,   COL
+        ,   |SCL |coordinates
+        ,   DIV
+        ;
+
+    coordinates =
+            x_coordinate
+        ,   CMA
+        ,   y_coordinate
+        ;
+
+    x_coordinate =
+            DBL
+        ,   CDX
+        ;
+
+    y_coordinate =
+            DBL
+        ,   CDY
+        ;
+
+    amount =
+            AMT
+        ,   COL
+        ,   NUM
+        ,   DIV
+        ;
+
+    spacing =
+            SPC
+        ,   COL
+        ,   NUM
+        ,   DIV
+        ;
+
+    inputs =
+            PRT
+        ,   COL
+        ,   NUM
+        ,   [DIV]
+        ;
+
+    ports =
+            BSL
+        ,   {port}
+        ,   BSR
+        ,   DIV
+        ;
+
+    port =
+            NUM
+        ,   [CMA]
+        ;
+
+    connections =
+            CON
+        ,   BFL
+        ,   {connection}
+        ,   BFR
+        ;
+
+    connection =
+            BRL
+        ,   obj1
+        ,   BRR
+        ,   port1
+        ,   | ARW
+            | LIN
+            | INV
+            | DTL
+        ,   BRL
+        ,   obj2
+        ,   BRR
+        ,   port2
+        ,   DIV
+        ,   <"
+                ConnectionBuilder builder = new ConnectionBuilder();
+                this.context.getConnections().add(builder.build(ast.onCursor()));
+            ">
+        ;
+
+    obj1 =
+            {LET}
+        ,   [property]
+        ;
+
+    obj2 =
+            {LET}
+        ,   [property]
+        ;
+
+    port1 =
+            {|LET |NUM}
+        ;
+
+    port2 =
+            {|LET |NUM}
+        ;
+
+    property =
+        |   IDN
+        |   NUM
+        |   CUR
+        ;
+
+    code_prod =
+            COD
+        ,   COL
+        ,   KOD
+        ,   <"
+                String position = ast.moveCursor(ASTCursor.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value();
+                ast.moveCursor(ASTCursor.Movement.TO_PARENT);
+            ">
+        ,   CMA
+        ,   QOT
+        ,   IOL
+            //inline(
+            //        "??????????????????????????????"
+            //),
+        ,   QOT
+        ,   DIV
+        ;
+
+$

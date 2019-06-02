@@ -1,7 +1,7 @@
 package cecylb.dsl.translator;
 
-import io.github.therealmone.tdf4j.generator.LexerGenerator;
-import io.github.therealmone.tdf4j.generator.ParserGenerator;
+import io.github.therealmone.tdf4j.generator.impl.LexerGenerator;
+import io.github.therealmone.tdf4j.generator.impl.ParserGenerator;
 import io.github.therealmone.tdf4j.lexer.Lexer;
 import io.github.therealmone.tdf4j.module.lexer.AbstractLexerModule;
 import io.github.therealmone.tdf4j.parser.Parser;
@@ -9,7 +9,7 @@ import io.github.therealmone.tdf4j.module.parser.AbstractParserModule;
 import org.junit.Test;
 
 public class LabelTest{
-    Lexer lexer = LexerGenerator.newInstance().generate(new AbstractLexerModule() {
+    Lexer lexer = new LexerGenerator(new AbstractLexerModule() {
         public void configure() {
             tokenize("BSL").pattern("^\\[$").priority(1); // int max
             tokenize("BSR").pattern("^\\]$").priority(1); // priority-  необзяательный параметр
@@ -57,10 +57,10 @@ public class LabelTest{
 
             tokenize("WS").pattern("\\s|\\n|\\r").priority(Integer.MAX_VALUE).hidden(true);
         }
-    });
+    }).generate();
 
 
-    Parser parser = ParserGenerator.newInstance().generate(new AbstractParserModule() {
+    Parser parser = new ParserGenerator(new AbstractParserModule() {
         public void configure() {
             //1
             prod("lang") // identifire - the name of production
@@ -109,7 +109,7 @@ public class LabelTest{
                             oneOf(t("IDN"), t("NUM"), t("CUR")) // U N F I N I S H E D
                     );
         }
-    });
+    }).generate();
     @Test
     public void Test(){
         System.out.println("Test 1: ");

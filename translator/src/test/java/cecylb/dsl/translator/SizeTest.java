@@ -1,7 +1,7 @@
 package cecylb.dsl.translator;
 
-import io.github.therealmone.tdf4j.generator.LexerGenerator;
-import io.github.therealmone.tdf4j.generator.ParserGenerator;
+import io.github.therealmone.tdf4j.generator.impl.LexerGenerator;
+import io.github.therealmone.tdf4j.generator.impl.ParserGenerator;
 import io.github.therealmone.tdf4j.lexer.Lexer;
 import io.github.therealmone.tdf4j.module.lexer.AbstractLexerModule;
 import io.github.therealmone.tdf4j.parser.Parser;
@@ -9,7 +9,7 @@ import io.github.therealmone.tdf4j.module.parser.AbstractParserModule;
 import org.junit.Test;
 
 public class SizeTest{
-    Lexer lexer = LexerGenerator.newInstance().generate(new AbstractLexerModule() {
+    Lexer lexer = new LexerGenerator(new AbstractLexerModule() {
         public void configure() {
             tokenize("BSL").pattern("^\\[$").priority(1); // int max
             tokenize("BSR").pattern("^\\]$").priority(1); // priority-  необзяательный параметр
@@ -57,8 +57,8 @@ public class SizeTest{
 
             tokenize("WS").pattern("\\s|\\n|\\r").priority(Integer.MAX_VALUE).hidden(true);
         }
-    });
-    Parser parser = ParserGenerator.newInstance().generate(new AbstractParserModule() {
+    }).generate();
+    Parser parser = new ParserGenerator(new AbstractParserModule() {
         public void configure() {
             //1
             prod("lang") // identifire - the name of production
@@ -111,7 +111,7 @@ public class SizeTest{
                             optional(t("CMA"))
                     );
         }
-    });
+    }).generate();
     @Test
     public void Test(){
         System.out.printf("Test 1: ");
