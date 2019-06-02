@@ -9,6 +9,14 @@ public class DCBuilder extends AbstractObjectBuilder {
     private ModifiableDC builder;
     public DCBuilder() {
 
+        addRule("object/position/coordinates/x_coordinate/DBL", leaf -> {
+            builder.setPosX(Double.parseDouble(leaf.token().value()));
+        });
+
+        addRule("object/position/coordinates/y_coordinate/DBL", leaf -> {
+            builder.setPosY(Double.parseDouble(leaf.token().value()));
+        });
+
         addRule("object/size/SCL", leaf -> {
             switch (leaf.token().value()) {
                 case "small":

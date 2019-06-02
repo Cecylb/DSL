@@ -144,7 +144,7 @@ teXmakeAtother()::=<<
 
 teXbegin()::=<<
 \begin{document}
-\begin{tikzpicture}[font=\sffamily,>=triangle 45]
+\begin{tikzpicture}(0,0)[font=\sffamily,>=triangle 45]
 
 
 >>
@@ -199,6 +199,10 @@ teXlet()::=<<
 \global\let\pa\pb\ma\mb}
 
 
+>>
+
+teXput(posX, posY)::=<<
+\put(<posX>, <posY>)
 >>
 
 teXoverLine(name)::=<<

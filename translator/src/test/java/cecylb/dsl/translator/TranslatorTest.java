@@ -37,7 +37,7 @@ public class TranslatorTest {
         final Translator translator = new TranslatorImpl(new LexerModule(), new ParserModule(), new TemplateProcessorImpl());
         final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         translator.translate(
-                new ByteArrayInputStream("a4, landscape; new DC{ size: 0.5x, 0.6y; label: 1.5x, 1.5y, \"Dc #n\"; inputs:  3; amount: 2; spacing: 4; }connections{(Dc)oa -- (Dc)ia; };".getBytes()),
+                new ByteArrayInputStream("a4, landscape; new DC{ position: 100.0x, 100.0y; size: 0.5x, 0.6y; label: 1.5x, 1.5y, \"Dc #n\"; inputs:  3; amount: 2; spacing: 4; }connections{(Dc)oa -- (Dc)ia; };".getBytes()),
                 byteArrayOutputStream
         );
         System.out.println(byteArrayOutputStream.toString());

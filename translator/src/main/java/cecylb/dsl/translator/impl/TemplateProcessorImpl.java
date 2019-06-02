@@ -142,11 +142,18 @@ public class TemplateProcessorImpl implements TemplateProcessor {
                     .k("0")
                     .build()
                     .appendBy(collector);
+            new PutTemplate.Builder()
+                    .posX(String.valueOf(object.posX()))
+                    .posY(String.valueOf(object.posY()))
+                    .build()
+                    .appendBy(collector);
+            collector.append(TEX_BRACKET_L.render());
             new SpacingTemplate.Builder()
                     .labelName(object.labelName())
                     .spacing(String.valueOf(object.spacing()))
                     .build()
                     .appendBy(collector);
+            collector.append(TEX_BRACKET_R.render());
         }
         collector.append(TEX_DEF.render());
         new ForEachTemplate.Builder()

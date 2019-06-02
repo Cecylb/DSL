@@ -30,6 +30,7 @@ public enum Template {
     TEX_END("teXend"),
     TEX_FOR_EACH("teXforEach"),
     TEX_LET("teXlet"),
+    TEX_PUT("teXput"),
     TEX_OVER_LINE("teXoverLine"),
     TEX_BRACKET_L("teXbracketL"),
     TEX_BRACKET_R("teXbracketR");

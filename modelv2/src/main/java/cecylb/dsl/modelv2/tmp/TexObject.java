@@ -1,10 +1,8 @@
 package cecylb.dsl.modelv2.tmp;
 
-import org.immutables.value.Value;
-
 import java.util.List;
 
-public interface TexObject extends Size, Label{
+public interface TexObject extends Position, Size, Label {
 
     String objName();
 

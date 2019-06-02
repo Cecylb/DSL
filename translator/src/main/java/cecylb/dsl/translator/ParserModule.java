@@ -53,6 +53,7 @@ public class ParserModule extends AbstractParserModule {
                                         "ast.moveCursor(ASTCursor.Movement.TO_PARENT);\n"
                         ),
                         t("BFL"),
+                        optional(nt("position")),
                         optional(nt("size")),
                         optional(nt("label")),
                         optional(nt("inputs")),
@@ -76,6 +77,14 @@ public class ParserModule extends AbstractParserModule {
                         t("QUT"),
                         t("DIV")
 
+                );
+        //4
+        prod("position")
+                .is(
+                        t("POS"),
+                        t("COL"),
+                        nt("coordinates"),
+                        t("DIV")
                 );
         //4
         prod("size")

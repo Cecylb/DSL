@@ -27,6 +27,7 @@ public class LexerModule extends AbstractLexerModule {
         tokenize("SHS").pattern("^(a1|a2|a3|a4|a5)$").priority(2); // Sheet size
         tokenize("ORI").pattern("^(landscape|portrait)$").priority(2); // Orientation
         tokenize("NEW").pattern("^new$").priority(2); // New element
+        tokenize("POS").pattern("^position$").priority(2); // Position KW
         tokenize("SIZ").pattern("^size$").priority(2); // Size KW
         tokenize("LAB").pattern("^label$").priority(2); // Label KW
         //tokenize("FON").pattern("^font$").priority(2); // Fonts KW
@@ -41,7 +42,7 @@ public class LexerModule extends AbstractLexerModule {
         tokenize("NUM").pattern("^(0|([1-9][0-9]*))$").priority(2); // Numbers
         tokenize("DBL").pattern("^(-?)(0|([1-9][0-9]*))(\\.[0-9]+)?$").priority(1); // Double numbers
         tokenize("SCL").pattern("^(small|medium|large)$").priority(2); // Scale options
-        tokenize("POS").pattern("^(top|middle|bottom)$").priority(2); // Position options (unused)
+        //tokenize("POS").pattern("^(top|middle|bottom)$").priority(2); // Position options (unused)
         tokenize("CDX").pattern("^x$").priority(2); // Coordinates
         tokenize("CDY").pattern("^y$").priority(2); // Coordinates
         tokenize("CUR").pattern("^#n$").priority(2); // Property
