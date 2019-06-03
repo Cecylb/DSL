@@ -7,9 +7,12 @@ import org.immutables.value.Value;
 @Value.Immutable
 public interface ConnCTemplate extends Collectible {
 
-    String objName();
+    @Value.Default
+    default String index() {
+        return "";
+    }
 
-    //String index();
+    String objName();
 
     String port();
 
@@ -26,7 +29,7 @@ public interface ConnCTemplate extends Collectible {
     default void appendBy(final TemplateProcessor.Collector collector) {
         collector.append(Template.TEX_CONN_C.template()
                 .add("objName", objName())
-                //.add("index", index())
+                .add("index", index())
                 .add("port", port())
                 .add("x", x())
                 .add("y", y())

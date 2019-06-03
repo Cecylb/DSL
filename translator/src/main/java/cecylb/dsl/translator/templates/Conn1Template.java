@@ -7,12 +7,12 @@ import org.immutables.value.Value;
 @Value.Immutable
 public interface Conn1Template extends Collectible {
 
-    String lineType();
-
     @Value.Default
     default String index1() {
         return "";
     }
+
+    String lineType();
 
     String objName1();
 

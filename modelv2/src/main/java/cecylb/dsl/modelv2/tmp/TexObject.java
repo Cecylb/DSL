@@ -4,6 +4,10 @@ import java.util.List;
 
 public interface TexObject extends Position, Size, Label {
 
+    default String index() {
+        return "";
+    }
+
     String objName();
 
     Integer amount();

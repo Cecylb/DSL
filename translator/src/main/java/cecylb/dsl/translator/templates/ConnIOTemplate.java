@@ -7,6 +7,11 @@ import org.immutables.value.Value;
 @Value.Immutable
 public interface ConnIOTemplate extends Collectible {
 
+    @Value.Default
+    default String index() {
+        return "";
+    }
+
     String eorw();
 
     String port();
@@ -16,8 +21,6 @@ public interface ConnIOTemplate extends Collectible {
     String space();
 
     String objName();
-
-    String index();
 
     class Builder extends ImmutableConnIOTemplate.Builder {
     }

@@ -121,7 +121,7 @@ lexis
         [priority: 3]
 
     LET
-        "^([a-z]+[0-1]*)|([A-Z]+[0-1]*)$"
+        "^([a-zA-Z]+[0-1]*)$"
         [priority: 1]
 
     NUM

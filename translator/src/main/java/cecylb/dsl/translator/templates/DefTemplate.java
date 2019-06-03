@@ -7,9 +7,12 @@ import org.immutables.value.Value;
 @Value.Immutable
 public interface DefTemplate extends Collectible {
 
-    String var();
+    @Value.Default
+    default String index() {
+        return "";
+    }
 
-    //String index();
+    String var();
 
     String amount();
 
@@ -20,7 +23,7 @@ public interface DefTemplate extends Collectible {
     default void appendBy(final TemplateProcessor.Collector collector) {
         collector.append(Template.TEX_DEF.template()
                 .add("var", var())
-                //.add("index", index())
+                .add("index", index())
                 .add("amount", amount())
                 .render()
         );
