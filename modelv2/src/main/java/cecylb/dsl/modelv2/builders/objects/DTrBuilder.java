@@ -1,14 +1,14 @@
 package cecylb.dsl.modelv2.builders.objects;
 
 import cecylb.dsl.modelv2.tmp.*;
-import cecylb.dsl.modelv2.tmp.TTr;
+import cecylb.dsl.modelv2.tmp.DTr;
 import cecylb.dsl.modelv2.tmp.TexObject;
 import io.github.therealmone.tdf4j.model.ast.ASTElement;
 
-public class TTrBuilder extends AbstractObjectBuilder {
+public class DTrBuilder extends AbstractObjectBuilder {
 
-    private ModifiableTTr builder;
-    public TTrBuilder() {
+    private ModifiableDTr builder;
+    public DTrBuilder() {
 
         addRule("object/position/coordinates/x_coordinate/DBL", leaf -> {
             builder.setPosX(Double.parseDouble(leaf.token().value()));
@@ -64,28 +64,28 @@ public class TTrBuilder extends AbstractObjectBuilder {
         });
 
         addRule("object/BFR", leaf -> {
-            for(TTr.Rectangles rectangle : TTr.Rectangles.values()) {
+            for(DTr.Rectangles rectangle : DTr.Rectangles.values()) {
                 builder.rectangles().add(new Rectangle.Builder()
-                .swX(rectangle.getSwX()*builder.sizeX()*2)
-                .swY(rectangle.getSwY()*builder.sizeY()*2)
-                .neX(rectangle.getNeX()*builder.sizeX()*2)
-                .neY(rectangle.getNeY()*builder.sizeY()*2)
-                .build());
+                        .swX(rectangle.getSwX()*builder.sizeX()*2)
+                        .swY(rectangle.getSwY()*builder.sizeY()*2)
+                        .neX(rectangle.getNeX()*builder.sizeX()*2)
+                        .neY(rectangle.getNeY()*builder.sizeY()*2)
+                        .build());
             }
-            for(int i=0; i<TTr.INPUTS.length; i++){
+            for(int i=0; i<DTr.INPUTS.length; i++){
                 builder.inputs().add(new Port.Builder()
-                .portX(-builder.sizeX()* 2)
-                .portY(((builder.sizeY() * 4) / (TTr.INPUTS.length + 1) * (i + 1)) - builder.sizeY() * 2)
-                .portName(TTr.INPUTS[i])
-                .portLabel(TTr.INPUTS[i])
-                .build());
+                        .portX(-builder.sizeX()* 2)
+                        .portY(((builder.sizeY() * 4) / (DTr.INPUTS.length + 1) * (i + 1)) - builder.sizeY() * 2)
+                        .portName(DTr.INPUTS[i])
+                        .portLabel(DTr.INPUTS[i])
+                        .build());
             }
-            for(int i=0; i<TTr.OUTPUTS.length; i++){
+            for(int i=0; i<DTr.OUTPUTS.length; i++){
                 builder.outputs().add(new Port.Builder()
                         .portX(builder.sizeX()*2)
-                        .portY(((builder.sizeY() * 4) / (TTr.OUTPUTS.length + 1) * (i + 1)) - builder.sizeY() * 2)
-                        .portName(TTr.OUTPUTS[i])
-                        .portLabel(TTr.OUTPUTS[i])
+                        .portY(((builder.sizeY() * 4) / (DTr.OUTPUTS.length + 1) * (i + 1)) - builder.sizeY() * 2)
+                        .portName(DTr.OUTPUTS[i])
+                        .portLabel(DTr.OUTPUTS[i])
                         .build());
             }
         });
@@ -93,7 +93,7 @@ public class TTrBuilder extends AbstractObjectBuilder {
 
     @Override
     public TexObject build(ASTElement tree) {
-        builder = ModifiableTTr.create();
+        builder = ModifiableDTr.create();
         process(tree);
         return builder;
     }

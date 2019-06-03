@@ -1,5 +1,6 @@
 package cecylb.dsl.modelv2.tmp;
 
+import cecylb.dsl.modelv2.tmp.TexObject;
 import org.immutables.value.Value;
 
 @Value.Modifiable

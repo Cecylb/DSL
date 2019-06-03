@@ -1,7 +1,8 @@
 package cecylb.dsl.modelv2.builders.objects;
 
-import cecylb.dsl.modelv2.builders.objects.AbstractObjectBuilder;
 import cecylb.dsl.modelv2.tmp.*;
+import cecylb.dsl.modelv2.tmp.DC;
+import cecylb.dsl.modelv2.tmp.TexObject;
 import io.github.therealmone.tdf4j.model.ast.ASTElement;
 
 public class DCBuilder extends AbstractObjectBuilder {

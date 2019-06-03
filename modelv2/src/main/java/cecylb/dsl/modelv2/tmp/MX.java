@@ -5,10 +5,12 @@ import org.immutables.value.Value;
 @Value.Modifiable
 public interface MX extends TexObject {
 
+    String objName = "MX";
+
     Integer input = 1;
 
-    String[] INPUTS = new String[] {"E"};
-    String[] OUTPUTS = new String[] {};
+    String[] INPUTS = new String[] {};
+    String[] OUTPUTS = new String[] {"Q", "Qn"};
 
     enum Rectangles {
         FRAME(1.0, 1.0, 1.0, 1.0),

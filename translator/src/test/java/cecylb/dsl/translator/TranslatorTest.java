@@ -11,7 +11,7 @@ import java.io.InputStream;
 public class TranslatorTest {
 
     @Test
-    public void test1() throws Exception {
+    public void ttrInlineTest() throws Exception {
         System.out.println("[TTr inline T E S T . . .]");
         final Translator translator = new TranslatorImpl(resource("grammar.tdf"), new TemplateProcessorImpl());
         final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -22,7 +22,7 @@ public class TranslatorTest {
         System.out.println(byteArrayOutputStream.toString());
     }
     @Test
-    public void test2() throws Exception {
+    public void ttrTest() throws Exception {
         System.out.println("[TTr T E S T . . .]");
         final Translator translator = new TranslatorImpl(resource("grammar.tdf"), new TemplateProcessorImpl());
         final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -33,7 +33,7 @@ public class TranslatorTest {
         System.out.println(byteArrayOutputStream.toString());
     }
     @Test
-    public void test3() throws Exception {
+    public void dcTest() throws Exception {
         System.out.println("[DC T E S T . . .]");
         final Translator translator = new TranslatorImpl(resource("grammar.tdf"), new TemplateProcessorImpl());
         final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -44,7 +44,7 @@ public class TranslatorTest {
         System.out.println(byteArrayOutputStream.toString());
     }
     @Test
-    public void test4() throws Exception {
+    public void ujktrTest() throws Exception {
         System.out.println("[UJKTr T E S T . . .]");
         final Translator translator = new TranslatorImpl(resource("grammar.tdf"), new TemplateProcessorImpl());
         final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -55,12 +55,36 @@ public class TranslatorTest {
         System.out.println(byteArrayOutputStream.toString());
     }
     @Test
-    public void test5() throws Exception {
+    public void udvtrTest() throws Exception {
         System.out.println("[UDVTr T E S T . . .]");
         final Translator translator = new TranslatorImpl(resource("grammar.tdf"), new TemplateProcessorImpl());
         final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         translator.translate(
-                new ByteArrayInputStream("a4, landscape; new UDVTr{ size: 0.5x, 0.6y; label: 1.5x, 1.5y, \"DV #n\"; inputs:  3; amount: 2; spacing: 4; }connections{(DV)Q -- (DV)S; };".getBytes()),
+                new ByteArrayInputStream("a4, landscape; new UDVTr{ position: 0.0x, 0.0y; size: 0.5x, 0.6y; label: 1.5x, 1.5y, \"DV #n\"; inputs:  3; amount: 2; spacing: 4; }connections{(DV)Q -- (DV)S; };".getBytes()),
+                byteArrayOutputStream
+        );
+        System.out.println(byteArrayOutputStream.toString());
+    }
+
+    @Test
+    public void dtrTest() throws Exception {
+        System.out.println("[DTr T E S T . . .]");
+        final Translator translator = new TranslatorImpl(resource("grammar.tdf"), new TemplateProcessorImpl());
+        final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        translator.translate(
+                new ByteArrayInputStream("a4, landscape; new DTr{ position: 0.0x, 0.0y; size: 0.5x, 0.6y; label: 1.5x, 1.5y, \"DT #n\"; inputs:  3; amount: 2; spacing: 4; }connections{(DT)Q -- (DT)S; };".getBytes()),
+                byteArrayOutputStream
+        );
+        System.out.println(byteArrayOutputStream.toString());
+    }
+
+    @Test
+    public void mxTest() throws Exception {
+        System.out.println("[MX T E S T . . .]");
+        final Translator translator = new TranslatorImpl(resource("grammar.tdf"), new TemplateProcessorImpl());
+        final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        translator.translate(
+                new ByteArrayInputStream("a4, landscape; new MX{ position: 100.0x, 100.0y; size: 0.5x, 0.6y; label: 1.5x, 1.5y, \"Mx #n\"; inputs:  3; amount: 2; spacing: 4; }connections{(Mx)Q -- (Mx)ia; };".getBytes()),
                 byteArrayOutputStream
         );
         System.out.println(byteArrayOutputStream.toString());

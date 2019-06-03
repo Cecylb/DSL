@@ -10,6 +10,8 @@ public interface ObjectBuilder {
 
     static ObjectBuilder byName(final String name) {
         switch (name) {
+            case "DTr":
+                return new DTrBuilder();
             case "TTr":
                 return new TTrBuilder();
             case "DC":

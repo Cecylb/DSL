@@ -1,21 +1,20 @@
 package cecylb.dsl.modelv2.tmp;
 
-import cecylb.dsl.modelv2.tmp.TexObject;
 import org.immutables.value.Value;
 
 @Value.Modifiable
-public interface TTr extends TexObject {
+public interface DTr extends TexObject {
 
-    String objName = "TTr";
+    String objName = "DTr";
 
-    String[] INPUTS = new String[] {"S", "T", "C", "R"};
+    String[] INPUTS = new String[] {"S", "D", "C", "R"};
 
     String[] OUTPUTS = new String[] {"Q", "Qn"};
 
     enum Rectangles {
         FRAME(1.0, 1.0, 1.0, 1.0),
         BORDER(0.5, 1.0, 0.5, 1.0),
-        PORT(-0.5, -0.25, 1.0, 1.0);
+        PORT(-0.5, -0.25, 0.5, 1.0);
 
         private final double neX;
         private final double neY;

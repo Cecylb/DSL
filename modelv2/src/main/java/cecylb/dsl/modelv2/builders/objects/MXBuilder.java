@@ -1,13 +1,23 @@
 package cecylb.dsl.modelv2.builders.objects;
 
-import cecylb.dsl.modelv2.builders.objects.AbstractObjectBuilder;
 import cecylb.dsl.modelv2.tmp.*;
+import cecylb.dsl.modelv2.tmp.MX;
+import cecylb.dsl.modelv2.tmp.TexObject;
 import io.github.therealmone.tdf4j.model.ast.ASTElement;
 
 public class MXBuilder extends AbstractObjectBuilder {
 
     private ModifiableMX builder;
     public MXBuilder() {
+
+        addRule("object/position/coordinates/x_coordinate/DBL", leaf -> {
+            builder.setPosX(Double.parseDouble(leaf.token().value()));
+        });
+
+        addRule("object/position/coordinates/y_coordinate/DBL", leaf -> {
+            builder.setPosY(Double.parseDouble(leaf.token().value()));
+        });
+
         addRule("object/size/SCL", leaf -> {
             switch (leaf.token().value()) {
                 case "small":
@@ -58,39 +68,43 @@ public class MXBuilder extends AbstractObjectBuilder {
         });
 
         addRule("object/BFR", leaf -> {
-            Character alphabet = 'a';
-            for (int i = 0; i < builder.input(); i++) {
-                builder.inputs().add(new Port.Builder()
-                        .portX(-builder.sizeX() * 2)
-                        .portY(-((builder.sizeY() * 4) / (builder.input() + 2) * (i + 1)) + builder.sizeY() * 2)
-                        .portName("i" + alphabet.toString())
-                        .portLabel(String.valueOf(i))
-                        .build());
-                alphabet++;
-            }
-            builder.inputs().add(new Port.Builder()
-                    .portX(-builder.sizeX() * 2)
-                    .portY((builder.sizeY() * 4) / (builder.input() + 1) - builder.sizeY() * 2)
-                    .portName(builder.INPUTS[0])
-                    .portLabel(builder.INPUTS[0])
-                    .build());
-            builder.setOutput((int)Math.pow(2, builder.input()+1));
-            alphabet = 'a';
-            for (int i = 0; i < builder.output(); i++) {
+            Character index = 'a';
+            index = 'a';
+            for (int i = 0; i < Math.pow(2, builder.input()); i++) {
                 builder.outputs().add(new Port.Builder()
                         .portX(builder.sizeX() * 2)
-                        .portY(((builder.sizeY() * 4) / (builder.output() + 1) * (i + 1)) - builder.sizeY() * 2)
-                        .portName("o" + alphabet.toString())
+                        .portY(((builder.sizeY() * 4) / (Math.pow(2, builder.input()) + 1) * (i + 1)) - builder.sizeY() * 2)
+                        .portName("i" + index.toString())
                         .portLabel(String.valueOf(i))
                         .build());
-                alphabet++;
+                index++;
+            }
+            for (int i = 0; i < builder.input(); i++) {
+                builder.outputs().add(new Port.Builder()
+                        .portX(builder.sizeX() * 2)
+                        .portY(((builder.sizeY() * 4) / (Math.pow(2, builder.input()) + 1) * (i + 1)) - builder.sizeY() * 2)
+                        .portName("s" + index.toString())
+                        .portLabel(String.valueOf(i))
+                        .build());
+                index++;
+            }
+            index = 'a';
+            for(int i=0; i<DTr.OUTPUTS.length; i++){
+                builder.outputs().add(new Port.Builder()
+                        .portX(builder.sizeX()*2)
+                        .portY(((builder.sizeY() * 4) / (DTr.OUTPUTS.length + 1) * (i + 1)) - builder.sizeY() * 2)
+                        .portName(DTr.OUTPUTS[i])
+                        .portLabel(DTr.OUTPUTS[i])
+                        .build());
             }
             for (MX.Rectangles rectangle : MX.Rectangles.values()) {
                 builder.rectangles().add(new Rectangle.Builder()
                         .swX(rectangle.getSwX() * builder.sizeX() * 2)
-                        .swY(rectangle.getSwY() * builder.sizeY() * builder.output() / 4)
+                        .swY(rectangle.getSwY() * builder.sizeY() *
+                                (builder.input()+Math.pow(2, builder.input())) / 4)
                         .neX(rectangle.getNeX() * builder.sizeX() * 2)
-                        .neY(rectangle.getNeY() * builder.sizeY() * builder.output() / 4)
+                        .neY(rectangle.getNeY() * builder.sizeY() *
+                                (builder.input()+Math.pow(2, builder.input())) / 4)
                         .build());
             }
         });

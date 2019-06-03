@@ -1,13 +1,22 @@
 package cecylb.dsl.modelv2.builders.objects;
 
-import cecylb.dsl.modelv2.builders.objects.AbstractObjectBuilder;
 import cecylb.dsl.modelv2.tmp.*;
+import cecylb.dsl.modelv2.tmp.TexObject;
+import cecylb.dsl.modelv2.tmp.UJKTr;
 import io.github.therealmone.tdf4j.model.ast.ASTElement;
 
 public class UJKTrBuilder extends AbstractObjectBuilder {
 
     private ModifiableUJKTr builder;
     public UJKTrBuilder() {
+
+        addRule("object/position/coordinates/x_coordinate/DBL", leaf -> {
+            builder.setPosX(Double.parseDouble(leaf.token().value()));
+        });
+
+        addRule("object/position/coordinates/y_coordinate/DBL", leaf -> {
+            builder.setPosY(Double.parseDouble(leaf.token().value()));
+        });
 
         addRule("object/size/SCL", leaf -> {
             switch(leaf.token().value()) {
