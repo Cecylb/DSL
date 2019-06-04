@@ -196,7 +196,7 @@ teXforEach(index, K)::=<<
 >>
 
 teXlet()::=<<
-\global\let\pa\pb\ma\mb}
+\global\let\p\m
 
 
 >>

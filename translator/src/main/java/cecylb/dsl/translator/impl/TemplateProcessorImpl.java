@@ -176,7 +176,7 @@ public class TemplateProcessorImpl implements TemplateProcessor {
                     .appendBy(collector);
             new ForEachTemplate.Builder()
                     .k("1")
-                    .index("a") // idk how to solve this yet
+                    .index("") // idk how to solve this yet
                     .build()
                     .appendBy(collector);
             //collector.append(TEX_BRACKET_L.render());
@@ -188,7 +188,7 @@ public class TemplateProcessorImpl implements TemplateProcessor {
                     .build()
                     .appendBy(collector);
             for(TexObject object : context.getTexObject()) {
-                if (object.labelName().equals(connection.objName1())) {
+                if (object.labelName().equals(connection.objName1()))
                     from = new ConnectionFields.Builder()
                             .objName(object.labelName())
                             .sizeY(object.sizeY())
@@ -197,7 +197,7 @@ public class TemplateProcessorImpl implements TemplateProcessor {
                             .portName(connection.port1())
                             .spacing(object.spacing())
                             .build();
-                } else if (object.labelName().equals(connection.objName2())) {
+                if (object.labelName().equals(connection.objName2()))
                     to = new ConnectionFields.Builder()
                             .objName(object.labelName())
                             .sizeY(object.sizeY())
@@ -206,17 +206,16 @@ public class TemplateProcessorImpl implements TemplateProcessor {
                             .portName(connection.port2())
                             .spacing(object.spacing())
                             .build();
-                }
             }
             new ConnCTemplate.Builder()
                     .objName(connection.objName1())
                     .port(connection.port1())
-                    .x(String.valueOf(from.spacing()/4))
+                    .x(String.valueOf((double)from.spacing()/4))
                     .y("0")
-                    .let("m")
+                    .let("p")
                     .build()
                     .appendBy(collector);
-            if(from.posX()>to.posX() && from.posY()>to.posY()){
+            /*if(from.posX()>to.posX() && from.posY()>to.posY()){
                 new ConnCTemplate.Builder()
                         .objName(connection.objName1())
                         .port(connection.port1())
@@ -250,14 +249,14 @@ public class TemplateProcessorImpl implements TemplateProcessor {
                         .let("p")
                         .build()
                         .appendBy(collector);
-            }
+            }*/
             new ConnCTemplate.Builder()
                     .objName(connection.objName2())
                     .port(connection.port2())
-                    .x(String.valueOf(-to.spacing()/4))
+                    .x(String.valueOf(-(double)to.spacing()/4))
                     .y("0")
                     //.index(String.valueOf(index2))
-                    .let("p")
+                    .let("m")
                     .build()
                     .appendBy(collector);
             new Conn2Template.Builder()
@@ -266,6 +265,7 @@ public class TemplateProcessorImpl implements TemplateProcessor {
                     .build()
                     .appendBy(collector);
         }
+        collector.append(TEX_LET.render());
         collector.append(TEX_BRACKET_R.render());
     }
 

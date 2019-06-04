@@ -69,42 +69,41 @@ public class MXBuilder extends AbstractObjectBuilder {
 
         addRule("object/BFR", leaf -> {
             Character index = 'a';
-            index = 'a';
-            for (int i = 0; i < Math.pow(2, builder.input()); i++) {
-                builder.outputs().add(new Port.Builder()
-                        .portX(builder.sizeX() * 2)
-                        .portY(((builder.sizeY() * 4) / (Math.pow(2, builder.input()) + 1) * (i + 1)) - builder.sizeY() * 2)
+            int j=0;
+            for (int i=0; i < Math.pow(2, builder.input()); i++) {
+                builder.inputs().add(new Port.Builder()
+                        .portX(-builder.sizeX() * 2)
+                        .portY(-((builder.sizeY() * 4) / (Math.pow(2, builder.input()) + 1) * (i + 1)) + builder.sizeY() * 3)
                         .portName("i" + index.toString())
                         .portLabel(String.valueOf(i))
                         .build());
                 index++;
             }
-            for (int i = 0; i < builder.input(); i++) {
-                builder.outputs().add(new Port.Builder()
-                        .portX(builder.sizeX() * 2)
-                        .portY(((builder.sizeY() * 4) / (Math.pow(2, builder.input()) + 1) * (i + 1)) - builder.sizeY() * 2)
+            index = 'a';
+            for (int i = (int)Math.pow(2, builder.input()); i < builder.input() + Math.pow(2, builder.input()); i++) {
+                builder.inputs().add(new Port.Builder()
+                        .portX(-builder.sizeX() * 2)
+                        .portY(-((builder.sizeY() * 4) / (Math.pow(2, builder.input()) + 1) * (i + 1)) + builder.sizeY() * 3)
                         .portName("s" + index.toString())
-                        .portLabel(String.valueOf(i))
+                        .portLabel(String.valueOf(j))
                         .build());
                 index++;
+                j++;
             }
-            index = 'a';
             for(int i=0; i<DTr.OUTPUTS.length; i++){
                 builder.outputs().add(new Port.Builder()
                         .portX(builder.sizeX()*2)
-                        .portY(((builder.sizeY() * 4) / (DTr.OUTPUTS.length + 1) * (i + 1)) - builder.sizeY() * 2)
+                        .portY(-((builder.sizeY() * 4) / (DTr.OUTPUTS.length + 1) * (i + 1)) + builder.sizeY() * 2)
                         .portName(DTr.OUTPUTS[i])
-                        .portLabel(DTr.OUTPUTS[i])
+                        .portLabel(DTr.OUTPUTS[i] + "  ")
                         .build());
             }
             for (MX.Rectangles rectangle : MX.Rectangles.values()) {
                 builder.rectangles().add(new Rectangle.Builder()
                         .swX(rectangle.getSwX() * builder.sizeX() * 2)
-                        .swY(rectangle.getSwY() * builder.sizeY() *
-                                (builder.input()+Math.pow(2, builder.input())) / 4)
+                        .swY(rectangle.getSwY() * builder.sizeY() * (builder.inputs().size()) / 4)
                         .neX(rectangle.getNeX() * builder.sizeX() * 2)
-                        .neY(rectangle.getNeY() * builder.sizeY() *
-                                (builder.input()+Math.pow(2, builder.input())) / 4)
+                        .neY(rectangle.getNeY() * builder.sizeY() * (builder.inputs().size()) / 4)
                         .build());
             }
         });

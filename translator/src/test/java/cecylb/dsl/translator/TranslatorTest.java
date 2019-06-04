@@ -84,7 +84,7 @@ public class TranslatorTest {
         final Translator translator = new TranslatorImpl(resource("grammar.tdf"), new TemplateProcessorImpl());
         final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         translator.translate(
-                new ByteArrayInputStream("a4, landscape; new MX{ position: 100.0x, 100.0y; size: 0.5x, 0.6y; label: 1.5x, 1.5y, \"Mx #n\"; inputs:  3; amount: 2; spacing: 4; }connections{(Mx)Q -- (Mx)ia; };".getBytes()),
+                new ByteArrayInputStream("a4, landscape; new MX{ position: 0.0x, 0.0y; size: 0.5x, 0.6y; label: 1.5x, 1.5y, \"Mx #n\"; inputs:  3; amount: 2; spacing: 4; }connections{(Mx)Q -- (Mx)ia; };".getBytes()),
                 byteArrayOutputStream
         );
         System.out.println(byteArrayOutputStream.toString());

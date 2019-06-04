@@ -26,7 +26,7 @@ public class ConnectionBuilder extends AbstractConnectionBuilder {
         });
 
         addRule("conneсtion/LIN", leaf -> {
-            builder.setLineType(leaf.token().value());
+            builder.setLineType("-");
         });
 
         addRule("conneсtion/INV", leaf -> {
