@@ -75,7 +75,7 @@ public class UJKTrBuilder extends AbstractObjectBuilder {
             for(int i = 0; i< UJKTr.INPUTS.length; i++){
                 builder.inputs().add(new Port.Builder()
                         .portX(-builder.sizeX()* 2)
-                        .portY(((builder.sizeY() * 4) / (UJKTr.INPUTS.length + 1) * (i + 1)) - builder.sizeY() * 2)
+                        .portY(-((builder.sizeY() * 4) / (UJKTr.INPUTS.length + 1) * (i + 1)) + builder.sizeY() * 2)
                         .portName(UJKTr.INPUTS[i])
                         .portLabel(UJKTr.INPUTS[i])
                         .build());
@@ -83,7 +83,7 @@ public class UJKTrBuilder extends AbstractObjectBuilder {
             for(int i = 0; i< UJKTr.OUTPUTS.length; i++){
                 builder.outputs().add(new Port.Builder()
                         .portX(builder.sizeX()*2)
-                        .portY(((builder.sizeY() * 4) / (UJKTr.OUTPUTS.length + 1) * (i + 1)) - builder.sizeY() * 2)
+                        .portY(-((builder.sizeY() * 4) / (UJKTr.OUTPUTS.length + 1) * (i + 1)) + builder.sizeY() * 2)
                         .portName(UJKTr.OUTPUTS[i])
                         .portLabel(UJKTr.OUTPUTS[i])
                         .build());

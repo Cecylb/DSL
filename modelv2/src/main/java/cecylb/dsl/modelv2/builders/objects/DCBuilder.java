@@ -81,28 +81,28 @@ public class DCBuilder extends AbstractObjectBuilder {
                 alphabet++;
             }
             builder.inputs().add(new Port.Builder()
-            .portX(-builder.sizeX() * 2)
-            .portY((builder.sizeY() * 4) / (builder.input() + 1) - builder.sizeY() * 2)
-            .portName(builder.INPUTS[0])
-            .portLabel(builder.INPUTS[0])
-            .build());
+                    .portX(-builder.sizeX() * 2)
+                    .portY(-(builder.sizeY() * 4) / (builder.input() + 2) * (builder.input() + 1) + builder.sizeY() * 2)
+                    .portName(builder.INPUTS[0])
+                    .portLabel(builder.INPUTS[0])
+                    .build());
             builder.setOutput((int)Math.pow(2, builder.input()+1));
             alphabet = 'a';
             for (int i = 0; i < builder.output(); i++) {
                 builder.outputs().add(new Port.Builder()
                         .portX(builder.sizeX() * 2)
-                        .portY(((builder.sizeY() * 4) / (builder.output() + 1) * (i + 1)) - builder.sizeY() * 2)
+                        .portY(-((builder.sizeY() * 4) / (builder.output() + 1) * (i + 1)) + builder.sizeY() * 2)
                         .portName("o" + alphabet.toString())
-                        .portLabel(String.valueOf(i))
+                        .portLabel(i + "  ")
                         .build());
                 alphabet++;
             }
             for (DC.Rectangles rectangle : DC.Rectangles.values()) {
                 builder.rectangles().add(new Rectangle.Builder()
                         .swX(rectangle.getSwX() * builder.sizeX() * 2)
-                        .swY(rectangle.getSwY() * builder.sizeY() * builder.output() / 4)
+                        .swY(rectangle.getSwY() * builder.sizeY() * builder.output() / 8)
                         .neX(rectangle.getNeX() * builder.sizeX() * 2)
-                        .neY(rectangle.getNeY() * builder.sizeY() * builder.output() / 4)
+                        .neY(rectangle.getNeY() * builder.sizeY() * builder.output() / 8)
                         .build());
             }
         });

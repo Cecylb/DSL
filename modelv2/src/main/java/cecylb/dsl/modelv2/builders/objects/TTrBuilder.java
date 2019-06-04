@@ -75,7 +75,7 @@ public class TTrBuilder extends AbstractObjectBuilder {
             for(int i=0; i<TTr.INPUTS.length; i++){
                 builder.inputs().add(new Port.Builder()
                 .portX(-builder.sizeX()* 2)
-                .portY(((builder.sizeY() * 4) / (TTr.INPUTS.length + 1) * (i + 1)) - builder.sizeY() * 2)
+                .portY(-((builder.sizeY() * 4) / (TTr.INPUTS.length + 1) * (i + 1)) + builder.sizeY() * 2)
                 .portName(TTr.INPUTS[i])
                 .portLabel(TTr.INPUTS[i])
                 .build());
@@ -83,7 +83,7 @@ public class TTrBuilder extends AbstractObjectBuilder {
             for(int i=0; i<TTr.OUTPUTS.length; i++){
                 builder.outputs().add(new Port.Builder()
                         .portX(builder.sizeX()*2)
-                        .portY(((builder.sizeY() * 4) / (TTr.OUTPUTS.length + 1) * (i + 1)) - builder.sizeY() * 2)
+                        .portY(-((builder.sizeY() * 4) / (TTr.OUTPUTS.length + 1) * (i + 1)) + builder.sizeY() * 2)
                         .portName(TTr.OUTPUTS[i])
                         .portLabel(TTr.OUTPUTS[i])
                         .build());

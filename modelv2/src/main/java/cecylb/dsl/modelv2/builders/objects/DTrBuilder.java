@@ -75,7 +75,7 @@ public class DTrBuilder extends AbstractObjectBuilder {
             for(int i=0; i<DTr.INPUTS.length; i++){
                 builder.inputs().add(new Port.Builder()
                         .portX(-builder.sizeX()* 2)
-                        .portY(((builder.sizeY() * 4) / (DTr.INPUTS.length + 1) * (i + 1)) - builder.sizeY() * 2)
+                        .portY(-((builder.sizeY() * 4) / (DTr.INPUTS.length + 1) * (i + 1)) + builder.sizeY() * 2)
                         .portName(DTr.INPUTS[i])
                         .portLabel(DTr.INPUTS[i])
                         .build());
@@ -83,7 +83,7 @@ public class DTrBuilder extends AbstractObjectBuilder {
             for(int i=0; i<DTr.OUTPUTS.length; i++){
                 builder.outputs().add(new Port.Builder()
                         .portX(builder.sizeX()*2)
-                        .portY(((builder.sizeY() * 4) / (DTr.OUTPUTS.length + 1) * (i + 1)) - builder.sizeY() * 2)
+                        .portY(-((builder.sizeY() * 4) / (DTr.OUTPUTS.length + 1) * (i + 1)) + builder.sizeY() * 2)
                         .portName(DTr.OUTPUTS[i])
                         .portLabel(DTr.OUTPUTS[i])
                         .build());

@@ -75,7 +75,7 @@ public class UDVTrBuilder extends AbstractObjectBuilder {
             for(int i = 0; i< UDVTr.INPUTS.length; i++){
                 builder.inputs().add(new Port.Builder()
                         .portX(-builder.sizeX()* 2)
-                        .portY(((builder.sizeY() * 4) / (UDVTr.INPUTS.length + 1) * (i + 1)) - builder.sizeY() * 2)
+                        .portY(-((builder.sizeY() * 4) / (UDVTr.INPUTS.length + 1) * (i + 1)) + builder.sizeY() * 2)
                         .portName(UDVTr.INPUTS[i])
                         .portLabel(UDVTr.INPUTS[i])
                         .build());
@@ -83,7 +83,7 @@ public class UDVTrBuilder extends AbstractObjectBuilder {
             for(int i = 0; i< UDVTr.OUTPUTS.length; i++){
                 builder.outputs().add(new Port.Builder()
                         .portX(builder.sizeX()*2)
-                        .portY(((builder.sizeY() * 4) / (UDVTr.OUTPUTS.length + 1) * (i + 1)) - builder.sizeY() * 2)
+                        .portY(-((builder.sizeY() * 4) / (UDVTr.OUTPUTS.length + 1) * (i + 1)) + builder.sizeY() * 2)
                         .portName(UDVTr.OUTPUTS[i])
                         .portLabel(UDVTr.OUTPUTS[i])
                         .build());
