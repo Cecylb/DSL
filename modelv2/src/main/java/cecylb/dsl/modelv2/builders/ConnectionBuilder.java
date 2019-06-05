@@ -49,6 +49,10 @@ public class ConnectionBuilder extends AbstractConnectionBuilder {
             builder.setPort1(leaf.token().value());
         });
 
+        addRule("connection/obj2/property/IDN", leaf -> {
+            builder.setSelf(true);
+        });
+
     }
 
     public Connection build(ASTElement tree) {

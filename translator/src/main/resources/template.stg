@@ -162,9 +162,12 @@ teXspacing(labelName, spacing, index)::=<<
 >>
 
 //CONNECTIONS BLOCK
+teXdrawLine(linetype)::=<<
+\draw [<linetype>]
+>>
 
-teXconn1(linetype, index1, objName1, port1)::=<<
-\draw [<linetype>] (<objName1>\p<index1>.<port1>)
+teXconn1(index1, objName1, port1)::=<<
+(<objName1>\p<index1>.<port1>)
 >> //START POINT
 
 teXconnC(objName, index, port, x, y, let)::=<<-- ($ (<objName>\\<let><index>.<port>) + (<x>,<y>) $)>> //OPTIONAL FOR THE LINE ANGLES

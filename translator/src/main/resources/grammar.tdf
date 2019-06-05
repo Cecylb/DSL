@@ -120,6 +120,10 @@ lexis
         "^code$"
         [priority: 3]
 
+    IDN
+        "^#self$"
+        [priority: 2]
+
     LET
         "^([a-zA-Z]+[0-1]*)$"
         [priority: 1]

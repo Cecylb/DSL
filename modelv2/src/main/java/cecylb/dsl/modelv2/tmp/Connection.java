@@ -5,6 +5,11 @@ import org.immutables.value.Value;
 @Value.Modifiable
 public interface Connection {
 
+    @Value.Default
+    default Boolean self() {
+        return false;
+    }
+
     String objName1();
 
     String objName2();

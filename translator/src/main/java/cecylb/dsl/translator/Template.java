@@ -23,6 +23,7 @@ public enum Template {
     TEX_BEGIN("teXbegin"),
     TEX_DEF("teXdef"),
     TEX_SPACING("teXspacing"),
+    TEX_DRAW_LINE("teXdrawLine"),
     TEX_CONN_1("teXconn1"),
     TEX_CONN_C("teXconnC"),
     TEX_CONN_2("teXconn2"),
