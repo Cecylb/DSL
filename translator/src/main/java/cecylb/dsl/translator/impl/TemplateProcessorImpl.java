@@ -166,28 +166,14 @@ public class TemplateProcessorImpl implements TemplateProcessor {
     }
 
     private void processConnections(final Collector collector, final Parser.Context context) {
-        ConnectionFields from = new ConnectionFields.Builder().objName("").sizeY(0.0).posX(0.0).posY(0.0).spacing(0).portName("").build();
-        ConnectionFields to = new ConnectionFields.Builder().objName("").sizeY(0.0).posX(0.0).posY(0.0).spacing(0).portName("").build();
+        ConnectionFields from = new ConnectionFields.Builder().objName("").sizeY(0.0).posX(0.0).posY(0.0).portY(0.0).spacing(0).portName("").build();
+        ConnectionFields to = new ConnectionFields.Builder().objName("").sizeY(0.0).posX(0.0).posY(0.0).portY(0.0).spacing(0).portName("").build();
         for (Connection connection : context.getConnections()) {
             for(TexObject object : context.getTexObject()) {
                 if (object.labelName().equals(connection.objName1()))
-                    from = new ConnectionFields.Builder()
-                            .objName(object.labelName())
-                            .sizeY(object.sizeY())
-                            .posX(object.posX())
-                            .posY(object.posY())
-                            .portName(connection.port1())
-                            .spacing(object.spacing())
-                            .build();
+                    from = getFrom(connection.port1(), object);
                 if (object.labelName().equals(connection.objName2()))
-                    to = new ConnectionFields.Builder()
-                            .objName(object.labelName())
-                            .sizeY(object.sizeY())
-                            .posX(object.posX())
-                            .posY(object.posY())
-                            .portName(connection.port2())
-                            .spacing(object.spacing())
-                            .build();
+                    to = getTo(connection.port2(), object);
             }
             new DefTemplate.Builder()
                     .amount("0")
@@ -207,59 +193,53 @@ public class TemplateProcessorImpl implements TemplateProcessor {
             if(from.posX() > to.posX() && from.posY() < to.posY()) { // Connection type 1
                 System.out.println("1");
                 processConnectionType1(from, to, collector);
-            } else if(from.posX() > to.posX() && from.posY() > to.posY()) { // Connection type 2 (different objects)
-                System.out.println("2");
-                processConnectionType2(from, to, collector);
-            } else if(from.posX().equals(to.posX()) && from.posY().equals(to.posY())) { // Connection type 2 (same object)
+            } else if (connection.self().equals(true)){ // Connection type 2 (self connection)
                 System.out.println("2");
                 processConnectionType2(from, to, collector);
             } else if(from.posX() < to.posX() && from.posY() < to.posY()) { // Connection type 3
                 System.out.println("3");
                 processConnectionType3(from, to, collector);
-            } else if (connection.self().equals(true)){ // Connection type 4 (self connection)
+            } else if(from.posX() > to.posX() && from.posY() > to.posY()) { // Connection type 4 (different objects)
+                System.out.println("4");
+                processConnectionType4(from, to, collector);
+            } else if(from.posX().equals(to.posX()) && from.posY().equals(to.posY())) { // Connection type 4 (same object)
                 System.out.println("4");
                 processConnectionType4(from, to, collector);
             }
-
-            /*if(from.posX()>to.posX() && from.posY()>to.posY()){
-                new ConnCTemplate.Builder()
-                        .objName(connection.objName1())
-                        .port(connection.port1())
-                        .x(String.valueOf(from.spacing()/4))
-                        .y(String.valueOf(-from.sizeY()*2))
-                        .let("m")
-                        .build()
-                        .appendBy(collector);
-                new ConnCTemplate.Builder()
-                        .objName(connection.objName2())
-                        .port(connection.port2())
-                        .x(String.valueOf(-to.spacing()/4))
-                        .y(String.valueOf(from.sizeY()*2))
-                        .let("p")
-                        .build()
-                        .appendBy(collector);
-            } else if(from.posX()>to.posX() && from.posY()<to.posY()) {
-                new ConnCTemplate.Builder()
-                        .objName(connection.objName1())
-                        .port(connection.port1())
-                        .x(String.valueOf(from.spacing()/4))
-                        .y(String.valueOf(from.sizeY()*2))
-                        .let("m")
-                        .build()
-                        .appendBy(collector);
-                new ConnCTemplate.Builder()
-                        .objName(connection.objName2())
-                        .port(connection.port2())
-                        .x(String.valueOf(-to.spacing()/4))
-                        .y(String.valueOf(from.sizeY()*2))
-                        .let("p")
-                        .build()
-                        .appendBy(collector);
-            }*/
-
         }
         collector.append(TEX_LET.render());
         collector.append(TEX_BRACKET_R.render());
+    }
+
+    private ConnectionFields getFrom(final String portName, final TexObject object) {
+        double portY = 0.0;
+        for(Port port : object.outputs()) {
+            if(port.portName().equals(portName)) portY = port.portY();
+        }
+        return new ConnectionFields.Builder()
+                .objName(object.labelName())
+                .sizeY(object.sizeY())
+                .posX(object.posX())
+                .posY(object.posY())
+                .portY(portY)
+                .portName(portName)
+                .spacing(object.spacing())
+                .build();
+    }
+    private ConnectionFields getTo(final String portName, final TexObject object) {
+        double portY = 0.0;
+        for(Port port : object.inputs()) {
+            if(port.portName().equals(portName)) portY = port.portY();
+        }
+        return new ConnectionFields.Builder()
+                .objName(object.labelName())
+                .sizeY(object.sizeY())
+                .posX(object.posX())
+                .posY(object.posY())
+                .portY(portY)
+                .portName(portName)
+                .spacing(object.spacing())
+                .build();
     }
 
     private void processConnectionType1(final ConnectionFields from, final ConnectionFields to, final Collector collector) {
@@ -277,7 +257,22 @@ public class TemplateProcessorImpl implements TemplateProcessor {
                 .build()
                 .appendBy(collector);
 
-
+        new ConnCTemplate.Builder()
+                        .objName(from.objName())
+                        .port(from.portName())
+                        .x(String.valueOf(from.spacing()/4))
+                        .y(String.valueOf(from.sizeY()*2))
+                        .let("m")
+                        .build()
+                        .appendBy(collector);
+        new ConnCTemplate.Builder()
+                        .objName(to.objName())
+                        .port(to.portName())
+                        .x(String.valueOf(-to.spacing()/4))
+                        .y(String.valueOf(from.sizeY()*2))
+                        .let("p")
+                        .build()
+                        .appendBy(collector);
 
         new ConnCTemplate.Builder()
                 .objName(to.objName())
@@ -296,34 +291,54 @@ public class TemplateProcessorImpl implements TemplateProcessor {
     }
 
     private void processConnectionType2(final ConnectionFields from, final ConnectionFields to, final Collector collector) {
+        System.out.println("HERE ");
+        System.out.println(from.portY());
+        System.out.println(to.portY());
         new Conn1Template.Builder()
                 .objName1(from.objName())
                 .port1(from.portName())
+                .let("p")
                 .build()
                 .appendBy(collector);
         new ConnCTemplate.Builder()
                 .objName(from.objName())
                 .port(from.portName())
-                .x(String.valueOf((double)from.spacing()/4))
+                .x(String.valueOf((double)from.spacing()/8))
                 .y("0")
                 .let("p")
                 .build()
                 .appendBy(collector);
 
-
+        new ConnCTemplate.Builder()
+                .objName(from.objName())
+                .port(from.portName())
+                .x(String.valueOf((double)from.spacing()/8))
+                .y(String.valueOf(from.sizeY()*8 - (from.portY()/4 - from.sizeY())))
+                .let("p")
+                .build()
+                .appendBy(collector);
+        new ConnCTemplate.Builder()
+                .objName(to.objName())
+                .port(to.portName())
+                .x(String.valueOf((double)-to.spacing()/8))
+                .y(String.valueOf(to.sizeY()*8 - to.portY()/4))
+                .let("p")
+                .build()
+                .appendBy(collector);
 
         new ConnCTemplate.Builder()
                 .objName(to.objName())
                 .port(to.portName())
-                .x(String.valueOf(-(double)to.spacing()/4))
-                .y("0")
+                .x(String.valueOf(-(double)to.spacing()/8))
+                .y("0.0")
                 //.index(String.valueOf(index2))
-                .let("m")
+                .let("p")
                 .build()
                 .appendBy(collector);
         new Conn2Template.Builder()
-                .objName2(from.objName())
+                .objName2(to.objName())
                 .port2(to.portName())
+                .let("p")
                 .build()
                 .appendBy(collector);
     }
@@ -343,8 +358,6 @@ public class TemplateProcessorImpl implements TemplateProcessor {
                 .build()
                 .appendBy(collector);
 
-
-
         new ConnCTemplate.Builder()
                 .objName(to.objName())
                 .port(to.portName())
@@ -361,8 +374,8 @@ public class TemplateProcessorImpl implements TemplateProcessor {
                 .appendBy(collector);
     }
 
+
     private void processConnectionType4(final ConnectionFields from, final ConnectionFields to, final Collector collector) {
-        System.out.println("HERE ");
         new Conn1Template.Builder()
                 .objName1(from.objName())
                 .port1(from.portName())
@@ -377,6 +390,22 @@ public class TemplateProcessorImpl implements TemplateProcessor {
                 .build()
                 .appendBy(collector);
 
+        new ConnCTemplate.Builder()
+                .objName(from.objName())
+                .port(from.portName())
+                .x(String.valueOf(from.spacing()/4))
+                .y(String.valueOf(-from.sizeY()*2))
+                .let("m")
+                .build()
+                .appendBy(collector);
+        new ConnCTemplate.Builder()
+                .objName(to.objName())
+                .port(to.portName())
+                .x(String.valueOf(-to.spacing()/4))
+                .y(String.valueOf(from.sizeY()*2))
+                .let("p")
+                .build()
+                .appendBy(collector);
 
 
         new ConnCTemplate.Builder()
@@ -389,7 +418,7 @@ public class TemplateProcessorImpl implements TemplateProcessor {
                 .build()
                 .appendBy(collector);
         new Conn2Template.Builder()
-                .objName2(to.objName())
+                .objName2(from.objName())
                 .port2(to.portName())
                 .build()
                 .appendBy(collector);

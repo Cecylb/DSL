@@ -166,13 +166,13 @@ teXdrawLine(linetype)::=<<
 \draw [<linetype>]
 >>
 
-teXconn1(index1, objName1, port1)::=<<
-(<objName1>\p<index1>.<port1>)
+teXconn1(let, index1, objName1, port1)::=<<
+(<objName1>\\<let><index1>.<port1>)
 >> //START POINT
 
 teXconnC(objName, index, port, x, y, let)::=<<-- ($ (<objName>\\<let><index>.<port>) + (<x>,<y>) $)>> //OPTIONAL FOR THE LINE ANGLES
 
-teXconn2(index2, objName2, port2)::=<< --(<objName2>\m<index2>.<port2>);
+teXconn2(let, index2, objName2, port2)::=<< --(<objName2>\\<let><index2>.<port2>);
 
 
 >> //END POINT (CONNECTION)

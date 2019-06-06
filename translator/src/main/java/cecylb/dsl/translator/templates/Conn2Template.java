@@ -12,6 +12,11 @@ public interface Conn2Template extends Collectible {
         return "";
     }
 
+    @Value.Default
+    default String let() {
+        return "";
+    }
+
     String objName2();
 
     String port2();
@@ -23,6 +28,7 @@ public interface Conn2Template extends Collectible {
     default void appendBy(final TemplateProcessor.Collector collector) {
         collector.append(Template.TEX_CONN_2.template()
                 .add("index2", index2())
+                .add("let", let())
                 .add("objName2", objName2())
                 .add("port2", port2())
                 .render()
