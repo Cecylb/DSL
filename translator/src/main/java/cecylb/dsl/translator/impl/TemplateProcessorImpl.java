@@ -143,7 +143,8 @@ public class TemplateProcessorImpl implements TemplateProcessor {
                     .appendBy(collector);
             new ForEachTemplate.Builder()
                     .k("0")
-                    .index(String.valueOf(index))
+                    .index1(String.valueOf(index))
+                    .index2(String.valueOf(index))
                     .build()
                     .appendBy(collector);
             collector.append(TEX_BRACKET_L.render());
@@ -182,7 +183,8 @@ public class TemplateProcessorImpl implements TemplateProcessor {
                     .appendBy(collector);
             new ForEachTemplate.Builder()
                     .k("1")
-                    .index("") // idk how to solve this yet
+                    .index1("") // idk how to solve this yet
+                    .index2("a")
                     .build()
                     .appendBy(collector);
             collector.append(TEX_BRACKET_L.render());

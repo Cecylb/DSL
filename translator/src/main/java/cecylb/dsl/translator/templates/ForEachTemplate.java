@@ -8,7 +8,12 @@ import org.immutables.value.Value;
 public interface ForEachTemplate extends Collectible {
 
     @Value.Default
-    default String index() {
+    default String index1() {
+        return "";
+    }
+
+    @Value.Default
+    default String index2() {
         return "";
     }
 
@@ -20,7 +25,8 @@ public interface ForEachTemplate extends Collectible {
     @Override
     default void appendBy(final TemplateProcessor.Collector collector) {
         collector.append(Template.TEX_FOR_EACH.template()
-                .add("index", index())
+                .add("index1", index1())
+                .add("index2", index2())
                 .add("K", k())
                 .render()
         );

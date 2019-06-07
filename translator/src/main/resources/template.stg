@@ -193,8 +193,8 @@ teXend()::=<<
 
 //OTHER PROPERTIES
 
-teXforEach(index, K)::=<<
-\foreach \m<index> in {<K>,...,\N<index>}
+teXforEach(index1, index2, K)::=<<
+\foreach \m<index1> in {<K>,...,\N<index2>}
 
 >>
 
