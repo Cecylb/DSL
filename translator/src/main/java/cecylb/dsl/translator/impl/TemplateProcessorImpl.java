@@ -198,13 +198,13 @@ public class TemplateProcessorImpl implements TemplateProcessor {
             } else if (connection.self().equals(true)){ // Connection type 2 (self connection)
                 System.out.println("2");
                 processConnectionType2(from, to, collector);
+            }  else if(from.posX().equals(to.posX()) && from.posY().equals(to.posY())) { // Connection type 4 (same object)
+                System.out.println("3");
+                processConnectionType3(from, to, collector);
             } else if(from.posX() < to.posX() && from.posY() < to.posY()) { // Connection type 3
                 System.out.println("3");
                 processConnectionType3(from, to, collector);
             } else if(from.posX() > to.posX() && from.posY() > to.posY()) { // Connection type 4 (different objects)
-                System.out.println("4");
-                processConnectionType4(from, to, collector);
-            } else if(from.posX().equals(to.posX()) && from.posY().equals(to.posY())) { // Connection type 4 (same object)
                 System.out.println("4");
                 processConnectionType4(from, to, collector);
             }
@@ -248,6 +248,7 @@ public class TemplateProcessorImpl implements TemplateProcessor {
         new Conn1Template.Builder()
                 .objName1(from.objName())
                 .port1(from.portName())
+                .let("p")
                 .build()
                 .appendBy(collector);
         new ConnCTemplate.Builder()
@@ -288,6 +289,7 @@ public class TemplateProcessorImpl implements TemplateProcessor {
         new Conn2Template.Builder()
                 .objName2(to.objName())
                 .port2(to.portName())
+                .let("m")
                 .build()
                 .appendBy(collector);
     }
@@ -349,6 +351,7 @@ public class TemplateProcessorImpl implements TemplateProcessor {
         new Conn1Template.Builder()
                 .objName1(from.objName())
                 .port1(from.portName())
+                .let("p")
                 .build()
                 .appendBy(collector);
         new ConnCTemplate.Builder()
@@ -372,6 +375,7 @@ public class TemplateProcessorImpl implements TemplateProcessor {
         new Conn2Template.Builder()
                 .objName2(to.objName())
                 .port2(to.portName())
+                .let("p")
                 .build()
                 .appendBy(collector);
     }
@@ -381,6 +385,7 @@ public class TemplateProcessorImpl implements TemplateProcessor {
         new Conn1Template.Builder()
                 .objName1(from.objName())
                 .port1(from.portName())
+                .let("p")
                 .build()
                 .appendBy(collector);
         new ConnCTemplate.Builder()
@@ -395,7 +400,7 @@ public class TemplateProcessorImpl implements TemplateProcessor {
         new ConnCTemplate.Builder()
                 .objName(from.objName())
                 .port(from.portName())
-                .x(String.valueOf(from.spacing()/4))
+                .x(String.valueOf((double)from.spacing()/4))
                 .y(String.valueOf(-from.sizeY()*2))
                 .let("m")
                 .build()
@@ -403,7 +408,7 @@ public class TemplateProcessorImpl implements TemplateProcessor {
         new ConnCTemplate.Builder()
                 .objName(to.objName())
                 .port(to.portName())
-                .x(String.valueOf(-to.spacing()/4))
+                .x(String.valueOf((double)-to.spacing()/4))
                 .y(String.valueOf(from.sizeY()*2))
                 .let("p")
                 .build()
@@ -422,6 +427,7 @@ public class TemplateProcessorImpl implements TemplateProcessor {
         new Conn2Template.Builder()
                 .objName2(from.objName())
                 .port2(to.portName())
+                .let("m")
                 .build()
                 .appendBy(collector);
     }

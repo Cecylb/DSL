@@ -15,7 +15,7 @@ public interface TTr extends TexObject {
     enum Rectangles {
         FRAME(1.0, 1.0, 1.0, 1.0),
         BORDER(0.5, 1.0, 0.5, 1.0),
-        PORT(-0.5, -0.25, 1.0, 1.0);
+        PORT(-0.5, -0.4, 1.0, 1.0);
 
         private final double neX;
         private final double neY;

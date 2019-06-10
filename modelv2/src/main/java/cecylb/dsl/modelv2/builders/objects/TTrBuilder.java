@@ -85,7 +85,7 @@ public class TTrBuilder extends AbstractObjectBuilder {
                         .portX(builder.sizeX()*2)
                         .portY(-((builder.sizeY() * 4) / (TTr.OUTPUTS.length + 1) * (i + 1)) + builder.sizeY() * 2)
                         .portName(TTr.OUTPUTS[i])
-                        .portLabel(TTr.OUTPUTS[i])
+                        .portLabel(TTr.OUTPUTS[i] + " ")
                         .build());
             }
         });
