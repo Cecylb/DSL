@@ -47,6 +47,10 @@ public class UJKTrBuilder extends AbstractObjectBuilder {
             builder.setLabelName(leaf.token().value());
         });
 
+        addRule("object/label/OBJ", leaf -> {
+            builder.setLabelName(leaf.token().value());
+        });
+
         addRule("object/label/coordinates/x_coordinate/DBL", leaf -> {
             builder.setLabelX(Double.parseDouble(leaf.token().value()));
         });

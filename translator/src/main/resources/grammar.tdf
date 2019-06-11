@@ -65,7 +65,7 @@ lexis
         [priority: 1]
 
     OBJ
-        "^(AC|UDVTr|ARSTr|CTTr|DC|DTr|LDC|MX|PDC|RDC|SC|ShRSTr|SRSTr|TTr|UJKTr)$"
+        "^(AND|OR|NOT|NAND|NOR|EXOR|AC|UDVTr|ARSTr|CTTr|DC|DTr|LDC|MX|PDC|RDC|SC|ShRSTr|SRSTr|TTr|UJKTr)$"
         [priority: 2]
 
     SHS
@@ -247,7 +247,7 @@ syntax
         ,   [|POS |coordinates]
         ,   [CMA]
         ,   QUT
-        ,   {LET}
+        ,   [|OBJ |{LET}]
         ,   [property]
         ,   QUT
         ,   DIV
@@ -344,12 +344,12 @@ syntax
         ;
 
     obj1 =
-            {LET}
+            [|{LET} |OBJ]
         ,   [property]
         ;
 
     obj2 =
-            {LET}
+            [|{LET} |OBJ]
         ,   [property]
         ;
 

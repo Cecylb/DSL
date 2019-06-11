@@ -13,6 +13,10 @@ public class ConnectionBuilder extends AbstractConnectionBuilder {
             builder.setObjName1(leaf.token().value());
         });
 
+        addRule("connection/obj1/OBJ", leaf -> {
+            builder.setObjName1(leaf.token().value());
+        });
+
         addRule("connection/port1/LET", leaf -> {
             builder.setPort1(leaf.token().value());
         });
@@ -38,6 +42,10 @@ public class ConnectionBuilder extends AbstractConnectionBuilder {
         });
 
         addRule("connection/obj2/LET", leaf -> {
+            builder.setObjName2(leaf.token().value());
+        });
+
+        addRule("connection/obj2/OBJ", leaf -> {
             builder.setObjName2(leaf.token().value());
         });
 
