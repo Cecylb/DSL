@@ -89,7 +89,7 @@ public class NORBuilder extends AbstractObjectBuilder {
                         .portX(builder.sizeX()*2)
                         .portY(-((builder.sizeY() * 4) / (NOR.OUTPUTS.length + 1) * (i + 1)) + builder.sizeY() * 2)
                         .portName(NOR.OUTPUTS[i])
-                        .portLabel(NOR.OUTPUTS[i] + " ")
+                        .portLabel("$\\overline{\\mbox{a+b }}$")
                         .build());
             }
         });

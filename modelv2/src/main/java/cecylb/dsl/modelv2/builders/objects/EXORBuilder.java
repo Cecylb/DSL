@@ -89,7 +89,7 @@ public class EXORBuilder extends AbstractObjectBuilder {
                         .portX(builder.sizeX()*2)
                         .portY(-((builder.sizeY() * 4) / (EXOR.OUTPUTS.length + 1) * (i + 1)) + builder.sizeY() * 2)
                         .portName(EXOR.OUTPUTS[i])
-                        .portLabel(EXOR.OUTPUTS[i] + " ")
+                        .portLabel("a⊕b ")
                         .build());
             }
         });

@@ -89,7 +89,7 @@ public class NANDBuilder extends AbstractObjectBuilder {
                         .portX(builder.sizeX()*2)
                         .portY(-((builder.sizeY() * 4) / (NAND.OUTPUTS.length + 1) * (i + 1)) + builder.sizeY() * 2)
                         .portName(NAND.OUTPUTS[i])
-                        .portLabel(NAND.OUTPUTS[i] + " ")
+                        .portLabel("$\\overline{\\mbox{ab }}$")
                         .build());
             }
         });

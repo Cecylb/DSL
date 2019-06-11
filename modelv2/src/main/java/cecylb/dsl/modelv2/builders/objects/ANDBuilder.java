@@ -89,7 +89,7 @@ public class ANDBuilder extends AbstractObjectBuilder {
                         .portX(builder.sizeX()*2)
                         .portY(-((builder.sizeY() * 4) / (AND.OUTPUTS.length + 1) * (i + 1)) + builder.sizeY() * 2)
                         .portName(AND.OUTPUTS[i])
-                        .portLabel(AND.OUTPUTS[i] + " ")
+                        .portLabel("ab ")
                         .build());
             }
         });

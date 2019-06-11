@@ -9,11 +9,11 @@ import org.immutables.value.Value;
 
         String[] INPUTS = new String[] {"a", "b"};
 
-        String[] OUTPUTS = new String[] {"ab "};
+        String[] OUTPUTS = new String[] {"q"};
 
         enum Rectangles {
-            FRAME(1.0, 1.0, 1.0, 1.0),
-            BORDER(0.5, 1.0, 0.5, 1.0);
+            FRAME(1.0, 1.0, 1.0, 1.0);
+            //BORDER(0.5, 1.0, 0.5, 1.0);
 
             private final double neX;
             private final double neY;

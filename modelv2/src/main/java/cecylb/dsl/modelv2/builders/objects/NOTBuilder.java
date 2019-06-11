@@ -89,7 +89,7 @@ public class NOTBuilder extends AbstractObjectBuilder {
                         .portX(builder.sizeX()*2)
                         .portY(-((builder.sizeY() * 4) / (NOT.OUTPUTS.length + 1) * (i + 1)) + builder.sizeY() * 2)
                         .portName(NOT.OUTPUTS[i])
-                        .portLabel(NOT.OUTPUTS[i] + " ")
+                        .portLabel("$\\overline{\\mbox{a }}$")
                         .build());
             }
         });

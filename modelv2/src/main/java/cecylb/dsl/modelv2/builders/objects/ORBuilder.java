@@ -89,7 +89,7 @@ public class ORBuilder extends AbstractObjectBuilder {
                         .portX(builder.sizeX()*2)
                         .portY(-((builder.sizeY() * 4) / (OR.OUTPUTS.length + 1) * (i + 1)) + builder.sizeY() * 2)
                         .portName(OR.OUTPUTS[i])
-                        .portLabel(OR.OUTPUTS[i] + " ")
+                        .portLabel("a+b ")
                         .build());
             }
         });

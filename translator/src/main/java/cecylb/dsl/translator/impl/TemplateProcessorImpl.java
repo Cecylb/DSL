@@ -375,7 +375,7 @@ public class TemplateProcessorImpl implements TemplateProcessor {
         new Conn2Template.Builder()
                 .objName2(to.objName())
                 .port2(to.portName())
-                .let("p")
+                .let("m")
                 .build()
                 .appendBy(collector);
     }
