@@ -5,6 +5,8 @@ import cecylb.dsl.modelv2.tmp.NOR;
 import cecylb.dsl.modelv2.tmp.TexObject;
 import io.github.therealmone.tdf4j.model.ast.ASTElement;
 
+import java.util.Map;
+
 public class NORBuilder extends AbstractObjectBuilder {
 
     private ModifiableNOR builder;
@@ -76,21 +78,27 @@ public class NORBuilder extends AbstractObjectBuilder {
                         .neY(rectangle.getNeY()*builder.sizeY()*2)
                         .build());
             }
-            for(int i=0; i<NOR.INPUTS.length; i++){
+            int i = 0;
+            for(Map.Entry<String, String> entry : NOR.inputs.entrySet()){
                 builder.inputs().add(new Port.Builder()
                         .portX(-builder.sizeX()* 2)
-                        .portY(-((builder.sizeY() * 4) / (NOR.INPUTS.length + 1) * (i + 1)) + builder.sizeY() * 2)
-                        .portName(NOR.INPUTS[i])
-                        .portLabel(NOR.INPUTS[i])
+                        .portY(-((builder.sizeY() * 4) / (NOR.inputs.size() + 1) * (i + 1)) + builder.sizeY() * 2)
+                        .portName(entry.getKey())
+                        .portLabel(entry.getKey())
+                        .portLine(entry.getValue())
                         .build());
+                i++;
             }
-            for(int i=0; i<NOR.OUTPUTS.length; i++){
+            i = 0;
+            for(Map.Entry<String, String> entry : NOR.outputs.entrySet()){
                 builder.outputs().add(new Port.Builder()
                         .portX(builder.sizeX()*2)
-                        .portY(-((builder.sizeY() * 4) / (NOR.OUTPUTS.length + 1) * (i + 1)) + builder.sizeY() * 2)
-                        .portName(NOR.OUTPUTS[i])
+                        .portY(-((builder.sizeY() * 4) / (NOR.outputs.size() + 1) * (i + 1)) + builder.sizeY() * 2)
+                        .portName(entry.getKey())
                         .portLabel("$\\overline{\\mbox{a+b }}$")
+                        .portLine(entry.getValue())
                         .build());
+                i++;
             }
         });
     }

@@ -2,14 +2,22 @@ package cecylb.dsl.modelv2.tmp;
 
 import org.immutables.value.Value;
 
+import java.util.Map;
+
 @Value.Modifiable
 public interface OR extends TexObject {
 
     String objName = "≥1";
 
-    String[] INPUTS = new String[] {"a", "b"};
+    Map<String, String> inputs = Map.of(
+            "A", "",
+            "B", ""
+    );
 
-    String[] OUTPUTS = new String[] {"q"};
+    Map<String, String> outputs = Map.of(
+            "Q", ""
+    );
+
 
     enum Rectangles {
         FRAME(1.0, 1.0, 1.0, 1.0);

@@ -5,6 +5,8 @@ import cecylb.dsl.modelv2.tmp.DC;
 import cecylb.dsl.modelv2.tmp.TexObject;
 import io.github.therealmone.tdf4j.model.ast.ASTElement;
 
+import java.util.Map;
+
 public class DCBuilder extends AbstractObjectBuilder {
 
     private ModifiableDC builder;
@@ -84,15 +86,21 @@ public class DCBuilder extends AbstractObjectBuilder {
                         .build());
                 alphabet++;
             }
-            builder.inputs().add(new Port.Builder()
-                    .portX(-builder.sizeX() * 2)
-                    .portY(-(builder.sizeY() * 4) / (builder.input() + 2) * (builder.input() + 1) + builder.sizeY() * 2)
-                    .portName(builder.INPUTS[0])
-                    .portLabel(builder.INPUTS[0])
-                    .build());
+            int i = 0;
+            for(Map.Entry<String, String> entry : DC.inputs.entrySet()){
+                builder.inputs().add(new Port.Builder()
+                        .portX(-builder.sizeX()* 2)
+                        .portY(-((builder.sizeY() * 4) / (DC.inputs.size() + 1) * (i + 1)) + builder.sizeY() * 2)
+                        .portName(entry.getKey())
+                        .portLabel(entry.getKey())
+                        .portLine(entry.getValue())
+                        .build());
+                i++;
+            }
+
             builder.setOutput((int)Math.pow(2, builder.input()+1));
             alphabet = 'a';
-            for (int i = 0; i < builder.output(); i++) {
+            for (i = 0; i < builder.output(); i++) {
                 builder.outputs().add(new Port.Builder()
                         .portX(builder.sizeX() * 2)
                         .portY(-((builder.sizeY() * 4) / (builder.output() + 1) * (i + 1)) + builder.sizeY() * 2)

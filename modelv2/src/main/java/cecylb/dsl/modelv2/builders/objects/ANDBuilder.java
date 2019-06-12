@@ -5,6 +5,8 @@ import cecylb.dsl.modelv2.tmp.AND;
 import cecylb.dsl.modelv2.tmp.TexObject;
 import io.github.therealmone.tdf4j.model.ast.ASTElement;
 
+import java.util.Map;
+
 public class ANDBuilder extends AbstractObjectBuilder {
 
     private ModifiableAND builder;
@@ -76,21 +78,27 @@ public class ANDBuilder extends AbstractObjectBuilder {
                         .neY(rectangle.getNeY()*builder.sizeY()*2)
                         .build());
             }
-            for(int i=0; i<AND.INPUTS.length; i++){
+            int i = 0;
+            for(Map.Entry<String, String> entry : AND.inputs.entrySet()){
                 builder.inputs().add(new Port.Builder()
                         .portX(-builder.sizeX()* 2)
-                        .portY(-((builder.sizeY() * 4) / (AND.INPUTS.length + 1) * (i + 1)) + builder.sizeY() * 2)
-                        .portName(AND.INPUTS[i])
-                        .portLabel(AND.INPUTS[i])
+                        .portY(-((builder.sizeY() * 4) / (AND.inputs.size() + 1) * (i + 1)) + builder.sizeY() * 2)
+                        .portName(entry.getKey())
+                        .portLabel(entry.getKey())
+                        .portLine(entry.getValue())
                         .build());
+                i++;
             }
-            for(int i=0; i<AND.OUTPUTS.length; i++){
+            i=0;
+            for(Map.Entry<String, String> entry : AND.outputs.entrySet()){
                 builder.outputs().add(new Port.Builder()
                         .portX(builder.sizeX()*2)
-                        .portY(-((builder.sizeY() * 4) / (AND.OUTPUTS.length + 1) * (i + 1)) + builder.sizeY() * 2)
-                        .portName(AND.OUTPUTS[i])
+                        .portY(-((builder.sizeY() * 4) / (AND.outputs.size() + 1) * (i + 1)) + builder.sizeY() * 2)
+                        .portName(entry.getKey())
                         .portLabel("ab ")
+                        .portLine(entry.getValue())
                         .build());
+                i++;
             }
         });
     }

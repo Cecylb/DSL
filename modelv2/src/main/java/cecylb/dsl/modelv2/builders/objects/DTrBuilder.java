@@ -5,6 +5,8 @@ import cecylb.dsl.modelv2.tmp.DTr;
 import cecylb.dsl.modelv2.tmp.TexObject;
 import io.github.therealmone.tdf4j.model.ast.ASTElement;
 
+import java.util.Map;
+
 public class DTrBuilder extends AbstractObjectBuilder {
 
     private ModifiableDTr builder;
@@ -76,21 +78,27 @@ public class DTrBuilder extends AbstractObjectBuilder {
                         .neY(rectangle.getNeY()*builder.sizeY()*2)
                         .build());
             }
-            for(int i=0; i<DTr.INPUTS.length; i++){
+            int i = 0;
+            for(Map.Entry<String, String> entry : DTr.inputs.entrySet()){
                 builder.inputs().add(new Port.Builder()
                         .portX(-builder.sizeX()* 2)
-                        .portY(-((builder.sizeY() * 4) / (DTr.INPUTS.length + 1) * (i + 1)) + builder.sizeY() * 2)
-                        .portName(DTr.INPUTS[i])
-                        .portLabel(DTr.INPUTS[i])
+                        .portY(-((builder.sizeY() * 4) / (DTr.inputs.size() + 1) * (i + 1)) + builder.sizeY() * 2)
+                        .portName(entry.getKey())
+                        .portLabel(entry.getKey())
+                        .portLine(entry.getValue())
                         .build());
+                i++;
             }
-            for(int i=0; i<DTr.OUTPUTS.length; i++){
+            i=0;
+            for(Map.Entry<String, String> entry : DTr.outputs.entrySet()){
                 builder.outputs().add(new Port.Builder()
                         .portX(builder.sizeX()*2)
-                        .portY(-((builder.sizeY() * 4) / (DTr.OUTPUTS.length + 1) * (i + 1)) + builder.sizeY() * 2)
-                        .portName(DTr.OUTPUTS[i])
-                        .portLabel(DTr.OUTPUTS[i])
+                        .portY(-((builder.sizeY() * 4) / (DTr.outputs.size() + 1) * (i + 1)) + builder.sizeY() * 2)
+                        .portName(entry.getKey())
+                        .portLabel(entry.getKey() + " ")
+                        .portLine(entry.getValue())
                         .build());
+                i++;
             }
         });
     }

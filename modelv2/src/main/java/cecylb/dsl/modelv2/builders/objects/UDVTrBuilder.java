@@ -5,6 +5,8 @@ import cecylb.dsl.modelv2.tmp.TexObject;
 import cecylb.dsl.modelv2.tmp.UDVTr;
 import io.github.therealmone.tdf4j.model.ast.ASTElement;
 
+import java.util.Map;
+
 public class UDVTrBuilder extends AbstractObjectBuilder {
 
     private ModifiableUDVTr builder;
@@ -76,21 +78,27 @@ public class UDVTrBuilder extends AbstractObjectBuilder {
                         .neY(rectangle.getNeY()*builder.sizeY()*2)
                         .build());
             }
-            for(int i = 0; i< UDVTr.INPUTS.length; i++){
+            int i = 0;
+            for(Map.Entry<String, String> entry : UDVTr.inputs.entrySet()){
                 builder.inputs().add(new Port.Builder()
                         .portX(-builder.sizeX()* 2)
-                        .portY(-((builder.sizeY() * 4) / (UDVTr.INPUTS.length + 1) * (i + 1)) + builder.sizeY() * 2)
-                        .portName(UDVTr.INPUTS[i])
-                        .portLabel(UDVTr.INPUTS[i])
+                        .portY(-((builder.sizeY() * 4) / (UDVTr.inputs.size() + 1) * (i + 1)) + builder.sizeY() * 2)
+                        .portName(entry.getKey())
+                        .portLabel(entry.getKey())
+                        .portLine(entry.getValue())
                         .build());
+                i++;
             }
-            for(int i = 0; i< UDVTr.OUTPUTS.length; i++){
+            i = 0;
+            for(Map.Entry<String, String> entry : UDVTr.outputs.entrySet()){
                 builder.outputs().add(new Port.Builder()
                         .portX(builder.sizeX()*2)
-                        .portY(-((builder.sizeY() * 4) / (UDVTr.OUTPUTS.length + 1) * (i + 1)) + builder.sizeY() * 2)
-                        .portName(UDVTr.OUTPUTS[i])
-                        .portLabel(UDVTr.OUTPUTS[i])
+                        .portY(-((builder.sizeY() * 4) / (UDVTr.outputs.size() + 1) * (i + 1)) + builder.sizeY() * 2)
+                        .portName(entry.getKey())
+                        .portLabel(entry.getKey() + " ")
+                        .portLine(entry.getValue())
                         .build());
+                i++;
             }
         });
     }

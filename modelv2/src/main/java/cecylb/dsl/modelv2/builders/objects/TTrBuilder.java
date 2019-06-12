@@ -5,6 +5,8 @@ import cecylb.dsl.modelv2.tmp.TTr;
 import cecylb.dsl.modelv2.tmp.TexObject;
 import io.github.therealmone.tdf4j.model.ast.ASTElement;
 
+import java.util.Map;
+
 public class TTrBuilder extends AbstractObjectBuilder {
 
     private ModifiableTTr builder;
@@ -70,27 +72,33 @@ public class TTrBuilder extends AbstractObjectBuilder {
         addRule("object/BFR", leaf -> {
             for(TTr.Rectangles rectangle : TTr.Rectangles.values()) {
                 builder.rectangles().add(new Rectangle.Builder()
-                .swX(rectangle.getSwX()*builder.sizeX()*2)
-                .swY(rectangle.getSwY()*builder.sizeY()*2)
-                .neX(rectangle.getNeX()*builder.sizeX()*2)
-                .neY(rectangle.getNeY()*builder.sizeY()*2)
-                .build());
+                        .swX(rectangle.getSwX()*builder.sizeX()*2)
+                        .swY(rectangle.getSwY()*builder.sizeY()*2)
+                        .neX(rectangle.getNeX()*builder.sizeX()*2)
+                        .neY(rectangle.getNeY()*builder.sizeY()*2)
+                        .build());
             }
-            for(int i=0; i<TTr.INPUTS.length; i++){
+            int i = 0;
+            for(Map.Entry<String, String> entry : TTr.inputs.entrySet()){
                 builder.inputs().add(new Port.Builder()
-                .portX(-builder.sizeX()* 2)
-                .portY(-((builder.sizeY() * 4) / (TTr.INPUTS.length + 1) * (i + 1)) + builder.sizeY() * 2)
-                .portName(TTr.INPUTS[i])
-                .portLabel(TTr.INPUTS[i])
-                .build());
+                        .portX(-builder.sizeX()* 2)
+                        .portY(-((builder.sizeY() * 4) / (TTr.inputs.size() + 1) * (i + 1)) + builder.sizeY() * 2)
+                        .portName(entry.getKey())
+                        .portLabel(entry.getKey())
+                        .portLine(entry.getValue())
+                        .build());
+                i++;
             }
-            for(int i=0; i<TTr.OUTPUTS.length; i++){
+            i = 0;
+            for(Map.Entry<String, String> entry : TTr.outputs.entrySet()){
                 builder.outputs().add(new Port.Builder()
                         .portX(builder.sizeX()*2)
-                        .portY(-((builder.sizeY() * 4) / (TTr.OUTPUTS.length + 1) * (i + 1)) + builder.sizeY() * 2)
-                        .portName(TTr.OUTPUTS[i])
-                        .portLabel(TTr.OUTPUTS[i] + " ")
+                        .portY(-((builder.sizeY() * 4) / (TTr.outputs.size() + 1) * (i + 1)) + builder.sizeY() * 2)
+                        .portName(entry.getKey())
+                        .portLabel(entry.getKey() + " ")
+                        .portLine(entry.getValue())
                         .build());
+                i++;
             }
         });
     }

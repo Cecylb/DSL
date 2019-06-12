@@ -17,6 +17,8 @@ public interface ConnectionFields {
 
     Double portY();
 
+    String lineType();
+
     Integer spacing();
 
     class Builder extends ImmutableConnectionFields.Builder {

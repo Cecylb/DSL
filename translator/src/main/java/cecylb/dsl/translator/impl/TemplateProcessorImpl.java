@@ -167,8 +167,8 @@ public class TemplateProcessorImpl implements TemplateProcessor {
     }
 
     private void processConnections(final Collector collector, final Parser.Context context) {
-        ConnectionFields from = new ConnectionFields.Builder().objName("").sizeY(0.0).posX(0.0).posY(0.0).portY(0.0).spacing(0).portName("").build();
-        ConnectionFields to = new ConnectionFields.Builder().objName("").sizeY(0.0).posX(0.0).posY(0.0).portY(0.0).spacing(0).portName("").build();
+        ConnectionFields from = new ConnectionFields.Builder().objName("").sizeY(0.0).posX(0.0).posY(0.0).portY(0.0).spacing(0).portName("").lineType("").build();
+        ConnectionFields to = new ConnectionFields.Builder().objName("").sizeY(0.0).posX(0.0).posY(0.0).portY(0.0).spacing(0).portName("").lineType("").build();
         for (Connection connection : context.getConnections()) {
             for(TexObject object : context.getTexObject()) {
                 if (object.labelName().equals(connection.objName1()))
@@ -189,7 +189,7 @@ public class TemplateProcessorImpl implements TemplateProcessor {
                     .appendBy(collector);
             collector.append(TEX_BRACKET_L.render());
             new DrawLineTemplate.Builder()
-                    .lineType(connection.lineType())
+                    .lineType(from.lineType() + "-" + to.lineType())
                     .build()
                     .appendBy(collector);
             if(from.posX() > to.posX() && from.posY() < to.posY()) { // Connection type 1
@@ -215,8 +215,11 @@ public class TemplateProcessorImpl implements TemplateProcessor {
 
     private ConnectionFields getFrom(final String portName, final TexObject object) {
         double portY = 0.0;
+        String lineType = "";
         for(Port port : object.outputs()) {
-            if(port.portName().equals(portName)) portY = port.portY();
+            if(port.portName().equals(portName)) {
+                portY = port.portY(); }
+                lineType = port.portLine();
         }
         return new ConnectionFields.Builder()
                 .objName(object.labelName())
@@ -225,13 +228,18 @@ public class TemplateProcessorImpl implements TemplateProcessor {
                 .posY(object.posY())
                 .portY(portY)
                 .portName(portName)
+                .lineType(lineType)
                 .spacing(object.spacing())
                 .build();
     }
     private ConnectionFields getTo(final String portName, final TexObject object) {
         double portY = 0.0;
+        String lineType = "";
         for(Port port : object.inputs()) {
-            if(port.portName().equals(portName)) portY = port.portY();
+            if(port.portName().equals(portName)) {
+                portY = port.portY();
+                lineType = port.portLine();
+            }
         }
         return new ConnectionFields.Builder()
                 .objName(object.labelName())
@@ -240,6 +248,7 @@ public class TemplateProcessorImpl implements TemplateProcessor {
                 .posY(object.posY())
                 .portY(portY)
                 .portName(portName)
+                .lineType(lineType)
                 .spacing(object.spacing())
                 .build();
     }
@@ -435,7 +444,7 @@ public class TemplateProcessorImpl implements TemplateProcessor {
     private void processLastPart(final Collector collector, final Parser.Context context) {
         Character index = 'a';
         for(TexObject object : context.getTexObject()) {
-            for(Port ports : object.inputs()) {
+            for(Port input : object.inputs()) {
                 new PutTemplate.Builder()
                         .posX(String.valueOf(object.posX()))
                         .posY(String.valueOf(object.posY()))
@@ -444,11 +453,11 @@ public class TemplateProcessorImpl implements TemplateProcessor {
                 collector.append(TEX_BRACKET_L.render());
                 new ConnIOTemplate.Builder()
                         .objName(object.labelName())
-                        .port(ports.portName())
+                        .port(input.portName())
                         .eorw("east")
                         .space(decimalFormat.format( - object.sizeX() * 2 ))
                         .index("0")
-                        .lineType("<-")
+                        .lineType("<-" + input.portLine())
                         .build()
                         .appendBy(collector);
                 collector.append(TEX_BRACKET_R.render());
@@ -466,7 +475,7 @@ public class TemplateProcessorImpl implements TemplateProcessor {
                         .eorw("west")
                         .space(decimalFormat.format( object.sizeX() * 2 ))
                         .index("\\N" + index)
-                        .lineType("->")
+                        .lineType(output.portLine() + "->")
                         .build()
                         .appendBy(collector);
                 collector.append(TEX_BRACKET_R.render());

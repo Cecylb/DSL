@@ -5,6 +5,8 @@ import cecylb.dsl.modelv2.tmp.EXOR;
 import cecylb.dsl.modelv2.tmp.TexObject;
 import io.github.therealmone.tdf4j.model.ast.ASTElement;
 
+import java.util.Map;
+
 public class EXORBuilder extends AbstractObjectBuilder {
 
     private ModifiableEXOR builder;
@@ -76,21 +78,28 @@ public class EXORBuilder extends AbstractObjectBuilder {
                         .neY(rectangle.getNeY()*builder.sizeY()*2)
                         .build());
             }
-            for(int i=0; i<EXOR.INPUTS.length; i++){
+            int i = 0;
+            for(Map.Entry<String, String> entry : EXOR.inputs.entrySet()){
                 builder.inputs().add(new Port.Builder()
                         .portX(-builder.sizeX()* 2)
-                        .portY(-((builder.sizeY() * 4) / (EXOR.INPUTS.length + 1) * (i + 1)) + builder.sizeY() * 2)
-                        .portName(EXOR.INPUTS[i])
-                        .portLabel(EXOR.INPUTS[i])
+                        .portY(-((builder.sizeY() * 4) / (EXOR.inputs.size() + 1) * (i + 1)) + builder.sizeY() * 2)
+                        .portName(entry.getKey())
+                        .portLabel(entry.getKey())
+                        .portLine(entry.getValue())
                         .build());
+                i++;
             }
-            for(int i=0; i<EXOR.OUTPUTS.length; i++){
+
+            i = 0;
+            for(Map.Entry<String, String> entry : EXOR.outputs.entrySet()){
                 builder.outputs().add(new Port.Builder()
                         .portX(builder.sizeX()*2)
-                        .portY(-((builder.sizeY() * 4) / (EXOR.OUTPUTS.length + 1) * (i + 1)) + builder.sizeY() * 2)
-                        .portName(EXOR.OUTPUTS[i])
-                        .portLabel("a⊕b ")
+                        .portY(-((builder.sizeY() * 4) / (EXOR.outputs.size() + 1) * (i + 1)) + builder.sizeY() * 2)
+                        .portName(entry.getKey())
+                        .portLabel("$\\overline{\\mbox{a}}$" + "+" + "$\\overline{\\mbox{b}}$" + " ")
+                        .portLine(entry.getValue())
                         .build());
+                i++;
             }
         });
     }

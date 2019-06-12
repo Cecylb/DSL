@@ -13,6 +13,8 @@ public interface Port {
 
     String portLabel();
 
+    String portLine();
+
     class Builder extends ImmutablePort.Builder {
     }
 

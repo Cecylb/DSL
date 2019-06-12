@@ -5,6 +5,8 @@ import cecylb.dsl.modelv2.tmp.MX;
 import cecylb.dsl.modelv2.tmp.TexObject;
 import io.github.therealmone.tdf4j.model.ast.ASTElement;
 
+import java.util.Map;
+
 public class MXBuilder extends AbstractObjectBuilder {
 
     private ModifiableMX builder;
@@ -94,13 +96,16 @@ public class MXBuilder extends AbstractObjectBuilder {
                 index++;
                 j++;
             }
-            for(int i=0; i<DTr.OUTPUTS.length; i++){
+            int i = 0;
+            for(Map.Entry<String, String> entry : MX.outputs.entrySet()){
                 builder.outputs().add(new Port.Builder()
                         .portX(builder.sizeX()*2)
-                        .portY(-((builder.sizeY() * 4) / (DTr.OUTPUTS.length + 1) * (i + 1)) + builder.sizeY() * 2)
-                        .portName(DTr.OUTPUTS[i])
-                        .portLabel(DTr.OUTPUTS[i] + "  ")
+                        .portY(-((builder.sizeY() * 4) / (MX.outputs.size() + 1) * (i + 1)) + builder.sizeY() * 2)
+                        .portName(entry.getKey())
+                        .portLabel(entry.getKey() + " ")
+                        .portLine(entry.getValue())
                         .build());
+                i++;
             }
             for (MX.Rectangles rectangle : MX.Rectangles.values()) {
                 builder.rectangles().add(new Rectangle.Builder()
@@ -110,6 +115,7 @@ public class MXBuilder extends AbstractObjectBuilder {
                         .neY(rectangle.getNeY() * builder.sizeY() * (builder.inputs().size()) / 4)
                         .build());
             }
+
         });
     }
 

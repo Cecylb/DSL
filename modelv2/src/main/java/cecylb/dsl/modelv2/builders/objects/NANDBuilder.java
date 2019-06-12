@@ -5,6 +5,8 @@ import cecylb.dsl.modelv2.tmp.NAND;
 import cecylb.dsl.modelv2.tmp.TexObject;
 import io.github.therealmone.tdf4j.model.ast.ASTElement;
 
+import java.util.Map;
+
 public class NANDBuilder extends AbstractObjectBuilder {
 
     private ModifiableNAND builder;
@@ -76,21 +78,27 @@ public class NANDBuilder extends AbstractObjectBuilder {
                         .neY(rectangle.getNeY()*builder.sizeY()*2)
                         .build());
             }
-            for(int i=0; i<NAND.INPUTS.length; i++){
+            int i = 0;
+            for(Map.Entry<String, String> entry : NAND.inputs.entrySet()){
                 builder.inputs().add(new Port.Builder()
                         .portX(-builder.sizeX()* 2)
-                        .portY(-((builder.sizeY() * 4) / (NAND.INPUTS.length + 1) * (i + 1)) + builder.sizeY() * 2)
-                        .portName(NAND.INPUTS[i])
-                        .portLabel(NAND.INPUTS[i])
+                        .portY(-((builder.sizeY() * 4) / (NAND.inputs.size() + 1) * (i + 1)) + builder.sizeY() * 2)
+                        .portName(entry.getKey())
+                        .portLabel(entry.getKey())
+                        .portLine(entry.getValue())
                         .build());
+                i++;
             }
-            for(int i=0; i<NAND.OUTPUTS.length; i++){
+            i = 0;
+            for(Map.Entry<String, String> entry : NAND.outputs.entrySet()){
                 builder.outputs().add(new Port.Builder()
                         .portX(builder.sizeX()*2)
-                        .portY(-((builder.sizeY() * 4) / (NAND.OUTPUTS.length + 1) * (i + 1)) + builder.sizeY() * 2)
-                        .portName(NAND.OUTPUTS[i])
+                        .portY(-((builder.sizeY() * 4) / (NAND.outputs.size() + 1) * (i + 1)) + builder.sizeY() * 2)
+                        .portName(entry.getKey())
                         .portLabel("$\\overline{\\mbox{ab }}$")
+                        .portLine(entry.getValue())
                         .build());
+                i++;
             }
         });
     }

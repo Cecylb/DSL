@@ -3,14 +3,25 @@ package cecylb.dsl.modelv2.tmp;
 import cecylb.dsl.modelv2.tmp.TexObject;
 import org.immutables.value.Value;
 
+import java.util.Map;
+
 @Value.Modifiable
 public interface TTr extends TexObject {
 
     String objName = "TTr";
 
-    String[] INPUTS = new String[] {"S", "T", "C", "R"};
+    Map<String, String> inputs = Map.of(
+            "S", "",
+            "T", "",
+            "C", "",
+            "R", ""
+    );
 
-    String[] OUTPUTS = new String[] {"Q", "Qn"};
+    Map<String, String> outputs = Map.of(
+            "Q", "",
+            "Qn", "o"
+    );
+
 
     enum Rectangles {
         FRAME(1.0, 1.0, 1.0, 1.0),

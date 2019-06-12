@@ -2,14 +2,22 @@ package cecylb.dsl.modelv2.tmp;
 
 import org.immutables.value.Value;
 
+import java.util.Map;
+
 @Value.Modifiable
 public interface NAND extends TexObject {
 
     String objName = "&";
 
-    String[] INPUTS = new String[] {"a", "b"};
+    Map<String, String> inputs = Map.of(
+            "A", "",
+            "B", ""
+    );
 
-    String[] OUTPUTS = new String[] {"q"};
+    Map<String, String> outputs = Map.of(
+            "Q", "o"
+    );
+
 
     enum Rectangles {
         FRAME(1.0, 1.0, 1.0, 1.0);

@@ -2,6 +2,8 @@ package cecylb.dsl.modelv2.tmp;
 
 import org.immutables.value.Value;
 
+import java.util.Map;
+
 @Value.Modifiable
 public interface MX extends TexObject {
 
@@ -9,8 +11,11 @@ public interface MX extends TexObject {
 
     Integer input = 1;
 
-    String[] INPUTS = new String[] {};
-    String[] OUTPUTS = new String[] {"Q", "Qn"};
+    Map<String, String> outputs = Map.of(
+            "Q", "",
+            "Qn", "o"
+    );
+
 
     enum Rectangles {
         FRAME(1.0, 1.0, 1.0, 1.0),
