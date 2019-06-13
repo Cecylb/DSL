@@ -17,7 +17,7 @@ public class DCBuilder extends AbstractObjectBuilder {
         });
 
         addRule("object/position/coordinates/y_coordinate/DBL", leaf -> {
-            builder.setPosY(Double.parseDouble(leaf.token().value()));
+            builder.setPosY(Double.parseDouble(leaf.token().value()) - 400.0);
         });
 
         addRule("object/size/SCL", leaf -> {
@@ -62,7 +62,7 @@ public class DCBuilder extends AbstractObjectBuilder {
         });
 
         addRule("object/amount/NUM", leaf -> {
-            builder.setAmount(Integer.parseInt(leaf.token().value()));
+            builder.setAmount(Integer.parseInt(leaf.token().value())-1);
         });
 
         addRule("object/spacing/NUM", leaf -> {
@@ -83,6 +83,7 @@ public class DCBuilder extends AbstractObjectBuilder {
                         .portY(-((builder.sizeY() * 4) / (builder.input() + 2) * (i + 1)) + builder.sizeY() * 2)
                         .portName("i" + alphabet.toString())
                         .portLabel(String.valueOf(i))
+                        .portLine("")
                         .build());
                 alphabet++;
             }
@@ -106,6 +107,7 @@ public class DCBuilder extends AbstractObjectBuilder {
                         .portY(-((builder.sizeY() * 4) / (builder.output() + 1) * (i + 1)) + builder.sizeY() * 2)
                         .portName("o" + alphabet.toString())
                         .portLabel(i + "  ")
+                        .portLine("")
                         .build());
                 alphabet++;
             }

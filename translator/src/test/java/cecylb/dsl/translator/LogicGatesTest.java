@@ -12,7 +12,7 @@ public class LogicGatesTest{
 
     @Test
     public void andInlineTest() throws Exception {
-        System.out.println("[AND inline T E S T . . .]");
+        System.out.println("[AND T E S T . . .]");
         final Translator translator = new TranslatorImpl(resource("grammar.tdf"), new TemplateProcessorImpl());
         final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         translator.translate(
@@ -24,7 +24,7 @@ public class LogicGatesTest{
 
     @Test
     public void orInlineTest() throws Exception {
-        System.out.println("[OR inline T E S T . . .]");
+        System.out.println("[OR T E S T . . .]");
         final Translator translator = new TranslatorImpl(resource("grammar.tdf"), new TemplateProcessorImpl());
         final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         translator.translate(
@@ -36,7 +36,7 @@ public class LogicGatesTest{
 
     @Test
     public void notInlineTest() throws Exception {
-        System.out.println("[NOT inline T E S T . . .]");
+        System.out.println("[NOT T E S T . . .]");
         final Translator translator = new TranslatorImpl(resource("grammar.tdf"), new TemplateProcessorImpl());
         final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         translator.translate(
@@ -48,7 +48,7 @@ public class LogicGatesTest{
 
     @Test
     public void nandInlineTest() throws Exception {
-        System.out.println("[NAND inline T E S T . . .]");
+        System.out.println("[NAND T E S T . . .]");
         final Translator translator = new TranslatorImpl(resource("grammar.tdf"), new TemplateProcessorImpl());
         final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         translator.translate(
@@ -60,7 +60,7 @@ public class LogicGatesTest{
 
     @Test
     public void norInlineTest() throws Exception {
-        System.out.println("[NOR inline T E S T . . .]");
+        System.out.println("[NOR T E S T . . .]");
         final Translator translator = new TranslatorImpl(resource("grammar.tdf"), new TemplateProcessorImpl());
         final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         translator.translate(
@@ -72,7 +72,7 @@ public class LogicGatesTest{
 
     @Test
     public void exorInlineTest() throws Exception {
-        System.out.println("[EXOR inline T E S T . . .]");
+        System.out.println("[EXOR T E S T . . .]");
         final Translator translator = new TranslatorImpl(resource("grammar.tdf"), new TemplateProcessorImpl());
         final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         translator.translate(

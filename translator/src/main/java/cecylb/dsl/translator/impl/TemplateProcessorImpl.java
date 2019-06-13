@@ -57,8 +57,10 @@ public class TemplateProcessorImpl implements TemplateProcessor {
 // Стоит разделить это на отдельные методы?
 // Можно ли как-то это упростить?
     private void processObjects(final Collector collector, final Parser.Context context) {
+        System.out.println("Objects processing . . .\n");
         Character index = 'a';
         for(TexObject object: context.getTexObject()) {
+            System.out.println("Object processing . . .\n");
             new ObjNTemplate.Builder()
                     .objName(object.labelName())
                     .build()
@@ -167,9 +169,11 @@ public class TemplateProcessorImpl implements TemplateProcessor {
     }
 
     private void processConnections(final Collector collector, final Parser.Context context) {
+        System.out.println("Connections processing . . .\n");
         ConnectionFields from = new ConnectionFields.Builder().objName("").sizeY(0.0).posX(0.0).posY(0.0).portY(0.0).spacing(0).portName("").lineType("").build();
         ConnectionFields to = new ConnectionFields.Builder().objName("").sizeY(0.0).posX(0.0).posY(0.0).portY(0.0).spacing(0).portName("").lineType("").build();
         for (Connection connection : context.getConnections()) {
+            System.out.println("Connection processing . . .\n");
             for(TexObject object : context.getTexObject()) {
                 if (object.labelName().equals(connection.objName1()))
                     from = getFrom(connection.port1(), object);
@@ -201,7 +205,7 @@ public class TemplateProcessorImpl implements TemplateProcessor {
             }  else if(from.posX().equals(to.posX()) && from.posY().equals(to.posY())) { // Connection type 4 (same object)
                 System.out.println("3");
                 processConnectionType3(from, to, collector);
-            } else if(from.posX() < to.posX() && from.posY() < to.posY()) { // Connection type 3
+            } else if(from.posX() < to.posX()) { // Connection type 3
                 System.out.println("3");
                 processConnectionType3(from, to, collector);
             } else if(from.posX() > to.posX() && from.posY() > to.posY()) { // Connection type 4 (different objects)
@@ -304,7 +308,6 @@ public class TemplateProcessorImpl implements TemplateProcessor {
     }
 
     private void processConnectionType2(final ConnectionFields from, final ConnectionFields to, final Collector collector) {
-        System.out.println("HERE ");
         System.out.println(from.portY());
         System.out.println(to.portY());
         new Conn1Template.Builder()

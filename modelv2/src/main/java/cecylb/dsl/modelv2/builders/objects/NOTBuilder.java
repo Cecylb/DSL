@@ -17,7 +17,7 @@ public class NOTBuilder extends AbstractObjectBuilder {
         });
 
         addRule("object/position/coordinates/y_coordinate/DBL", leaf -> {
-            builder.setPosY(Double.parseDouble(leaf.token().value()));
+            builder.setPosY(Double.parseDouble(leaf.token().value()) - 400.0);
         });
 
         addRule("object/size/SCL", leaf -> {
@@ -62,7 +62,7 @@ public class NOTBuilder extends AbstractObjectBuilder {
         });
 
         addRule("object/amount/NUM", leaf -> {
-            builder.setAmount(Integer.parseInt(leaf.token().value()));
+            builder.setAmount(Integer.parseInt(leaf.token().value())-1);
         });
 
         addRule("object/spacing/NUM", leaf -> {

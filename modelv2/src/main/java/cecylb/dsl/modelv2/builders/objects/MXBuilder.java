@@ -17,7 +17,7 @@ public class MXBuilder extends AbstractObjectBuilder {
         });
 
         addRule("object/position/coordinates/y_coordinate/DBL", leaf -> {
-            builder.setPosY(Double.parseDouble(leaf.token().value()));
+            builder.setPosY(Double.parseDouble(leaf.token().value()) - 400.0);
         });
 
         addRule("object/size/SCL", leaf -> {
@@ -62,7 +62,7 @@ public class MXBuilder extends AbstractObjectBuilder {
         });
 
         addRule("object/amount/NUM", leaf -> {
-            builder.setAmount(Integer.parseInt(leaf.token().value()));
+            builder.setAmount(Integer.parseInt(leaf.token().value())-1);
         });
 
         addRule("object/spacing/NUM", leaf -> {
@@ -82,6 +82,7 @@ public class MXBuilder extends AbstractObjectBuilder {
                         .portY(-((builder.sizeY() * 4) / (Math.pow(2, builder.input()) + 1) * (i + 1)) + builder.sizeY() * 3)
                         .portName("i" + index.toString())
                         .portLabel(String.valueOf(i))
+                        .portLine("") //Нужно сделать отдельный MAP для инпутов
                         .build());
                 index++;
             }
@@ -92,6 +93,7 @@ public class MXBuilder extends AbstractObjectBuilder {
                         .portY(-((builder.sizeY() * 4) / (Math.pow(2, builder.input()) + 1) * (i + 1)) + builder.sizeY() * 3)
                         .portName("s" + index.toString())
                         .portLabel(String.valueOf(j))
+                        .portLine("")
                         .build());
                 index++;
                 j++;
