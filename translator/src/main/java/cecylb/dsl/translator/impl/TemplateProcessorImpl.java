@@ -5,6 +5,9 @@ import cecylb.dsl.modelv2.tmp.Port;
 import cecylb.dsl.modelv2.tmp.TexObject;
 import cecylb.dsl.translator.Parser;
 import cecylb.dsl.translator.TemplateProcessor;
+import cecylb.dsl.translator.impl.connectionProcessor.ConnectionProcessor;
+import cecylb.dsl.translator.impl.elementProcessor.DrawProcessor;
+import cecylb.dsl.translator.impl.elementProcessor.InitializeProcessor;
 import cecylb.dsl.translator.templates.*;
 
 import java.io.OutputStream;
@@ -16,6 +19,7 @@ import static cecylb.dsl.translator.Template.*;
 
 public class TemplateProcessorImpl implements TemplateProcessor {
     private final DecimalFormat decimalFormat;
+    InlineProcessor inlineProcessor = new InlineProcessor();
 
     public TemplateProcessorImpl() {
         this.decimalFormat = new DecimalFormat("0.0000");
@@ -34,133 +38,27 @@ public class TemplateProcessorImpl implements TemplateProcessor {
     }
 
     private void processProperties(final Collector collector, final Parser.Context context) {
-        //GATHERING PROPERTIES
-        for(Map.Entry<String, String> inline : context.getInline().entrySet()){
-            if(inline.getKey().equals("documentclass")){
-                collector.append(inline.getValue());
-            }
-        }
+       inlineProcessor.generate(collector, context, "documentclass");
         new PropertyTemplate.Builder()
                 .sheetSize(context.getProperties().peek().sheetSize())
                 .orientation(context.getProperties().peek().orientation())
                 .build()
                 .appendBy(collector);
         collector.append(TEX_MAKE_A_LETTER.render());
-        //GATHERING OBJECT INFORMATION
-        for(Map.Entry<String, String> inline : context.getInline().entrySet()){
-            if(inline.getKey().equals("declareshape")){
-                collector.append(inline.getValue());
-            }
-        }
+        inlineProcessor.generate(collector, context, "declareshape");
     }
 
 // Стоит разделить это на отдельные методы?
 // Можно ли как-то это упростить?
     private void processObjects(final Collector collector, final Parser.Context context) {
+        InitializeProcessor initializeProcessor = new InitializeProcessor();
+        DrawProcessor drawProcessor = new DrawProcessor();
         System.out.println("Objects processing . . .\n");
-        Character index = 'a';
-        for(TexObject object: context.getTexObject()) {
-            System.out.println("Object processing . . .\n");
-            new ObjNTemplate.Builder()
-                    .objName(object.labelName())
-                    .build()
-                    .appendBy(collector);
-            new SizeTemplate.Builder()
-                    .x(String.valueOf(object.sizeX()))
-                    .y(String.valueOf(object.sizeY()))
-                    .build()
-                    .appendBy(collector);
-            collector.append(TEX_BORDER.render());
-            new LabelCTemplate.Builder()
-                    .x(String.valueOf(object.labelX()))
-                    .y(String.valueOf(object.labelY()))
-                    .build()
-                    .appendBy(collector);
-            for (int i = 0; i < object.inputs().size(); i++) {
-                new PortTemplate.Builder()
-                        .x(String.valueOf(object.inputs().get(i).portX()))
-                        .y(String.valueOf(object.inputs().get(i).portY()))
-                        .name(String.valueOf(object.inputs().get(i).portName()))
-                        .build()
-                        .appendBy(collector);
-            }
-            for (int i = 0; i < object.outputs().size(); i++) {
-                new PortTemplate.Builder()
-                        .x(String.valueOf(object.outputs().get(i).portX()))
-                        .y(String.valueOf(object.outputs().get(i).portY()))
-                        .name(String.valueOf(object.outputs().get(i).portName()))
-                        .build()
-                        .appendBy(collector);
-            }
-            collector.append(TEX_BACKGROUND_PATH.render());
-            for (int i = 0; i < object.rectangles().size(); i++) {
-                new RecTemplate.Builder()
-                        .swx(String.valueOf(object.rectangles().get(i).swX()))
-                        .swy(String.valueOf(object.rectangles().get(i).swY()))
-                        .nex(String.valueOf(object.rectangles().get(i).neX()))
-                        .ney(String.valueOf(object.rectangles().get(i).neY()))
-                        .build()
-                        .appendBy(collector);
-            }
-            collector.append(TEX_CLOSE_P.render());
-            for (int i = 0; i < object.inputs().size(); i++) {
-                new PortLTemplate.Builder()
-                        .objName(object.labelName())
-                        .name(object.inputs().get(i).portName())
-                        .label(object.inputs().get(i).portLabel())
-                        .lor("left")
-                        .build()
-                        .appendBy(collector);
-            }
-            for (int i = 0; i < object.outputs().size(); i++) {
-                new PortLTemplate.Builder()
-                        .objName(object.labelName())
-                        .name(object.outputs().get(i).portName())
-                        .label(object.outputs().get(i).portLabel())
-                        .lor("right")
-                        .build()
-                        .appendBy(collector);
-            }
-            collector.append(TEX_END_G.render());
-            collector.append(TEX_ADD_FONT.render());
-            new FontSizeTemplate.Builder()
-                    .objName(object.labelName())
-                    .build()
-                    .appendBy(collector);
-        }
+        initializeProcessor.generate(collector, context);
         collector.append(TEX_MAKE_A_TOTHER.render());
         collector.append(TEX_BEGIN.render());
-        for(Map.Entry<String, String> inline : context.getInline().entrySet()){
-            if(inline.getKey().equals("tikzpicture")){
-                collector.append(inline.getValue());
-            }
-        }
-        index = 'a';
-        for(TexObject object : context.getTexObject()) {
-            new DefTemplate.Builder()
-                    .amount(String.valueOf(object.amount()))
-                    .var("N")
-                    .index(String.valueOf(index))
-                    .build()
-                    .appendBy(collector);
-            new ForEachTemplate.Builder()
-                    .k("0")
-                    .index1(String.valueOf(index))
-                    .index2(String.valueOf(index))
-                    .build()
-                    .appendBy(collector);
-            collector.append(TEX_BRACKET_L.render());
-            new SpacingTemplate.Builder()
-                    .labelName(object.labelName())
-                    .spacing(String.valueOf(object.spacing()))
-                    .index(String.valueOf(index))
-                    .posX(object.posX())
-                    .posY(object.posY())
-                    .build()
-                    .appendBy(collector);
-            collector.append(TEX_BRACKET_R.render());
-            index++;
-        }
+        inlineProcessor.generate(collector, context,"tikzpicture");
+        drawProcessor.generate(collector, context);
     }
 
     private void processConnections(final Collector collector, final Parser.Context context) {

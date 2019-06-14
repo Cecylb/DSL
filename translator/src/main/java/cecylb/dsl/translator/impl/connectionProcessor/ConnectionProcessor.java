@@ -1,6 +1,7 @@
-package cecylb.dsl.translator.impl;
+package cecylb.dsl.translator.impl.connectionProcessor;
 
 import cecylb.dsl.translator.TemplateProcessor;
+import cecylb.dsl.translator.impl.ConnectionFields;
 
 @FunctionalInterface
 public interface ConnectionProcessor {
