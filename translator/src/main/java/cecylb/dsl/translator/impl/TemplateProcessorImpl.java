@@ -150,19 +150,14 @@ public class TemplateProcessorImpl implements TemplateProcessor {
                     .build()
                     .appendBy(collector);
             collector.append(TEX_BRACKET_L.render());
-            new PutTemplate.Builder()
-                    .posX(String.valueOf(object.posX()))
-                    .posY(String.valueOf(object.posY()))
-                    .build()
-                    .appendBy(collector);
-            collector.append(TEX_BRACKET_L.render());
             new SpacingTemplate.Builder()
                     .labelName(object.labelName())
                     .spacing(String.valueOf(object.spacing()))
                     .index(String.valueOf(index))
+                    .posX(object.posX())
+                    .posY(object.posY())
                     .build()
                     .appendBy(collector);
-            collector.append(TEX_BRACKET_R.render());
             collector.append(TEX_BRACKET_R.render());
             index++;
         }
@@ -186,7 +181,7 @@ public class TemplateProcessorImpl implements TemplateProcessor {
                     .build()
                     .appendBy(collector);
             new ForEachTemplate.Builder()
-                    .k("1")
+                    .k("0") // This value may vary
                     .index1("") // idk how to solve this yet
                     .index2("a")
                     .build()
@@ -213,8 +208,6 @@ public class TemplateProcessorImpl implements TemplateProcessor {
                 processConnectionType4(from, to, collector);
             }
         }
-        collector.append(TEX_LET.render());
-        collector.append(TEX_BRACKET_R.render());
     }
 
     private ConnectionFields getFrom(final String portName, final TexObject object) {
@@ -305,6 +298,8 @@ public class TemplateProcessorImpl implements TemplateProcessor {
                 .let("m")
                 .build()
                 .appendBy(collector);
+        collector.append(TEX_LET.render());
+        collector.append(TEX_BRACKET_R.render());
     }
 
     private void processConnectionType2(final ConnectionFields from, final ConnectionFields to, final Collector collector) {
@@ -357,6 +352,8 @@ public class TemplateProcessorImpl implements TemplateProcessor {
                 .let("p")
                 .build()
                 .appendBy(collector);
+        collector.append(TEX_LET.render());
+        collector.append(TEX_BRACKET_R.render());
     }
 
     private void processConnectionType3(final ConnectionFields from, final ConnectionFields to, final Collector collector) {
@@ -369,7 +366,7 @@ public class TemplateProcessorImpl implements TemplateProcessor {
         new ConnCTemplate.Builder()
                 .objName(from.objName())
                 .port(from.portName())
-                .x(String.valueOf((double)from.spacing()/4))
+                .x(String.valueOf((to.posX()-from.posX())/2.5))
                 .y("0")
                 .let("p")
                 .build()
@@ -378,7 +375,7 @@ public class TemplateProcessorImpl implements TemplateProcessor {
         new ConnCTemplate.Builder()
                 .objName(to.objName())
                 .port(to.portName())
-                .x(String.valueOf(-(double)to.spacing()/4))
+                .x(String.valueOf(-(to.posX()-from.posX())/2.5))
                 .y("0")
                 //.index(String.valueOf(index2))
                 .let("m")
@@ -390,6 +387,8 @@ public class TemplateProcessorImpl implements TemplateProcessor {
                 .let("m")
                 .build()
                 .appendBy(collector);
+        collector.append(TEX_LET.render());
+        collector.append(TEX_BRACKET_R.render());
     }
 
 
@@ -442,18 +441,14 @@ public class TemplateProcessorImpl implements TemplateProcessor {
                 .let("m")
                 .build()
                 .appendBy(collector);
+        collector.append(TEX_LET.render());
+        collector.append(TEX_BRACKET_R.render());
     }
 
     private void processLastPart(final Collector collector, final Parser.Context context) {
         Character index = 'a';
         for(TexObject object : context.getTexObject()) {
             for(Port input : object.inputs()) {
-                new PutTemplate.Builder()
-                        .posX(String.valueOf(object.posX()))
-                        .posY(String.valueOf(object.posY()))
-                        .build()
-                        .appendBy(collector);
-                collector.append(TEX_BRACKET_L.render());
                 new ConnIOTemplate.Builder()
                         .objName(object.labelName())
                         .port(input.portName())
@@ -463,15 +458,8 @@ public class TemplateProcessorImpl implements TemplateProcessor {
                         .lineType("<-" + input.portLine())
                         .build()
                         .appendBy(collector);
-                collector.append(TEX_BRACKET_R.render());
             }
             for(Port output : object.outputs()) {
-                new PutTemplate.Builder()
-                        .posX(String.valueOf(object.posX()))
-                        .posY(String.valueOf(object.posY()))
-                        .build()
-                        .appendBy(collector);
-                collector.append(TEX_BRACKET_L.render());
                 new ConnIOTemplate.Builder()
                         .objName(object.labelName())
                         .port(output.portName())
@@ -481,7 +469,6 @@ public class TemplateProcessorImpl implements TemplateProcessor {
                         .lineType(output.portLine() + "->")
                         .build()
                         .appendBy(collector);
-                collector.append(TEX_BRACKET_R.render());
             }
             index++;
         }

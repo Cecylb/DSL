@@ -155,8 +155,8 @@ teXdef(var, index, amount)::=<<
 
 >>
 
-teXspacing(labelName, spacing, index)::=<<
-\node [shape=<labelName>] (<labelName>\m<index>) at ($ <spacing>*(\m<index>,0) $) {<labelName> \m<index>};
+teXspacing(labelName, spacing, index, posX, posY)::=<<
+\node [shape=<labelName>] (<labelName>\m<index>) at ($ (<posX>, <posY>) + <spacing>*(\m<index>,0) $) {<labelName> \m<index>};
 
 
 >>
@@ -202,10 +202,6 @@ teXlet()::=<<
 \global\let\p\m
 
 
->>
-
-teXput(posX, posY)::=<<
-\put(<posX>, <posY>)
 >>
 
 teXoverLine(name)::=<<

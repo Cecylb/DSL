@@ -12,7 +12,7 @@ public interface MX extends TexObject {
     Integer input = 1;
 
     Map<String, String> outputs = Map.of(
-            "Q", "",
+            "Q", " ",
             "Qn", "o"
     );
 

@@ -17,7 +17,7 @@ public class TTrBuilder extends AbstractObjectBuilder {
         });
 
         addRule("object/position/coordinates/y_coordinate/DBL", leaf -> {
-            builder.setPosY(Double.parseDouble(leaf.token().value()) - 400.0);
+            builder.setPosY(Double.parseDouble(leaf.token().value()) - 15.0);
         });
 
         addRule("object/size/SCL", leaf -> {

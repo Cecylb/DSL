@@ -16,6 +16,10 @@ public interface SpacingTemplate extends Collectible {
 
     String spacing();
 
+    Double posX();
+
+    Double posY();
+
     class Builder extends ImmutableSpacingTemplate.Builder {
     }
 
@@ -25,6 +29,8 @@ public interface SpacingTemplate extends Collectible {
                 .add("index", index())
                 .add("labelName", labelName())
                 .add("spacing", spacing())
+                .add("posX", posX())
+                .add("posY", posY())
                 .render()
         );
     }

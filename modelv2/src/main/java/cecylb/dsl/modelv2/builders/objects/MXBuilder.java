@@ -17,7 +17,7 @@ public class MXBuilder extends AbstractObjectBuilder {
         });
 
         addRule("object/position/coordinates/y_coordinate/DBL", leaf -> {
-            builder.setPosY(Double.parseDouble(leaf.token().value()) - 400.0);
+            builder.setPosY(Double.parseDouble(leaf.token().value()) - 15.0);
         });
 
         addRule("object/size/SCL", leaf -> {
@@ -100,6 +100,7 @@ public class MXBuilder extends AbstractObjectBuilder {
             }
             int i = 0;
             for(Map.Entry<String, String> entry : MX.outputs.entrySet()){
+                System.out.println(entry.getValue());
                 builder.outputs().add(new Port.Builder()
                         .portX(builder.sizeX()*2)
                         .portY(-((builder.sizeY() * 4) / (MX.outputs.size() + 1) * (i + 1)) + builder.sizeY() * 2)

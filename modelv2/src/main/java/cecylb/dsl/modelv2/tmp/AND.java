@@ -10,8 +10,8 @@ import java.util.Map;
         String objName = "AND";
 
     Map<String, String> inputs = Map.of(
-            "A", "",
-            "B", ""
+            "B", " ",
+            "A", " "
     );
 
     Map<String, String> outputs = Map.of(

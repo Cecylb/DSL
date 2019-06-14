@@ -19,7 +19,7 @@ public class MultipleElementTest{
         translator.translate(
                 new ByteArrayInputStream(("a4, landscape; " +
                         "new MX{ " +
-                            "position: 0.0x, 400.0y; " +
+                            "position: 0.0x, 15.0y; " +
                             "size: 0.5x, 0.5y; " +
                             "label: 1.5x, 1.5y, \"MX #n\"; " +
                             "inputs: 3;" +
@@ -27,7 +27,7 @@ public class MultipleElementTest{
                             "spacing: 4; " +
                         "}" +
                         "new DC{ " +
-                            "position: 0.0x, 300.0y; " +
+                            "position: 2.5x, 10.0y; " +
                             "size: 0.5x, 0.5y; " +
                             "label: 1.5x, 1.5y, \"DC #n\"; " +
                             "inputs: 3;" +
@@ -35,7 +35,7 @@ public class MultipleElementTest{
                             "spacing: 4; " +
                         "}" +
                         "new AND{ " +
-                            "position: 100.0x, 350.0y; " +
+                            "position: 10.0x, 12.5y; " +
                             "size: 0.5x, 0.5y; " +
                             "label: 1.5x, 1.5y, \"AND #n\"; " +
                             "amount: 1; " +
