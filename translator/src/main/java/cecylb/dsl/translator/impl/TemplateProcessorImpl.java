@@ -48,8 +48,6 @@ public class TemplateProcessorImpl implements TemplateProcessor {
         inlineProcessor.generate(collector, context, "declareshape");
     }
 
-// Стоит разделить это на отдельные методы?
-// Можно ли как-то это упростить?
     private void processObjects(final Collector collector, final Parser.Context context) {
         InitializeProcessor initializeProcessor = new InitializeProcessor();
         DrawProcessor drawProcessor = new DrawProcessor();
