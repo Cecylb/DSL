@@ -1,6 +1,6 @@
 package cecylb.dsl.modelv2.builders.objects;
 
-import cecylb.dsl.modelv2.tmp.TexObject;
+import cecylb.dsl.modelv2.elements.TexObject;
 import io.github.therealmone.tdf4j.model.ast.ASTElement;
 
 @FunctionalInterface // Интерфейс у которого только один метод, можно использовать как лямбду

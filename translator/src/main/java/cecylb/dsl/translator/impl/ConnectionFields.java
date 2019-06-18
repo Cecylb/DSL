@@ -9,6 +9,8 @@ public interface ConnectionFields {
 
     String portName();
 
+    Double sizeX();
+
     Double sizeY();
 
     Double posX();

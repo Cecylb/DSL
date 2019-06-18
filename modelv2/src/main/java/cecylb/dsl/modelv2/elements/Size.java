@@ -1,4 +1,4 @@
-package cecylb.dsl.modelv2.tmp;
+package cecylb.dsl.modelv2.elements;
 
 public interface Size{
 

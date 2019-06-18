@@ -1,21 +1,22 @@
-package cecylb.dsl.modelv2.tmp;
+package cecylb.dsl.modelv2.elements;
 
 import org.immutables.value.Value;
 
 import java.util.Map;
+import java.util.TreeMap;
 
 @Value.Modifiable
     public interface AND extends TexObject {
 
         String objName = "AND";
 
-    Map<String, String> inputs = Map.of(
-            "B", " ",
-            "A", " "
-    );
+    Map<String, String> inputs = new TreeMap<>(String::compareTo){{
+        put("B", " ");
+        put("A", " ");
+    }};
 
     Map<String, String> outputs = Map.of(
-            "Q", ""
+            "Q", " "
     );
 
 

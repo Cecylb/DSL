@@ -1,8 +1,8 @@
 package cecylb.dsl.modelv2.builders.objects;
 
-import cecylb.dsl.modelv2.tmp.*;
-import cecylb.dsl.modelv2.tmp.TexObject;
-import cecylb.dsl.modelv2.tmp.UJKTr;
+import cecylb.dsl.modelv2.elements.*;
+import cecylb.dsl.modelv2.elements.TexObject;
+import cecylb.dsl.modelv2.elements.UJKTr;
 import io.github.therealmone.tdf4j.model.ast.ASTElement;
 
 import java.util.Map;

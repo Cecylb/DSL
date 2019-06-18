@@ -26,7 +26,6 @@ public class Connection1ProcessorImpl implements ConnectionProcessor {
                 .let("p")
                 .build()
                 .appendBy(collector);
-
         new ConnCTemplate.Builder()
                 .objName(from.objName())
                 .port(from.portName())

@@ -1,8 +1,8 @@
 package cecylb.dsl.translator.impl;
 
-import cecylb.dsl.modelv2.tmp.Connection;
-import cecylb.dsl.modelv2.tmp.Port;
-import cecylb.dsl.modelv2.tmp.TexObject;
+import cecylb.dsl.modelv2.elements.Connection;
+import cecylb.dsl.modelv2.elements.Port;
+import cecylb.dsl.modelv2.elements.TexObject;
 import cecylb.dsl.translator.Parser;
 import cecylb.dsl.translator.TemplateProcessor;
 import cecylb.dsl.translator.templates.DefTemplate;
@@ -16,8 +16,8 @@ public class ConnectionProcessor {
     ConnectionProcessor(final TemplateProcessor.Collector collector, final Parser.Context context) {
         System.out.println("Connections processing . . .\n");
 
-        ConnectionFields from = new ConnectionFields.Builder().objName("").sizeY(0.0).posX(0.0).posY(0.0).portY(0.0).spacing(0).portName("").lineType("").build();
-        ConnectionFields to = new ConnectionFields.Builder().objName("").sizeY(0.0).posX(0.0).posY(0.0).portY(0.0).spacing(0).portName("").lineType("").build();
+        ConnectionFields from = null;
+        ConnectionFields to = null;
         for (Connection connection : context.getConnections()) {
 
             System.out.println("Connection processing . . .\n");
@@ -64,6 +64,7 @@ public class ConnectionProcessor {
         }
         return new ConnectionFields.Builder()
                 .objName(object.labelName())
+                .sizeX(object.sizeX())
                 .sizeY(object.sizeY())
                 .posX(object.posX())
                 .posY(object.posY())
@@ -85,6 +86,7 @@ public class ConnectionProcessor {
         }
         return new ConnectionFields.Builder()
                 .objName(object.labelName())
+                .sizeX(object.sizeX())
                 .sizeY(object.sizeY())
                 .posX(object.posX())
                 .posY(object.posY())

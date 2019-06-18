@@ -1,7 +1,7 @@
 package cecylb.dsl.modelv2.builders;
 
-import cecylb.dsl.modelv2.tmp.ModifiableProperty;
-import cecylb.dsl.modelv2.tmp.Property;
+import cecylb.dsl.modelv2.elements.ModifiableProperty;
+import cecylb.dsl.modelv2.elements.Property;
 import io.github.therealmone.tdf4j.model.ast.ASTElement;
 
 public class PropertyBuilder extends  AbstractPropertyBuilder{

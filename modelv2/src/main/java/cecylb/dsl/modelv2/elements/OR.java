@@ -1,11 +1,11 @@
-package cecylb.dsl.modelv2.tmp;
+package cecylb.dsl.modelv2.elements;
 
 import org.immutables.value.Value;
 
 import java.util.Map;
 
 @Value.Modifiable
-public interface NOR extends TexObject {
+public interface OR extends TexObject {
 
     String objName = "≥1";
 
@@ -15,7 +15,7 @@ public interface NOR extends TexObject {
     );
 
     Map<String, String> outputs = Map.of(
-            "Q", "o"
+            "Q", ""
     );
 
 

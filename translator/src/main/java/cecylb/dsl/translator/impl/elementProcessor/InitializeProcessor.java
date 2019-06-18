@@ -1,6 +1,6 @@
 package cecylb.dsl.translator.impl.elementProcessor;
 
-import cecylb.dsl.modelv2.tmp.TexObject;
+import cecylb.dsl.modelv2.elements.TexObject;
 import cecylb.dsl.translator.Parser;
 import cecylb.dsl.translator.TemplateProcessor;
 import cecylb.dsl.translator.templates.*;

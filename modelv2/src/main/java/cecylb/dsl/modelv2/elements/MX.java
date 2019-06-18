@@ -1,26 +1,26 @@
-package cecylb.dsl.modelv2.tmp;
+package cecylb.dsl.modelv2.elements;
 
 import org.immutables.value.Value;
 
 import java.util.Map;
 
 @Value.Modifiable
-public interface NOT extends TexObject {
+public interface MX extends TexObject {
 
-    String objName = "1";
+    String objName = "MX";
 
-    Map<String, String> inputs = Map.of(
-            "A", "",
-            "B", ""
-    );
+    Integer input = 1;
 
     Map<String, String> outputs = Map.of(
-            "Q", "o"
+            "Q", " ",
+            "Qn", "o"
     );
 
+
     enum Rectangles {
-        FRAME(1.0, 1.0, 1.0, 1.0);
-        //BORDER(0.5, 1.0, 0.5, 1.0);
+        FRAME(1.0, 1.0, 1.0, 1.0),
+        BORDER(0.5, 1.0, 0.5, 1.0),
+        PORT(-0.5, -0.25, 1.0, 1.0);
 
         private final double neX;
         private final double neY;

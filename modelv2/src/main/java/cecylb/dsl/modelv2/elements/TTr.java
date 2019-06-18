@@ -1,6 +1,5 @@
-package cecylb.dsl.modelv2.tmp;
+package cecylb.dsl.modelv2.elements;
 
-import cecylb.dsl.modelv2.tmp.TexObject;
 import org.immutables.value.Value;
 
 import java.util.Map;

@@ -185,7 +185,7 @@ env
 
     import "cecylb.dsl.modelv2.builders.objects.*"
     import "cecylb.dsl.modelv2.builders.*"
-    import "cecylb.dsl.modelv2.tmp.TexObject"
+    import "cecylb.dsl.modelv2.elements.TexObject"
 
     code "
         Context context;

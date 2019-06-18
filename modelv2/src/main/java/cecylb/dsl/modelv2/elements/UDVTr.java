@@ -1,27 +1,27 @@
-package cecylb.dsl.modelv2.tmp;
+package cecylb.dsl.modelv2.elements;
 
 import org.immutables.value.Value;
 
 import java.util.Map;
 
 @Value.Modifiable
-public interface OR extends TexObject {
-
-    String objName = "≥1";
+public interface UDVTr extends TexObject {
 
     Map<String, String> inputs = Map.of(
-            "A", "",
-            "B", ""
+            "D", "",
+            "C", "",
+            "V", ""
     );
 
     Map<String, String> outputs = Map.of(
-            "Q", ""
+            "Q", "",
+            "Qn", "o"
     );
 
 
     enum Rectangles {
-        FRAME(1.0, 1.0, 1.0, 1.0);
-        //BORDER(0.5, 1.0, 0.5, 1.0);
+        FRAME(1.0, 1.0, 1.0, 1.0),
+        BORDER(0.5, 1.0, 0.5, 1.0);
 
         private final double neX;
         private final double neY;

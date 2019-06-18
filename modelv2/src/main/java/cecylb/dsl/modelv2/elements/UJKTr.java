@@ -1,18 +1,16 @@
-package cecylb.dsl.modelv2.tmp;
-
+package cecylb.dsl.modelv2.elements;
 import org.immutables.value.Value;
 
 import java.util.Map;
 
 @Value.Modifiable
-public interface DTr extends TexObject {
-
-    String objName = "DTr";
+public interface UJKTr extends TexObject {
 
     Map<String, String> inputs = Map.of(
             "S", "",
-            "D", "",
+            "J", "",
             "C", "",
+            "K", "",
             "R", ""
     );
 
@@ -21,11 +19,10 @@ public interface DTr extends TexObject {
             "Qn", "o"
     );
 
-
     enum Rectangles {
         FRAME(1.0, 1.0, 1.0, 1.0),
         BORDER(0.5, 1.0, 0.5, 1.0),
-        PORT(-0.5, -0.25, 0.5, 1.0);
+        PORT(-0.5, -0.25, 1.0, 0.25);
 
         private final double neX;
         private final double neY;

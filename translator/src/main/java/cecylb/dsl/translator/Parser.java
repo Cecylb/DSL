@@ -1,8 +1,8 @@
 package cecylb.dsl.translator;
 
-import cecylb.dsl.modelv2.tmp.Connection;
-import cecylb.dsl.modelv2.tmp.Property;
-import cecylb.dsl.modelv2.tmp.TexObject;
+import cecylb.dsl.modelv2.elements.Connection;
+import cecylb.dsl.modelv2.elements.Property;
+import cecylb.dsl.modelv2.elements.TexObject;
 
 import java.util.LinkedList;
 import java.util.Map;

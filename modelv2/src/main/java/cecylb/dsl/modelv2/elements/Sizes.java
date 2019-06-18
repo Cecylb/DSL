@@ -1,4 +1,4 @@
-package cecylb.dsl.modelv2.tmp;
+package cecylb.dsl.modelv2.elements;
 
 public enum Sizes {
      SMALL(1.0, 2.0),

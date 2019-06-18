@@ -1,4 +1,4 @@
-package cecylb.dsl.modelv2.tmp;
+package cecylb.dsl.modelv2.elements;
 
 public enum  Labels {
     DEFAULT(1.5, 1.5);

@@ -1,13 +1,13 @@
-package cecylb.dsl.modelv2.tmp;
+package cecylb.dsl.modelv2.elements;
 
 import org.immutables.value.Value;
 
 import java.util.Map;
 
 @Value.Modifiable
-public interface NAND extends TexObject {
+public interface NOR extends TexObject {
 
-    String objName = "&";
+    String objName = "≥1";
 
     Map<String, String> inputs = Map.of(
             "A", "",

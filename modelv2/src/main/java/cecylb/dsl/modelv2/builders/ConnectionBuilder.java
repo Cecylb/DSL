@@ -1,7 +1,7 @@
 package cecylb.dsl.modelv2.builders;
 
-import cecylb.dsl.modelv2.tmp.Connection;
-import cecylb.dsl.modelv2.tmp.ModifiableConnection;
+import cecylb.dsl.modelv2.elements.Connection;
+import cecylb.dsl.modelv2.elements.ModifiableConnection;
 import io.github.therealmone.tdf4j.model.ast.ASTElement;
 
 public class ConnectionBuilder extends AbstractConnectionBuilder {
