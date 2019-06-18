@@ -32,7 +32,6 @@ public class Connection3ProcessorImpl implements ConnectionProcessor {
                 .port(to.portName())
                 .x(String.valueOf(-((to.posX()-(to.sizeX()*2)-from.posX()-(from.sizeX()*2))/2)))
                 .y("0")
-                //.index(String.valueOf(index2))
                 .let("m")
                 .build()
                 .appendBy(collector);

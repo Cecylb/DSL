@@ -33,7 +33,7 @@ public class Connection2ProcessorImpl implements ConnectionProcessor {
                 .objName(from.objName())
                 .port(from.portName())
                 .x(String.valueOf((double)from.spacing()/8))
-                .y(String.valueOf(from.sizeY()*8 - (from.portY()/4 - from.sizeY())))
+                .y(String.valueOf(from.sizeY()*2 + from.portY()))
                 .let("p")
                 .build()
                 .appendBy(collector);
@@ -41,7 +41,7 @@ public class Connection2ProcessorImpl implements ConnectionProcessor {
                 .objName(to.objName())
                 .port(to.portName())
                 .x(String.valueOf((double)-to.spacing()/8))
-                .y(String.valueOf(to.sizeY()*8 - to.portY()/4))
+                .y(String.valueOf(to.sizeY()*2 + to.portY()))
                 .let("p")
                 .build()
                 .appendBy(collector);
@@ -51,7 +51,6 @@ public class Connection2ProcessorImpl implements ConnectionProcessor {
                 .port(to.portName())
                 .x(String.valueOf(-(double)to.spacing()/8))
                 .y("0.0")
-                //.index(String.valueOf(index2))
                 .let("p")
                 .build()
                 .appendBy(collector);

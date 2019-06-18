@@ -50,7 +50,6 @@ public class Connection4ProcessorImpl implements ConnectionProcessor {
                 .port(to.portName())
                 .x(String.valueOf(-(double)to.spacing()/4))
                 .y("0")
-                //.index(String.valueOf(index2))
                 .let("m")
                 .build()
                 .appendBy(collector);
