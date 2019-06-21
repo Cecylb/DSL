@@ -166,12 +166,8 @@ lexis
         [priority: 2]
 
     IOL
-        "^'*$"
-        [priority: 1]
-
-    QOT
-        "^\'$"
-        [priority: 2]
+        "\'(.*)\'$"
+        [priority: 1000]
 
     WS
         "\s|\n|\r"
@@ -376,12 +372,11 @@ syntax
                 ast.moveCursor(ASTCursor.Movement.TO_PARENT);
             ">
         ,   CMA
-        ,   QOT
         ,   IOL
-            //inline(
-            //        "??????????????????????????????"
-            //),
-        ,   QOT
+        ,   <"
+                this.context.getInline().put(position, ast.moveCursor(ASTCursor.Movement.TO_LAST_ADDED_LEAF).onCursor().asLeaf().token().value());
+                ast.moveCursor(ASTCursor.Movement.TO_PARENT);
+            ">
         ,   DIV
         ;
 

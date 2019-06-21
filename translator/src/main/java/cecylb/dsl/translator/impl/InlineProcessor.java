@@ -11,8 +11,8 @@ public class InlineProcessor {
             final Parser.Context context,
             final String field) {
         for (Map.Entry<String, String> inline : context.getInline().entrySet()) {
-            if (field.equals(inline.getValue())) {
-                collector.append(inline.getValue());
+            if (field.equals(inline.getKey())) {
+                collector.append(inline.getValue().replaceAll("^'", ""));
             }
         }
     }

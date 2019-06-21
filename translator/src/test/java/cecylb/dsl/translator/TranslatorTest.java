@@ -16,7 +16,7 @@ public class TranslatorTest {
         final Translator translator = new TranslatorImpl(resource("grammar.tdf"), new TemplateProcessorImpl());
         final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         translator.translate(
-                new ByteArrayInputStream("a4, landscape; new TTr{ size: 0.5x, 0.5y; label: 1.5x, 1.5y, \"TtR #n\"; amount: 3; spacing: 4; }connections{ (TtR)Qn o- (TtR)S; } code: tikzpicture, \" \\def\\p{0} \\foreach \\min{0,...,\\N} { \\draw [*-] ($ (Tt R\\m.Qn) + (5mm,-0.8mm) $) -- ($ (Tt R\\m.Qn) + (5mm,2.9) $) -- ($ (Tt R\\m.R) + (-5mm,1.5) $) -- ($ (Tt R\\m.R) + (-5mm,0) $) --(Tt R\\m.R); \\global\\let\\p\\m}\";".getBytes()),
+                new ByteArrayInputStream("a4, landscape; new TTr{ position: 0.0x, 0.0y; size: 0.5x, 0.5y; label: 1.5x, 1.5y, \"TtR #n\"; amount: 3; spacing: 4; }connections{ (TtR)Qn o- (TtR)S; } code: tikzpicture, \' \\def\\p{0} \\foreach \\min{0,...,\\N} { \\draw [*-] ($ (Tt R\\m.Qn) + (5mm,-0.8mm) $) -- ($ (Tt R\\m.Qn) + (5mm,2.9) $) -- ($ (Tt R\\m.R) + (-5mm,1.5) $) -- ($ (Tt R\\m.R) + (-5mm,0) $) --(Tt R\\m.R); \\global\\let\\p\\m}\';".getBytes()),
                 byteArrayOutputStream
         );
         System.out.println(byteArrayOutputStream.toString());
@@ -49,7 +49,7 @@ public class TranslatorTest {
         final Translator translator = new TranslatorImpl(resource("grammar.tdf"), new TemplateProcessorImpl());
         final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         translator.translate(
-                new ByteArrayInputStream("a4, landscape; new UJKTr{ size: 0.5x, 0.6y; label: 1.5x, 1.5y, \"JK #n\"; inputs:  3; amount: 2; spacing: 4; }connections{(JK)Q -- (JK)S; };".getBytes()),
+                new ByteArrayInputStream("a4, landscape; new UJKTr{ position: 0.0x, 0.0y; size: 0.5x, 0.6y; label: 1.5x, 1.5y, \"JK #n\"; inputs:  3; amount: 2; spacing: 4; }connections{(JK)Q -- (JK)S; };".getBytes()),
                 byteArrayOutputStream
         );
         System.out.println(byteArrayOutputStream.toString());
