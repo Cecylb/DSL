@@ -79,7 +79,7 @@ public class DTrBuilder extends AbstractObjectBuilder {
                         .neY(rectangle.getNeY()*builder.sizeY()*2)
                         .build());
             }
-            for(i=0; i<DTr.inputs.length; i++){
+            for(i = 0; i < DTr.inputs.length; i ++) {
                 builder.inputs().add(new Port.Builder()
                         .portX(-builder.sizeX()* 2)
                         .portY(-((builder.sizeY() * 4) / (DTr.inputs.length + 1) * (i + 1)) + builder.sizeY() * 2)
@@ -88,8 +88,8 @@ public class DTrBuilder extends AbstractObjectBuilder {
                         .portLine("")
                         .build());
             }
-            i=0;
-            for(Map.Entry<String, String> entry : DTr.outputs.entrySet()){
+            i = 0;
+            for(Map.Entry<String, String> entry : DTr.outputs.entrySet()) {
                 builder.outputs().add(new Port.Builder()
                         .portX(builder.sizeX()*2)
                         .portY(-((builder.sizeY() * 4) / (DTr.outputs.size() + 1) * (i + 1)) + builder.sizeY() * 2)

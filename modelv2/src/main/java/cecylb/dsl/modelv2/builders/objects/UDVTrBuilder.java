@@ -70,6 +70,7 @@ public class UDVTrBuilder extends AbstractObjectBuilder {
         });
 
         addRule("object/BFR", leaf -> {
+            int i;
             for(UDVTr.Rectangles rectangle : UDVTr.Rectangles.values()) {
                 builder.rectangles().add(new Rectangle.Builder()
                         .swX(rectangle.getSwX()*builder.sizeX()*2)
@@ -78,14 +79,13 @@ public class UDVTrBuilder extends AbstractObjectBuilder {
                         .neY(rectangle.getNeY()*builder.sizeY()*2)
                         .build());
             }
-            int i = 0;
-            for(Map.Entry<String, String> entry : UDVTr.inputs.entrySet()){
+            for(i = 0; i < UDVTr.inputs.length; i++) {
                 builder.inputs().add(new Port.Builder()
                         .portX(-builder.sizeX()* 2)
-                        .portY(-((builder.sizeY() * 4) / (UDVTr.inputs.size() + 1) * (i + 1)) + builder.sizeY() * 2)
-                        .portName(entry.getKey())
-                        .portLabel(entry.getKey())
-                        .portLine(entry.getValue())
+                        .portY(-((builder.sizeY() * 4) / (UDVTr.inputs.length + 1) * (i + 1)) + builder.sizeY() * 2)
+                        .portName(UDVTr.inputs[i])
+                        .portLabel(UDVTr.inputs[i])
+                        .portLine("")
                         .build());
                 i++;
             }

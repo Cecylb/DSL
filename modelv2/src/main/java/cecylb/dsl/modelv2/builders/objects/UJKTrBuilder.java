@@ -70,6 +70,7 @@ public class UJKTrBuilder extends AbstractObjectBuilder {
         });
 
         addRule("object/BFR", leaf -> {
+            int i;
             for(UJKTr.Rectangles rectangle : UJKTr.Rectangles.values()) {
                 builder.rectangles().add(new Rectangle.Builder()
                         .swX(rectangle.getSwX()*builder.sizeX()*2)
@@ -78,19 +79,18 @@ public class UJKTrBuilder extends AbstractObjectBuilder {
                         .neY(rectangle.getNeY()*builder.sizeY()*2)
                         .build());
             }
-            int i = 0;
-            for(Map.Entry<String, String> entry : UJKTr.inputs.entrySet()){
+            for(i = 0; i < UJKTr.inputs.length; i ++) {
                 builder.inputs().add(new Port.Builder()
                         .portX(-builder.sizeX()* 2)
-                        .portY(-((builder.sizeY() * 4) / (UJKTr.inputs.size() + 1) * (i + 1)) + builder.sizeY() * 2)
-                        .portName(entry.getKey())
-                        .portLabel(entry.getKey())
-                        .portLine(entry.getValue())
+                        .portY(-((builder.sizeY() * 4) / (UJKTr.inputs.length + 1) * (i + 1)) + builder.sizeY() * 2)
+                        .portName(UJKTr.inputs[i])
+                        .portLabel(UJKTr.inputs[i])
+                        .portLine("")
                         .build());
                 i++;
             }
             i = 0;
-            for(Map.Entry<String, String> entry : UJKTr.outputs.entrySet()){
+            for(Map.Entry<String, String> entry : UJKTr.outputs.entrySet()) {
                 builder.outputs().add(new Port.Builder()
                         .portX(builder.sizeX()*2)
                         .portY(-((builder.sizeY() * 4) / (UJKTr.outputs.size() + 1) * (i + 1)) + builder.sizeY() * 2)

@@ -2,22 +2,17 @@ package cecylb.dsl.modelv2.elements;
 import org.immutables.value.Value;
 
 import java.util.Map;
+import java.util.TreeMap;
 
 @Value.Modifiable
 public interface UJKTr extends TexObject {
 
-    Map<String, String> inputs = Map.of(
-            "S", "",
-            "J", "",
-            "C", "",
-            "K", "",
-            "R", ""
-    );
+    String[] inputs = {"S", "J", "C", "K", "R"};
 
-    Map<String, String> outputs = Map.of(
-            "Q", "",
-            "Qn", "o"
-    );
+    Map<String, String> outputs = new TreeMap<>(String::compareTo){{
+        put("Q", "");
+        put("Qn", "o");
+    }};
 
     enum Rectangles {
         FRAME(1.0, 1.0, 1.0, 1.0),

@@ -3,6 +3,7 @@ package cecylb.dsl.modelv2.elements;
 import org.immutables.value.Value;
 
 import java.util.Map;
+import java.util.TreeMap;
 
 @Value.Modifiable
 public interface MX extends TexObject {
@@ -11,10 +12,10 @@ public interface MX extends TexObject {
 
     Integer input = 1;
 
-    Map<String, String> outputs = Map.of(
-            "Q", " ",
-            "Qn", "o"
-    );
+    Map<String, String> outputs = new TreeMap<>(String::compareTo){{
+        put("Q", "");
+        put("Qn", "o");
+    }};
 
 
     enum Rectangles {

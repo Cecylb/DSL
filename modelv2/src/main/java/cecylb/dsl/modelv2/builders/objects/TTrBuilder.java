@@ -70,6 +70,7 @@ public class TTrBuilder extends AbstractObjectBuilder {
         });
 
         addRule("object/BFR", leaf -> {
+            int i;
             for(TTr.Rectangles rectangle : TTr.Rectangles.values()) {
                 builder.rectangles().add(new Rectangle.Builder()
                         .swX(rectangle.getSwX()*builder.sizeX()*2)
@@ -78,19 +79,17 @@ public class TTrBuilder extends AbstractObjectBuilder {
                         .neY(rectangle.getNeY()*builder.sizeY()*2)
                         .build());
             }
-            int i = 0;
-            for(Map.Entry<String, String> entry : TTr.inputs.entrySet()){
+            for(i = 0; i < TTr.inputs.length; i ++) {
                 builder.inputs().add(new Port.Builder()
                         .portX(-builder.sizeX()* 2)
-                        .portY(-((builder.sizeY() * 4) / (TTr.inputs.size() + 1) * (i + 1)) + builder.sizeY() * 2)
-                        .portName(entry.getKey())
-                        .portLabel(entry.getKey())
-                        .portLine(entry.getValue())
+                        .portY(-((builder.sizeY() * 4) / (TTr.inputs.length + 1) * (i + 1)) + builder.sizeY() * 2)
+                        .portName(TTr.inputs[i])
+                        .portLabel(TTr.inputs[i])
+                        .portLine("")
                         .build());
-                i++;
             }
             i = 0;
-            for(Map.Entry<String, String> entry : TTr.outputs.entrySet()){
+            for(Map.Entry<String, String> entry : TTr.outputs.entrySet()) {
                 builder.outputs().add(new Port.Builder()
                         .portX(builder.sizeX()*2)
                         .portY(-((builder.sizeY() * 4) / (TTr.outputs.size() + 1) * (i + 1)) + builder.sizeY() * 2)

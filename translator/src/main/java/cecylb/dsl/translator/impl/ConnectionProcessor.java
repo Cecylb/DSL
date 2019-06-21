@@ -14,14 +14,9 @@ import static cecylb.dsl.translator.Template.TEX_BRACKET_L;
 public class ConnectionProcessor {
 
     ConnectionProcessor(final TemplateProcessor.Collector collector, final Parser.Context context) {
-        System.out.println("Connections processing . . .\n");
-
         ConnectionFields from = null;
         ConnectionFields to = null;
         for (Connection connection : context.getConnections()) {
-
-            System.out.println("Connection processing . . .\n");
-
             for(TexObject object : context.getTexObject()) {
                 if (object.labelName().equals(connection.objName1()))
                     from = getFrom(connection.port1(), object);

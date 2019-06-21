@@ -3,23 +3,19 @@ package cecylb.dsl.modelv2.elements;
 import org.immutables.value.Value;
 
 import java.util.Map;
+import java.util.TreeMap;
 
 @Value.Modifiable
 public interface TTr extends TexObject {
 
     String objName = "TTr";
 
-    Map<String, String> inputs = Map.of(
-            "S", "",
-            "T", "",
-            "C", "",
-            "R", ""
-    );
+    String[] inputs = {"S", "T", "C", "R"};
 
-    Map<String, String> outputs = Map.of(
-            "Q", "",
-            "Qn", "o"
-    );
+    Map<String, String> outputs = new TreeMap<>(String::compareTo){{
+        put("Q", "");
+        put("Qn", "o");
+    }};
 
 
     enum Rectangles {

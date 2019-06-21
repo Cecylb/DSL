@@ -13,7 +13,6 @@ public class InitializeProcessor implements ElementProcessor {
         Character index = 'a';
         for (
                 TexObject object : context.getTexObject()) {
-            System.out.println("Object processing . . .\n");
             new ObjNTemplate.Builder()
                     .objName(object.labelName())
                     .build()
