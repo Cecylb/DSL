@@ -79,6 +79,18 @@ public class TranslatorTest {
     }
 
     @Test
+    public void dtrSelfTest() throws Exception {
+        System.out.println("[DTr SELF T E S T . . .]");
+        final Translator translator = new TranslatorImpl(resource("grammar.tdf"), new TemplateProcessorImpl());
+        final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        translator.translate(
+                new ByteArrayInputStream("a4, landscape; new DTr{ position: 0.0x, 0.0y; size: 0.5x, 0.6y; label: 1.5x, 1.5y, \"DT #n\"; inputs:  3; amount: 2; spacing: 4; }connections{(DT)Qn -- (DT #self)S; };".getBytes()),
+                byteArrayOutputStream
+        );
+        System.out.println(byteArrayOutputStream.toString());
+    }
+
+    @Test
     public void mxSelfTest() throws Exception {
         System.out.println("[MX SELF T E S T . . .]");
         final Translator translator = new TranslatorImpl(resource("grammar.tdf"), new TemplateProcessorImpl());

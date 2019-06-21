@@ -70,6 +70,7 @@ public class DTrBuilder extends AbstractObjectBuilder {
         });
 
         addRule("object/BFR", leaf -> {
+            int i;
             for(DTr.Rectangles rectangle : DTr.Rectangles.values()) {
                 builder.rectangles().add(new Rectangle.Builder()
                         .swX(rectangle.getSwX()*builder.sizeX()*2)
@@ -78,16 +79,14 @@ public class DTrBuilder extends AbstractObjectBuilder {
                         .neY(rectangle.getNeY()*builder.sizeY()*2)
                         .build());
             }
-            int i = 0;
-            for(Map.Entry<String, String> entry : DTr.inputs.entrySet()){
+            for(i=0; i<DTr.inputs.length; i++){
                 builder.inputs().add(new Port.Builder()
                         .portX(-builder.sizeX()* 2)
-                        .portY(-((builder.sizeY() * 4) / (DTr.inputs.size() + 1) * (i + 1)) + builder.sizeY() * 2)
-                        .portName(entry.getKey())
-                        .portLabel(entry.getKey())
-                        .portLine(entry.getValue())
+                        .portY(-((builder.sizeY() * 4) / (DTr.inputs.length + 1) * (i + 1)) + builder.sizeY() * 2)
+                        .portName(DTr.inputs[i])
+                        .portLabel(DTr.inputs[i])
+                        .portLine("")
                         .build());
-                i++;
             }
             i=0;
             for(Map.Entry<String, String> entry : DTr.outputs.entrySet()){

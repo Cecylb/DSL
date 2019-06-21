@@ -12,8 +12,6 @@ import static cecylb.dsl.translator.Template.TEX_LET;
 public class Connection2ProcessorImpl implements ConnectionProcessor {
 
     public void generate(final ConnectionFields from, final ConnectionFields to, final TemplateProcessor.Collector collector) {
-        System.out.println(from.portY());
-        System.out.println(to.portY());
         new Conn1Template.Builder()
                 .objName1(from.objName())
                 .port1(from.portName())
@@ -33,7 +31,7 @@ public class Connection2ProcessorImpl implements ConnectionProcessor {
                 .objName(from.objName())
                 .port(from.portName())
                 .x(String.valueOf((double)from.spacing()/8))
-                .y(String.valueOf(from.sizeY()*2 + from.portY()))
+                .y(String.valueOf(to.sizeY()*6 - from.portY()*1.7))
                 .let("p")
                 .build()
                 .appendBy(collector);
@@ -41,7 +39,7 @@ public class Connection2ProcessorImpl implements ConnectionProcessor {
                 .objName(to.objName())
                 .port(to.portName())
                 .x(String.valueOf((double)-to.spacing()/8))
-                .y(String.valueOf(to.sizeY()*2 + to.portY()))
+                .y(String.valueOf(to.sizeY()*6 - to.portY()*1.7))
                 .let("p")
                 .build()
                 .appendBy(collector);
