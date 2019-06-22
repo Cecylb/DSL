@@ -12,7 +12,7 @@ public class InlineProcessor {
             final String field) {
         for (Map.Entry<String, String> inline : context.getInline().entrySet()) {
             if (field.equals(inline.getKey())) {
-                collector.append(inline.getValue().replaceAll("^'", ""));
+                collector.append(inline.getValue().replaceAll("'", "\n"));
             }
         }
     }

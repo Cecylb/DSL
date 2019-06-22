@@ -3,7 +3,6 @@ package cecylb.dsl.translator;
 import cecylb.dsl.translator.impl.TemplateProcessorImpl;
 import cecylb.dsl.translator.impl.TranslatorImpl;
 import org.junit.Test;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -16,14 +15,14 @@ public class LogicGatesTest{
         final Translator translator = new TranslatorImpl(resource("grammar.tdf"), new TemplateProcessorImpl());
         final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         translator.translate(
-                new ByteArrayInputStream("a4, landscape; new AND{ position: 0.0x, 0.0y; size: 0.5x, 0.5y; label: 1.5x, 1.5y, \"AND #n\"; amount: 3; spacing: 4; }connections{ (AND)ab o- (AND)a; };".getBytes()),
+                new ByteArrayInputStream("a4, landscape;\n new AND{ position: 0.0x, 0.0y; size: 0.5x, 0.5y; label: 1.5x, 1.5y, \"AND #n\"; amount: 3; spacing: 4; }connections{ (AND)ab o- (AND)a; };".getBytes()),
                 byteArrayOutputStream
         );
         System.out.println(byteArrayOutputStream.toString());
     }
 
     @Test
-    public void orInlineTest() throws Exception {
+    public void orTest() throws Exception {
         System.out.println("[OR T E S T . . .]");
         final Translator translator = new TranslatorImpl(resource("grammar.tdf"), new TemplateProcessorImpl());
         final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();

@@ -1,173 +1,156 @@
 lexis
 
     BSL
-        "^\[$"
+        "\["
         [priority: 1]
 
     BSR
-        "^\]$"
+        "\]"
         [priority: 1]
 
     BFL
-        "^\{$"
+        "\{"
         [priority: 1]
 
     BFR
-        "^\}$"
+        "\}"
         [priority: 1]
 
     BRL
-        "^\($"
+        "\("
         [priority: 1]
 
     BRR
-        "^\)$"
+        "\)"
         [priority: 1]
 
     COL
-        "^\:$"
+        ":"
         [priority: 1]
 
     QUT
-        "^\"$"
+        "\""
         [priority: 1]
 
     DIV
-        "^\;$"
+        ";"
         [priority: 1]
 
     CMA
-        "^\,$"
+        ","
         [priority: 1]
 
     DOT
-        "^\.$"
+        "\."
         [priority: 1]
 
     EQL
-        "^\=$"
+        "="
         [priority: 1]
 
     LIN
-        "^--$"
+        "--"
         [priority: 1]
 
     INV
-        "^(o-)|(-o)$"
+        "(o-)|(-o)"
         [priority: 1]
 
     ARW
-        "^(->)|(<-)$"
+        "(->)|(<-)"
         [priority: 1]
 
     DTL
-        "^(\*-)|(-\*)$"
+        "(\*-)|(-\*)"
         [priority: 1]
 
     OBJ
-        "^(AND|OR|NOT|NAND|NOR|EXOR|AC|UDVTr|ARSTr|CTTr|DC|DTr|LDC|MX|PDC|RDC|SC|ShRSTr|SRSTr|TTr|UJKTr)$"
+        "(AND|OR|NOT|NAND|NOR|EXOR|AC|UDVTr|ARSTr|CTTr|DC|DTr|LDC|MX|PDC|RDC|SC|ShRSTr|SRSTr|TTr|UJKTr)"
         [priority: 2]
 
     SHS
-        "^(a1|a2|a3|a4|a5)$"
+        "(a1|a2|a3|a4|a5)"
         [priority: 2]
 
     ORI
-        "^(landscape|portrait)$"
+        "(landscape|portrait)"
         [priority: 2]
 
     NEW
-        "^new$"
+        "new"
         [priority: 2]
 
     POS
-        "^position$"
+        "position"
         [priority: 2]
 
     SIZ
-        "^size$"
+        "size"
         [priority: 2]
 
     LAB
-        "^label$"
+        "label"
         [priority: 2]
 
     PRT
-        "^inputs$"
+        "inputs"
         [priority: 2]
 
     SPC
-        "^spacing$"
+        "spacing"
         [priority: 2]
 
     AMT
-        "^amount"
-        [priority: 2]
-
-    MTH
-        "^[\+\-\/\*]$"
-        [priority: 2]
-
-    COP
-        "^[<>]|(<=)|(>=)|(==)|(!=)$"
+        "amount"
         [priority: 2]
 
     CON
-        "^connections$"
+        "connections"
         [priority: 2]
 
     COD
-        "^code$"
+        "code"
         [priority: 3]
 
     IDN
-        "^#self$"
+        "#self"
         [priority: 2]
 
     LET
-        "^([a-zA-Z]+[0-1]*)$"
+        "([a-zA-Z]+[0-1]*)"
         [priority: 1]
 
     NUM
-        "^(0|([1-9][0-9]*))$"
+        "(0|([1-9][0-9]*))"
         [priority: 2]
 
     DBL
-        "^(-?)(0|([1-9][0-9]*))(\.[0-9]+)?$"
+        "(-?)(0|([1-9][0-9]*))(\.[0-9]+)?"
         [priority: 1]
 
     SCL
-        "^(small|medium|large)$"
+        "(small|medium|large)"
         [priority: 2]
 
     CDX
-        "^x$"
+        "x"
         [priority: 2]
 
     CDY
-        "^y$"
+        "y"
         [priority: 2]
 
     CUR
-        "^#n$"
-        [priority: 2]
-
-    SLA
-        "^\\$"
-        [priority: 2]
-
-
-    DLR
-        "^\$$"
+        "#n"
         [priority: 2]
 
     KOD
-        "^(documentclass|declareshape|tikzpicture)$"
+        "(documentclass|declareshape|tikzpicture)"
         [priority: 2]
 
     IOL
-        "\'(.*)\'$"
-        [priority: 1000]
+        "\'(.*)\'"
+        [priority: 1000, pattern: DOTALL]
 
     WS
         "\s|\n|\r"

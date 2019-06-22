@@ -12,6 +12,7 @@
     <modules>
         <module>translator</module>
         <module>modelv2</module>
+        <module>cli</module>
     </modules>
 
     <dependencies>

@@ -5,11 +5,10 @@ import cecylb.dsl.translator.impl.ConnectionFields;
 import cecylb.dsl.translator.templates.Conn1Template;
 import cecylb.dsl.translator.templates.Conn2Template;
 import cecylb.dsl.translator.templates.ConnCTemplate;
-
 import static cecylb.dsl.translator.Template.TEX_BRACKET_R;
 import static cecylb.dsl.translator.Template.TEX_LET;
 
-public class Connection1ProcessorImpl implements ConnectionProcessor {
+public class Connection3Processor implements ConnectionProcessor {
 
     public void generate(final ConnectionFields from, final ConnectionFields to, final TemplateProcessor.Collector collector) {
         new Conn1Template.Builder()
@@ -21,25 +20,8 @@ public class Connection1ProcessorImpl implements ConnectionProcessor {
         new ConnCTemplate.Builder()
                 .objName(from.objName())
                 .port(from.portName())
-                .x(String.valueOf((double)from.spacing() / 8))
+                .x(String.valueOf(((to.posX() - (to.sizeX() * 2) - from.posX() - (from.sizeX() * 2)) / 2)))
                 .y("0")
-                .let("p")
-                .build()
-                .appendBy(collector);
-
-        new ConnCTemplate.Builder()
-                .objName(from.objName())
-                .port(from.portName())
-                .x(String.valueOf((double)from.spacing() / 8))
-                .y(String.valueOf((from.sizeY() + from.portY()) + ((to.posY() - from.posY()) / 2)))
-                .let("m")
-                .build()
-                .appendBy(collector);
-        new ConnCTemplate.Builder()
-                .objName(to.objName())
-                .port(to.portName())
-                .x(String.valueOf(-(double)to.spacing() / 8))
-                .y(String.valueOf((- to.sizeY() + to.portY()) - ((to.posY() - from.posY()) / 2)))
                 .let("p")
                 .build()
                 .appendBy(collector);
@@ -47,9 +29,8 @@ public class Connection1ProcessorImpl implements ConnectionProcessor {
         new ConnCTemplate.Builder()
                 .objName(to.objName())
                 .port(to.portName())
-                .x(String.valueOf(- (double)to.spacing() / 8))
+                .x(String.valueOf(- ((to.posX() - (to.sizeX() * 2) - from.posX() - (from.sizeX() * 2)) / 2)))
                 .y("0")
-                //.index(String.valueOf(index2))
                 .let("m")
                 .build()
                 .appendBy(collector);

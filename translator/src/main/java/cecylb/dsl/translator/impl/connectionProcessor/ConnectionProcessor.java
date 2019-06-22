@@ -20,15 +20,15 @@ public interface ConnectionProcessor {
             boolean self
     ) {
         if(posX1 > posX2 && posY1 < posY2) {
-            return new Connection1ProcessorImpl();
+            return new Connection1Processor();
         } else if (self){
-            return new Connection2ProcessorImpl();
+            return new Connection2Processor();
         }  else if(posX1.equals(posX2) && posY1.equals(posY2)) {
-            return  new Connection3ProcessorImpl();
+            return  new Connection3Processor();
         } else if(posX1 < posX2) {
-            return new Connection3ProcessorImpl();
+            return new Connection3Processor();
         } else if(posX1 > posX2 && posY1 > posY2) {
-            return new Connection4ProcessorImpl();
+            return new Connection4Processor();
         }
         return null;
     }

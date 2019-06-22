@@ -5,11 +5,10 @@ import cecylb.dsl.translator.impl.ConnectionFields;
 import cecylb.dsl.translator.templates.Conn1Template;
 import cecylb.dsl.translator.templates.Conn2Template;
 import cecylb.dsl.translator.templates.ConnCTemplate;
-
 import static cecylb.dsl.translator.Template.TEX_BRACKET_R;
 import static cecylb.dsl.translator.Template.TEX_LET;
 
-public class Connection2ProcessorImpl implements ConnectionProcessor {
+public class Connection1Processor implements ConnectionProcessor {
 
     public void generate(final ConnectionFields from, final ConnectionFields to, final TemplateProcessor.Collector collector) {
         new Conn1Template.Builder()
@@ -31,15 +30,15 @@ public class Connection2ProcessorImpl implements ConnectionProcessor {
                 .objName(from.objName())
                 .port(from.portName())
                 .x(String.valueOf((double)from.spacing() / 8))
-                .y(String.valueOf(to.sizeY() * 6 - from.portY() * 1.7))
-                .let("p")
+                .y(String.valueOf((from.sizeY() + from.portY()) + ((to.posY() - from.posY()) / 2)))
+                .let("m")
                 .build()
                 .appendBy(collector);
         new ConnCTemplate.Builder()
                 .objName(to.objName())
                 .port(to.portName())
-                .x(String.valueOf((double) - to.spacing() / 8))
-                .y(String.valueOf(to.sizeY() * 6 - to.portY() * 1.7))
+                .x(String.valueOf(-(double)to.spacing() / 8))
+                .y(String.valueOf((- to.sizeY() + to.portY()) - ((to.posY() - from.posY()) / 2)))
                 .let("p")
                 .build()
                 .appendBy(collector);
@@ -48,14 +47,15 @@ public class Connection2ProcessorImpl implements ConnectionProcessor {
                 .objName(to.objName())
                 .port(to.portName())
                 .x(String.valueOf(- (double)to.spacing() / 8))
-                .y("0.0")
-                .let("p")
+                .y("0")
+                //.index(String.valueOf(index2))
+                .let("m")
                 .build()
                 .appendBy(collector);
         new Conn2Template.Builder()
                 .objName2(to.objName())
                 .port2(to.portName())
-                .let("p")
+                .let("m")
                 .build()
                 .appendBy(collector);
         collector.append(TEX_LET.render());

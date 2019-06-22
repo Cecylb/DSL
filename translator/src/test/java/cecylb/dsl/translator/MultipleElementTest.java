@@ -3,7 +3,6 @@ package cecylb.dsl.translator;
 import cecylb.dsl.translator.impl.TemplateProcessorImpl;
 import cecylb.dsl.translator.impl.TranslatorImpl;
 import org.junit.Test;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -38,7 +37,7 @@ public class MultipleElementTest{
                             "position: 10.0x, 12.5y; " +
                             "size: 0.5x, 0.5y; " +
                             "label: 1.5x, 1.5y, \"AND #n\"; " +
-                            "amount: 1; " +
+                            "amount: 2; " +
                             "spacing: 4; " +
                         "}" +
                         "connections{ " +

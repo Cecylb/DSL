@@ -5,11 +5,10 @@ import cecylb.dsl.translator.impl.ConnectionFields;
 import cecylb.dsl.translator.templates.Conn1Template;
 import cecylb.dsl.translator.templates.Conn2Template;
 import cecylb.dsl.translator.templates.ConnCTemplate;
-
 import static cecylb.dsl.translator.Template.TEX_BRACKET_R;
 import static cecylb.dsl.translator.Template.TEX_LET;
 
-public class Connection4ProcessorImpl implements ConnectionProcessor {
+public class Connection4Processor implements ConnectionProcessor {
 
     public void generate(final ConnectionFields from, final ConnectionFields to, final TemplateProcessor.Collector collector) {
         new Conn1Template.Builder()

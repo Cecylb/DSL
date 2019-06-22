@@ -91,7 +91,7 @@ public class DCBuilder extends AbstractObjectBuilder {
             for(Map.Entry<String, String> entry : DC.inputs.entrySet()){
                 builder.inputs().add(new Port.Builder()
                         .portX(-builder.sizeX()* 2)
-                        .portY(-((builder.sizeY() * 4) / (DC.inputs.size() + 1) * (i + 1)) + builder.sizeY() * 2)
+                        .portY(-((builder.sizeY() * 4) / (builder.input() + 2) * (builder.input() + 1)) + builder.sizeY() * 2)
                         .portName(entry.getKey())
                         .portLabel(entry.getKey())
                         .portLine(entry.getValue())
@@ -99,7 +99,7 @@ public class DCBuilder extends AbstractObjectBuilder {
                 i++;
             }
 
-            builder.setOutput((int)Math.pow(2, builder.input()+1));
+            builder.setOutput((int)Math.pow(2, builder.input()));
             alphabet = 'a';
             for (i = 0; i < builder.output(); i++) {
                 builder.outputs().add(new Port.Builder()
@@ -114,9 +114,9 @@ public class DCBuilder extends AbstractObjectBuilder {
             for (DC.Rectangles rectangle : DC.Rectangles.values()) {
                 builder.rectangles().add(new Rectangle.Builder()
                         .swX(rectangle.getSwX() * builder.sizeX() * 2)
-                        .swY(rectangle.getSwY() * builder.sizeY() * builder.output() / 8)
+                        .swY(rectangle.getSwY() * builder.sizeY() * builder.output() / 4)
                         .neX(rectangle.getNeX() * builder.sizeX() * 2)
-                        .neY(rectangle.getNeY() * builder.sizeY() * builder.output() / 8)
+                        .neY(rectangle.getNeY() * builder.sizeY() * builder.output() / 4)
                         .build());
             }
         });

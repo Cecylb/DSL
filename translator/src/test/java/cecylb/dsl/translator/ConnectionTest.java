@@ -3,12 +3,11 @@ package cecylb.dsl.translator;
 import cecylb.dsl.translator.impl.TemplateProcessorImpl;
 import cecylb.dsl.translator.impl.TranslatorImpl;
 import org.junit.Test;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
-public class ConnectionTester {
+public class ConnectionTest {
 
     @Test
     public void connection1Test() throws Exception {
@@ -48,12 +47,12 @@ public class ConnectionTester {
     }
 
     @Test
-    public void connection4InlineTest() throws Exception {
+    public void connection4Test() throws Exception {
         System.out.println("[CONNECTION 4 T E S T . . .]");
         final Translator translator = new TranslatorImpl(resource("grammar.tdf"), new TemplateProcessorImpl());
         final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         translator.translate(
-                new ByteArrayInputStream("a4, landscape; new UDVTr{ position: 0.0x, 5.0y; size: 0.5x, 0.6y; label: 1.5x, 1.5y, \"DV #n\"; amount: 1; spacing: 4;} new DTr{ position: 10.0x, 15.0y; size: 0.5x, 0.6y; label: 1.5x, 1.5y, \"DT #n\"; amount: 1; spacing: 4; }connections{(DT)Q -- (DV)D; };".getBytes()),
+                new ByteArrayInputStream("a4, landscape; new UDVTr{ position: 0.0x, 10.0y; size: 0.5x, 0.6y; label: 1.5x, 1.5y, \"DV #n\"; amount: 1; spacing: 4;} new DTr{ position: 10.0x, 15.0y; size: 0.5x, 0.6y; label: 1.5x, 1.5y, \"DT #n\"; amount: 1; spacing: 4; }connections{(DT)Q -- (DV)D; };".getBytes()),
                 byteArrayOutputStream
         );
         System.out.println(byteArrayOutputStream.toString());
