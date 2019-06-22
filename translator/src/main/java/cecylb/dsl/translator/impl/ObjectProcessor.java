@@ -14,9 +14,6 @@ public class ObjectProcessor {
         InlineProcessor inlineProcessor = new InlineProcessor();
         InitializeProcessor initializeProcessor = new InitializeProcessor();
         DrawProcessor drawProcessor = new DrawProcessor();
-
-        System.out.println("Objects processing . . .\n");
-
         initializeProcessor.generate(collector, context);
         collector.append(TEX_MAKE_A_TOTHER.render());
         collector.append(TEX_BEGIN.render());

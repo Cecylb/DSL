@@ -48,12 +48,12 @@ public class ConnectionTester {
     }
 
     @Test
-    public void nandInlineTest() throws Exception {
+    public void connection4InlineTest() throws Exception {
         System.out.println("[CONNECTION 4 T E S T . . .]");
         final Translator translator = new TranslatorImpl(resource("grammar.tdf"), new TemplateProcessorImpl());
         final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         translator.translate(
-                new ByteArrayInputStream("a4, landscape; new NAND{ position: 0.0x, 0.0y; size: 0.5x, 0.5y; label: 1.5x, 1.5y, \"NAND #n\"; amount: 3; spacing: 4; }connections{ (NAND)q o- (NAND)a; };".getBytes()),
+                new ByteArrayInputStream("a4, landscape; new UDVTr{ position: 0.0x, 5.0y; size: 0.5x, 0.6y; label: 1.5x, 1.5y, \"DV #n\"; amount: 1; spacing: 4;} new DTr{ position: 10.0x, 15.0y; size: 0.5x, 0.6y; label: 1.5x, 1.5y, \"DT #n\"; amount: 1; spacing: 4; }connections{(DT)Q -- (DV)D; };".getBytes()),
                 byteArrayOutputStream
         );
         System.out.println(byteArrayOutputStream.toString());
