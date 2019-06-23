@@ -223,9 +223,12 @@ syntax
     label =
             LAB
         ,   COL
-        ,   [|POS |coordinates]
-        ,   [CMA]
-        ,   QUT
+        ,   [coordinates]
+        ,   [|labelname |DIV]
+        ;
+
+    labelname =
+            QUT
         ,   [|OBJ |{LET}]
         ,   [property]
         ,   QUT
@@ -250,6 +253,7 @@ syntax
             x_coordinate
         ,   CMA
         ,   y_coordinate
+        ,   [CMA]
         ;
 
     x_coordinate =

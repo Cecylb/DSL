@@ -54,4 +54,25 @@ public interface NOT extends TexObject {
             return swY;
         }
     }
+
+    @Value.Default
+    default Double posX() { return 0.0; }
+    @Value.Default
+    default Double posY() { return 15.0; }
+    @Value.Default
+    default Double sizeX() { return 0.5; }
+    @Value.Default
+    default Double sizeY() { return 0.5; }
+    @Value.Default
+    default Double labelX() { return 0.5; }
+    @Value.Default
+    default Double labelY() { return 0.5; }
+    @Value.Default
+    default String labelName() { return "NOT"; }
+    @Value.Default
+    default Integer input() { return 1; }
+    @Value.Default
+    default Integer amount() { return 1; }
+    @Value.Default
+    default Integer spacing() { return 1; }
 }

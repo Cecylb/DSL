@@ -2,9 +2,9 @@ package cecylb.dsl.modelv2.elements;
 
 public interface Label {
 
-    double labelX();
+    Double labelX();
 
-    double labelY();
+    Double labelY();
 
     String labelName();
 

@@ -5,8 +5,10 @@ import org.immutables.value.Value;
 @Value.Modifiable
 public interface Property {
 
-    String sheetSize();
+    @Value.Default
+    default String sheetSize() { return "a4"; }
 
-    String orientation();
+    @Value.Default
+    default String orientation() { return "landscape"; }
 
 }
