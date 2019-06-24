@@ -68,20 +68,6 @@ public class LastPartProcessor {
         }
     }
 
-    private boolean checkOutputObj(final String labelName, final Parser.Context context) {
-        for (Connection connection : context.getConnections()) {
-            if(labelName.equals(connection.objName1())) return false;
-        }
-        return true;
-    }
-
-    private boolean checkInputObj(final String labelName, final Parser.Context context) {
-        for (Connection connection : context.getConnections()) {
-            if(labelName.equals(connection.objName2())) return false;
-        }
-        return true;
-    }
-
     private boolean checkInput(final String portName, final String labelName, final Parser.Context context) {
         for (Connection connection : context.getConnections()) {
             if(labelName.equals(connection.objName2())) {
