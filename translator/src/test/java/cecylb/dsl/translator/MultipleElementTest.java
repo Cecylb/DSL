@@ -43,6 +43,7 @@ public class MultipleElementTest{
                         "connections{ " +
                             "(MX)Q -- (AND)A; " +
                             "(DC)oe -- (AND)B;" +
+                            "(AND)Q -- (AND)B;" +
                         "};").getBytes()),
                 byteArrayOutputStream
         );

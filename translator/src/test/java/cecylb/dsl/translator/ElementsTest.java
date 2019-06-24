@@ -15,7 +15,7 @@ public class ElementsTest {
         final Translator translator = new TranslatorImpl(resource("grammar.tdf"), new TemplateProcessorImpl());
         final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         translator.translate(
-                new ByteArrayInputStream("a4, landscape; new TTr{ position: 0.0x, 0.0y; size: 0.5x, 0.5y; label: 1.65x, 1.5y, \"TTr #n\"; amount: 1; spacing: 4; }connections{};".getBytes()),
+                new ByteArrayInputStream("a4, landscape; new TTr{ position: 0.0x, 0.0y; size: 0.5x, 0.5y; label: 1.8x, 1.5y, \"ttr #n\"; amount: 1; spacing: 4; }connections{ (ttr)Q -- (ttr #self)T; };".getBytes()),
                 byteArrayOutputStream
         );
         System.out.println(byteArrayOutputStream.toString());
